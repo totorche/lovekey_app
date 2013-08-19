@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+  <head>
+      <meta charset="utf-8" />
+      <meta name="format-detection" content="telephone=no" />
+      <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />-->
+      <link rel="stylesheet" type="text/css" href="css/index.css" />
+      <title>Lovekey</title>
+  </head>
+  <body onorientationchange="orientationChange();">
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    
+    <!-- APP-UI -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/app-ui/libs/jquery.animate-enhanced.js"></script>
+    <script src="js/app-ui/libs/iscroll.js"></script>
+    <script src="js/app-ui/libs/noClickDelay.js"></script>
+    
+    <link rel="stylesheet" href="js/app-ui/slidingview/slidingview.css" type="text/css" />
+    <script src="js/app-ui/slidingview/slidingview.js"></script>
+
+    <link rel="stylesheet" href="js/app-ui/viewnavigator/viewnavigator.css" type="text/css" />
+    <script src="js/app-ui/viewnavigator/viewnavigator.js"></script>
+    <script src="js/app-ui/libs/jquery.animate-enhanced.js"></script>
+    <script src="js/app-ui/libs/iscroll.js"></script>
+    <script src="js/app-ui/libs/noClickDelay.js"></script>
+    
+    <!-- Magic 360 -->
+    <script type="text/javascript" src="js/magic360/magic360/magic360.js"></script>
+    <link rel="stylesheet" href="js/magic360/magic360/magic360.css" />
+
+    <!-- Configurateur -->
+    <script type="text/javascript" src="js/configurateur.js"></script>
+
+    <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=herve.torche@fbw-one.com"></script>
+    
+
+    <!-- Affiche la barre du haut -->
+    <div id="barre_top">
+      <!-- Un premier contenu pour la barre du haut -->
+      <div id="barre_top_1" class="barre_top_content">
+        <a href='#' title="Afficher le menu" id="bouton_menu"></a>
+
+        <div id="boutons_bagues">
+          <a href='#' title="Afficher la bague n° 1" id="bouton_bague_1" class="bouton_bague">Bague 1</a>
+          <a href='#' title="Afficher la bague n° 2" id="bouton_bague_2" class="bouton_bague">Bague 2</a>
+        </div>
+      </div>
+      
+      <!-- Un second contenu pour la barre du haut -->
+      <div id="barre_top_2" class="barre_top_content" style="display: none;">
+        <a href='javascript: popView();' title="Retourner au configurateur" id="bouton_retour" class="bouton">Retour</a>
+
+        <a href='javascript: modify_saves();' title="Modifier les sauvegardes" id="bouton_modifier_sauvegardes" class="bouton">Modifier</a>
+      </div>
+    </div>
+
+
+    <div id="app_container" style="display: none;">
+    
+      <!-- Vue du configurateur -->
+      <div id="view_bagues">
+        <div class="slidingview_wrapper">
+          <div id="sidebar">
+
+            <div class='logo'>LoveKey</div>
+            <div class='logo_petit'>unique comme vos sentiments</div>
+            
+            <div class="options">
+              <h2>Choisissez votre type de bague</h2>
+
+              <div id="type_configurateur">
+                <select name="type_configurateur">
+                  <option value="1">Bague célibataire collection bijou</option>
+                  <option value="2">Bague célibataire collection alliance</option>
+                  <option value="3">Couple de bagues collection bijou</option>
+                  <option value="4">Couple de bagues alliance</option>
+                </select>
+              </div>
+              
+              <h2>Choisissez les options</h2>
+
+              <div id="article1">
+                <div class="article_sets"></div>
+              </div>
+              <div id="article2">
+                <div class="article_sets"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="body">
+            <img class="bg" src="img/background.jpg" />
+            <div class='articles_pictures'>
+              <div class='article_picture article1_picture'></div>
+              <div class='article_picture article2_picture'></div>
+            </div>
+
+            <div class="barre_bottom">
+              <div class="bouton_centre">
+                <a href='#' title="Charger" id="bouton_charger" class="boutons_bottom">Charger</a>
+                <a href='#' title="Enregistrer" id="bouton_enregistrer" class="boutons_bottom">Sauver</a>
+                <a href='javascript: goto_website();' title="Acheter" id="bouton_acheter" class="boutons_bottom">Acheter</a>
+                <a href='#' title="Vidéo" id="bouton_video" class="boutons_bottom">Vidéo</a>
+                <a href='#' title="Partager" id="bouton_partager" class="boutons_bottom">Partager</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="menu_partage" class="addthis_toolbox">
+          <div class='partage_title'>
+            Partager votre bague Lovekey
+            <img src='img/fermer.png' id='partage_fermer' />  
+          </div>
+
+          <ul>
+            <li class='partage partage_facebook'><a href='#' class='addthis_link addthis_button_facebook'><img src='img/facebook.png' class='social_icon' /></a>Facebook<img src='img/fleche_droite.png' class='fleche_droite' /></li>
+            <li class='partage partage_twitter'><a href='#' class='addthis_link addthis_button_twitter'><img src='img/twitter.png' class='social_icon' /></a>Twitter<img src='img/fleche_droite.png' class='fleche_droite' /></li>
+            <li class='partage partage_pinterest'><a href='#' class='addthis_link addthis_button_pinterest'><img src='img/pinterest.png' class='social_icon' /></a>Pinterest<img src='img/fleche_droite.png' class='fleche_droite' /></li>
+            <li class='partage partage_pinterest'><a href='#' class='addthis_link addthis_button_email'><img src='img/email.png' class='social_icon' /></a>Pinterest<img src='img/fleche_droite.png' class='fleche_droite' /></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Fin de la vue du configurateur -->
+
+
+      <!-- Vue des bagues sauvegardées -->
+      <div id="view_load">
+        <ul class='sauvegarde_bagues'></ul>
+      </div>
+      <!-- Fin de la vue des bagues sauvegardées -->
+    </div>
+
+
+    <script type="text/javascript">
+      app.initialize();
+
+      var slide = null;
+      var slide_state = 0;
+      var sharing_menu_state = 0;
+
+      $(document).ready( function() {
+        window.localStorage.setItem("sauvegardes_bagues", '');
+
+        // configure la première vue (le configurateur)
+        var defaultView = { 
+          title: "Default View " + parseInt(Math.random()*1000),
+          backLabel: null,
+          view: $('#view_bagues')
+        };
+
+        // configure le ViewNavigator
+        window.viewNavigator = new ViewNavigator('body');
+
+        // et y ajoute la première vue
+        window.viewNavigator.pushView(defaultView);
+
+        // configure la sidebar
+        slide = new SlidingView('sidebar', 'body');
+        // slide.slideView(50);
+
+        init_app();
+
+        // charge toutes les bagues sauvegardées
+        load_saves();
+
+        // appelle le changement d'orientation pour initialiser l'affichage correctement
+        orientationChange();
+
+
+        // pour afficher/masquer le menu
+        $('#bouton_menu').click(toggle_slide);
+
+        // pour afficher la bague n° 1
+        $('#bouton_bague_1').click(function(){
+          change_bague(1);
+        });
+
+        // pour afficher la bague n° 2
+        $('#bouton_bague_2').click(function(){
+          change_bague(2);
+        });
+
+        // pour la sauvegarde de la bague
+        $('#bouton_enregistrer').click(save_confirmation);
+
+        // pour charger les sauvegardes des bagues
+        $('#bouton_charger').click(print_saves);
+
+        // pour le partage
+        $('#bouton_partager').click(toggle_sharing_menu);
+
+        // pour fermer la fenêtre de partage
+        $('#partage_fermer').click(toggle_sharing_menu);
+      });
+
+      function toggle_slide(){
+        if (slide_state == 1){
+          slide.close();
+          slide_state = 0;
+        }
+        else if (slide_state == 0){
+          slide.open();
+          slide_state = 1;
+        }
+      }
+
+      function toggle_sharing_menu(){
+        if (sharing_menu_state == 1){
+          $('#menu_partage').animate(
+            {
+              height: '0'
+            },
+            function(){
+              $('#menu_partage').hide();
+            }
+          );
+          
+          sharing_menu_state = 0;
+        }
+        else if (sharing_menu_state == 0){
+          $('#menu_partage').show(
+            function(){
+              $('#menu_partage').animate({
+                height: $(window).height() - 44
+              });
+            }
+          );
+
+          sharing_menu_state = 1;
+        }
+      }
+
+      // revient à la vue précédente
+      function popView() {
+        window.viewNavigator.popView();
+        
+        // affiche le contenu n° 1 pour la barre du haut
+        print_barreTop(1);
+      }
+
+    </script>
+  </body>
+</html>

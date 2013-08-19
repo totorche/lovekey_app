@@ -1,0 +1,448 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#E4E4E4;
+    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #A7A7A7),
+        color-stop(0.51, #E4E4E4)
+    );
+    background-attachment:fixed;
+    /*font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;*/
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    /*text-transform:uppercase;*/
+    width:100%;
+}
+
+h1 {
+    font-size:24px;
+    font-weight:normal;
+    margin:0px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
+}
+
+
+
+@font-face {
+  font-family: 'A771RomanOsf';
+  src: url('../fonts/amgafi.eot');
+  src: url('../fonts/amgafi.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/amgafi.woff') format('woff'),
+       url('../fonts/amgafi.ttf') format('truetype'),
+       url('../fonts/amgafi.svg#amgafi') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*masque le header*/
+body .viewNavigator_header{
+  /*display: none;*/
+}
+
+/*place le contenu réel tout en haut*/
+body .viewNavigator_content{
+  top: 44px;
+}
+
+#sidebar{
+  /*padding:10px;*/
+  height: 100%;
+  overflow-y: scroll;
+  background: url(../img/top-bg.png) no-repeat center 0;
+  position: relative;
+}
+
+#type_configurateur{
+  margin-bottom: 40px;
+}
+
+h2{
+  margin-top: 0;
+  font-size: 1.2em;
+}
+
+.content_option_set{
+  overflow: hidden;
+}
+
+.options{
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.options label{
+  width: 100px;
+  display: block;
+  float: left;
+}
+
+.logo,
+.logo_petit{
+  font-family: "A771RomanOsf",sans-serif;
+  font-size: 2.8em;
+  line-height: 1.2em;
+  color: #2f2f2f;
+  text-align: center;
+}
+
+.logo_petit{
+  font-size: 1.5em;
+  margin-top: -5px;
+}
+
+#body .open_button{
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  width: 20px;
+  height: 30px;
+  background: #00ff00;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#body{
+  background-color: white;
+  /*padding: 2px;*/
+  width: 100%;
+  height: 100%;
+}
+
+#barre_top{
+  width: 100%;
+  height: 44px;
+  background: url('../img/barre_top.jpg');
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+#bouton_menu{
+  display: block;
+  float: left;
+  width: 29px;
+  height: 29px;
+  background: url('../img/bouton_menu.png') 0 0;
+  /*margin: 7px 0 0 10px;*/
+  position: absolute;
+  z-index: 1001;
+  top: 7px;
+  left: 10px;
+}
+
+#boutons_bagues{
+  float: left;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1001;
+  top: 7px;
+  right: 10px;
+}
+
+.bouton_bague{
+  display: block;
+  float: left;
+  width: 58px;
+  height: 15px;
+  background: url('../img/bouton_bagues.png') 0 0;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 1.2em;
+  padding: 7px 0 7px 28px;
+}
+
+.bouton{
+  display: block;
+  text-align: center;
+  float: left;
+  width: 106px;
+  height: 15px;
+  background: url('../img/bouton.png') 0 0;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 1.2em;
+  padding: 7px 0 7px 0;
+}
+
+#bouton_bague_1{
+}
+
+#bouton_bague_2{
+  width: 57px;
+  background-position: -86px -29px;
+  color: #93989d;
+}
+
+.barre_bottom{
+  width: 100%;
+  height: 55px;
+  background: url('../img/barre_bottom_background.png') repeat-x left bottom;
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+
+div.bouton_centre{
+  width: 100%;
+  height: 100%;
+  background: url('../img/barre_bottom_center_small.png') no-repeat center bottom;
+}
+
+a.boutons_bottom{
+  text-align: center;
+  display: block;
+  height: 47px;
+  color: #c6c6c5;
+  font-size: 1.1em;
+  text-decoration: none;
+  position: absolute;
+  top: 7px;
+  width: 20%;
+  overflow: visible;
+  padding-top: 31px;
+  box-sizing: border-box;
+}
+
+#bouton_charger{
+  left: 0%;
+  border-right: solid 1px #474d4e;
+  background: url('../img/plus2.png') no-repeat center 5px;
+}
+
+#bouton_enregistrer{
+  left: 20%;
+  border-left: solid 1px #1e1e1e;
+  background: url('../img/coeur.png') no-repeat center 5px;
+}
+
+#bouton_acheter{
+  left: 40%;
+  width: 20%;
+}
+
+#bouton_video{
+  left: 60%;
+  border-right: solid 1px #474d4e;
+  background: url('../img/eye.png') no-repeat center 5px;
+}
+
+#bouton_partager{
+  left: 80%;
+  border-left: solid 1px #1e1e1e;
+  background: url('../img/commentaire.png') no-repeat center 5px;
+}
+
+
+/* Image de background Lovekey */
+img.bg{
+  position: fixed;
+  top: 0;
+  bottom: 55px;
+  left: 0;
+}
+
+#article2 .content_option_set:first-child{
+  display: none;
+}
+
+.article1_picture,
+.article2_picture{
+  float: left;
+  /*width: 230px;*/
+}
+
+.article1_picture{
+  margin-right: 10px;
+}
+
+.article2_picture{
+  display: none;
+}
+
+.articles_pictures{
+  margin: 20px auto 0 auto;
+  overflow: hidden;
+  padding-left: 20px;
+}
+
+.Magic360Contener{
+  -moz-box-shadow: 2px 2px 20px #ddd;
+  -webkit-box-shadow: 2px 2px 20px #ddd;
+  -o-box-shadow: 2px 2px 20px #ddd;
+  box-shadow: 2px 2px 20px #ddd;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  background: #ffffff;
+}
+
+#menu_partage{
+  /*display: none;*/
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+  height: 0;
+  background: #fff;
+  font-family: "Open Sans",Helvetica,arial,sans-serif;
+  font-size: 1.5em;
+  display: none;
+}
+
+#menu_partage ul{
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+#menu_partage li{
+  color: #000000;
+  background: #ffffff;
+  border-bottom: solid 1px #cccccc;
+  position: relative;
+  padding: 10px 20px;
+}
+
+#menu_partage li img.social_icon{
+  height: 40px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+#menu_partage li img.fleche_droite{
+  height: 20px;
+  margin: 5px;
+  position: absolute;
+  right: 10px;
+  margin-top: 12px;
+}
+
+#menu_partage .partage_title{
+  position: relative;
+  color: #000000;
+  padding: 10px 20px;
+  border-bottom: solid 20px #cccccc;
+  height: 20px;
+}
+
+#menu_partage .partage_title #partage_fermer{
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+
+
+/*Pour la vue des bagues sauvegardées*/
+
+ul.sauvegarde_bagues{
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  font-family: "Open Sans",Helvetica,arial,sans-serif;
+  font-size: 1em;
+}
+
+ul.sauvegarde_bagues li{
+  color: #000000;
+  background: #ffffff;
+  border-bottom: solid 1px #cccccc;
+  position: relative;
+  /*padding: 20px 20px;*/
+  overflow: hidden;
+  height: 3em;
+}
+
+ul.sauvegarde_bagues li .save_name{
+  font-weight: bold;
+}
+
+ul.sauvegarde_bagues li .save_date{
+  font-size: 0.8em;
+}
+
+ul.sauvegarde_bagues li img.fleche_droite{
+  height: 20px;
+  margin: 5px;
+  position: absolute;
+  right: 10px;
+  margin-top: 3px;
+}
+
+#bouton_retour{
+  float: left;
+  position: absolute;
+  z-index: 1001;
+  top: 7px;
+  left: 10px;
+}
+
+#bouton_modifier_sauvegardes{
+  float: right;
+  position: absolute;
+  z-index: 1001;
+  top: 7px;
+  right: 10px;
+}
+
+.save_data{
+  position: absolute;
+  height: 2em;
+  left: 0px;
+  right: 0px;
+  padding: 0.5em 2%;
+}
+
+.save_modify{
+  position: absolute;
+  top: 0;
+  right: -100px;
+  width: 60px;
+  height: 1em;
+  padding: 1em 20px;
+  background: #ff0000;
+  color: #ffffff;
+  text-align: center;
+}
+
+/*Fin de la vue des bagues sauvegardées*/
