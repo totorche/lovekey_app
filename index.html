@@ -179,15 +179,15 @@
         <div class='logo'>LoveKey</div>
         <div class='logo_petit'>unique comme vos sentiments</div>
         
-        <p style="margin-top: 40px;">
+        <p>
           La connexion disponible n'est pas suffisante pour utiliser toutes les fonctionnalités de l'application Lovekey.
         </p>
 
-        <p style="margin-top: 20px;">
+        <p>
           En attendant une meilleure connexion, visionnez notre vidéo : 
         </p>
 
-        <p style="margin-top: 20px;">
+        <p>
           <a href="javascript: print_video('#video_lovekey_no_connection');" title="Lancer la vidéo"><img src="img/play.png" alt="Play" class="video" /></a>
         </p>
 
@@ -214,17 +214,9 @@
         // vérifie la connexion à internet
         var connexion = checkConnection();
 
-        if (connexion <= 9){
-          // configure la vue du chargeur de bague
-          // var view_no_connection = { 
-          //   title: "Default View " + parseInt(Math.random()*1000),
-          //   backLabel: 'retour',
-          //   view: $('#view_no_connection').clone()
-          // };
-
-          // // affiche la vue
-          // window.viewNavigator.pushView(view_no_connection);
-
+        // s'il n'y a pas de connexion
+        if (connexion < 1){
+          // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
           var defaultView = { 
             title: "Default View " + parseInt(Math.random()*1000),
             backLabel: null,

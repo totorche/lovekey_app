@@ -462,6 +462,15 @@ ul.sauvegarde_bagues li img.fleche_droite{
   font-size: 1.3em;
   padding: 0 10px;
   text-align: center;
+  margin: 0;
+}
+
+#view_no_connection p{
+  margin-top: 20px;
+}
+
+#view_no_connection p:first-child{
+  margin-top: 40px;
 }
 
 #view_no_connection .logo{
@@ -473,9 +482,25 @@ ul.sauvegarde_bagues li img.fleche_droite{
   font-size: 2.3em;
 }
 
-
-img.video{
+#view_no_connection img.video{
   width: 150px;
 }
 
 /*Fin de la vue lorsqu'il n'y a pas de connexion à Internet*/
+
+
+
+@media only screen and (min-width: 450px) {
+  
+  #view_no_connection p{
+    margin-top: 15px;
+  }
+
+  #view_no_connection p:first-child{
+    margin-top: 30px;
+  }
+
+  #view_no_connection img.video{
+    width: 75px;
+  }
+}
