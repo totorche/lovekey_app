@@ -1,15 +1,50 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.lovekey.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Lovekey</name>
+    <name>Lovekey - Bague Unique</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Configurer, visionnez et partagez votre bague unique Lovekey.
     </description>
-    <author email="dev@callback.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="herve.torche@fbw-one.com" href="http://www.fbw-one.com">
+        Hervé Torche - FBW-One
     </author>
     <access origin="*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
 
     <preference name="orientation" value="default" />
+
+    <preference name="target-device" value="handset" />
+
+    <icon src="icons/ios/Icon.png" gap:platform="ios" width="57" height="57" />
+    <icon src="icons/ios/Icon-72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="icons/ios/Icon@2x.png" gap:platform="ios" width="114" height="114" />
+    <!-- retina iPad support: PhoneGap 2.5.0+ only -->
+    <icon src="icons/ios/Icon-72@2x.png" gap:platform="ios" width="144" height="144" />
+    
+    <!-- <icon src="icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" /> -->
+
+    <gap:splash src="splash.png" />
+    <gap:splash src="splash/ios/screen-iphone-portrait.png" gap:platform="ios" width="320" height="480" />
+    <gap:splash src="splash/ios/screen-iphone-portrait-2x.png" gap:platform="ios" width="640" height="960" />
+    <gap:splash src="splash/ios/screen-iphone-landscape.png" gap:platform="ios" width="480" height="320" />
+    <gap:splash src="splash/ios/screen-iphone-landscape-2x.png" gap:platform="ios" width="960" height="640" />
+
+    <!-- <gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+    <gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+    <gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+    <gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" /> -->
+
+
+    <feature name="http://api.phonegap.com/1.0/battery"/>
+    <feature name="http://api.phonegap.com/1.0/camera"/>
+    <feature name="http://api.phonegap.com/1.0/contacts"/>
+    <feature name="http://api.phonegap.com/1.0/file"/>
+    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+    <feature name="http://api.phonegap.com/1.0/media"/>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    <feature name="http://api.phonegap.com/1.0/notification"/>
+
 </widget>
