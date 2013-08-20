@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.lovekey.app" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Lovekey Bague Unique</name>
+    <name>Lovekey</name>
+    <!-- <name>Lovekey Bague Unique</name> -->
     <description>
         Configurer, visionnez et partagez votre bague unique Lovekey.
     </description>

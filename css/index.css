@@ -458,13 +458,21 @@ ul.sauvegarde_bagues li img.fleche_droite{
 
 /*Pour la vue lorsqu'il n'y a pas de connexion à Internet*/
 
-.logo{
-  margin-top: 20px;
+#view_no_connection p{
+  font-size: 1.3em;
+  padding: 0 10px;
+  text-align: center;
 }
 
-#view_no_connection{
-  font-size: 1em;
+#view_no_connection .logo{
+  margin-top: 20px;
+  font-size: 4em;
 }
+
+#view_no_connection .logo_petit{
+  font-size: 2.3em;
+}
+
 
 img.video{
   width: 150px;
