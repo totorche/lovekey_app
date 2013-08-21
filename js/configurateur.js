@@ -988,7 +988,8 @@ function checkConnection() {
     }
   }
   catch(err){
-    connexion = 0;
+    alert(err);
+    connexion = 1;
   }
 
   return connexion;
