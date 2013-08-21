@@ -14,6 +14,11 @@ var buy_link = "";
 
 var orientation_value = "";
 
+var slide = null;
+var slide_state = 0;
+var sharing_menu_state = 0;
+var connected = null;  // pour savoir si on est actuellement connecté ou pas
+
 // pour défnir le type de connexion à internet
 // 0 : pas de connexion ou type de connexion inconnu
 // 1 : connexion 2G ou générique
@@ -23,6 +28,50 @@ var orientation_value = "";
 var connexion = 0;
 
 function init_app(){
+
+   // vérifie la connexion à internet
+  var connexion = getConnection();
+
+  // s'il n'y a pas de connexion
+  if (connexion < 1){
+    // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
+    var defaultView = { 
+      title: "Default View " + parseInt(Math.random()*1000),
+      backLabel: null,
+      view: $('#view_no_connection')
+    };
+
+    // configure le ViewNavigator
+    window.viewNavigator = new ViewNavigator('body');
+
+    // et y ajoute la première vue
+    window.viewNavigator.pushView(defaultView);
+
+    // dit que l'on est pas connecté
+    connected = false;
+
+    return false;
+  }
+
+  // dit que l'on est connecté
+  connected = true;
+
+  // configure la première vue (le configurateur)
+  var defaultView = { 
+    title: "Default View " + parseInt(Math.random()*1000),
+    backLabel: null,
+    view: $('#view_bagues')
+  };
+
+  // configure le ViewNavigator
+  window.viewNavigator = new ViewNavigator('body');
+
+  // et y ajoute la première vue
+  window.viewNavigator.pushView(defaultView);
+
+  // configure la sidebar
+  slide = new SlidingView('sidebar', 'body');
+
   // récupert les différentes valeurs nécessaires
   $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
     
@@ -50,9 +99,6 @@ function init_app(){
       configurateur_type = $("select[name='type_configurateur']").val();
     }
 
-    // affiche le contenu n° 1 pour la barre du haut
-    // print_barreTop(1);
-
     // initialise l'affichage
     change_type_configurateur(configurateur_type);
   });
@@ -61,21 +107,48 @@ function init_app(){
   $("select[name='type_configurateur']").change(function(){
     change_type_configurateur($(this).val());
   });
+
+  // charge toutes les bagues sauvegardées
+  load_saves();
+
+  // appelle le changement d'orientation pour initialiser l'affichage correctement
+  orientationChange();
+
+
+  // pour afficher/masquer le menu
+  $('#bouton_menu').click(toggle_slide);
+
+  // pour afficher la bague n° 1
+  $('#bouton_bague_1').click(function(){
+    change_bague(1);
+  });
+
+  // pour afficher la bague n° 2
+  $('#bouton_bague_2').click(function(){
+    change_bague(2);
+  });
+
+  // pour la sauvegarde de la bague
+  $('#bouton_enregistrer').click(save_confirmation);
+
+  // pour charger les sauvegardes des bagues
+  $('#bouton_charger').click(print_saves);
+
+  // pour la vidéo
+  $('#bouton_video').click(print_video);
+
+  // pour le partage
+  $('#bouton_partager').click(toggle_sharing_menu);
+
+  // pour fermer la fenêtre de partage
+  $('#partage_fermer').click(toggle_sharing_menu);
+
+  // lors d'un clic sur un bouton de partage
+  $("#menu_partage").on("click", "li.partage", share_click);
+
+  // dit que l'on est connecté
+  connected = true;
 }
-
-// Affiche le contenu dont le numéro est donné en paramètre dans la barre du haut
-// function print_barreTop(content_no){
-//   // on vérifie avant tout que le contenu existe
-//   var el = $('.barre_top .barre_top_' + content_no);
-
-//   if (el.length > 0){
-//     // masque tous les contenus
-//     $('.barre_top .barre_top_content').hide();
-
-//     // affiche le contenu demandé
-//     el.show();
-//   }
-// }
 
 // va sur le configurateur online (sur le site web) avec les bonnes options sélectionnées
 function goto_website(){
@@ -114,14 +187,24 @@ function change_bague(no_bague){
 function change_link_to_website(){
   var type = $("select[name='type_configurateur']").val();
   var url = "";
-  if (type == 1)
+  var url_picture = "";
+
+  if (type == 1){
     url = "http://lovekey.com/configurateur-simple?gamme=bijou&options_init=";
-  else if (type == 2)
+    url_picture = "http://lovekey.com/content/print_product_image.php?gamme_bague=bijou&article_options=";
+  }
+  else if (type == 2){
     url = "http://lovekey.com/configurateur-simple?gamme=alliance&options_init=";
-  else if (type == 3)
+    url_picture = "http://lovekey.com/content/print_product_image.php?gamme_bague=alliance&article_options=";
+  }
+  else if (type == 3){
     url = "http://lovekey.com/configurateur-double?gamme=bijou&options_init=";
-  else if (type == 4)
+    url_picture = "http://lovekey.com/content/print_product_image.php?gamme_bague=bijou&article_options=";
+  }
+  else if (type == 4){
     url = "http://lovekey.com/configurateur-double?gamme=alliance&options_init=";
+    url_picture = "http://lovekey.com/content/print_product_image.php?gamme_bague=alliance&article_options=";
+  }
 
   // génère les paramètres à ajouter à l'url du site web
   params = new Array();
@@ -134,9 +217,15 @@ function change_link_to_website(){
   params = params.join(",");
 
   url += params;
+  url_picture += params;
 
-  // $('#bouton_acheter').attr('href', url);
   buy_link = url;
+
+  // modifie les liens de partage
+  $('.partage_facebook').data('sharelink', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(buy_link));
+  $('.partage_twitter').data('sharelink', 'http://twitter.com/home?status=Ma%20bague%20unique%20personnalis%C3%A9e%20sur%20Lovekey.com%20:%20' + encodeURIComponent(buy_link));
+  $('.partage_pinterest').data('sharelink', 'http://pinterest.com/pin/create/button/?url=' + encodeURIComponent(buy_link) + '&media=' + encodeURIComponent(url_picture) + '&description=Ma%20bague%20unique%20personnalis%C3%A9e%20sur%20Lovekey%20:%20' + encodeURIComponent(buy_link));
+  $('.partage_email').data('sharelink', 'mailto:?subject=Ma%20bague%20unique%20personnalis%C3%A9e%20sur%20Lovekey.com&body=Voici%20la%20bague%20unique%20et%20personnalis%C3%A9e%20que%20je%20me%20suis%20configur%C3%A9%20sur%20Lovekey.com%20:%20' + encodeURIComponent(buy_link));
 }
 
 // lors d'un changement d'orientation de l'appareil
@@ -663,9 +752,8 @@ function load_saves(){
 
   // récupert les sauvegardes
   var save = window.localStorage.getItem("sauvegardes_bagues");
-  if (save.length == 0)
-    // var save = "ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34";
-  var save = "ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;";
+  // if (save.length == 0)
+  //   var save = "ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;ma bague 1&&1/5/2013&&1&&29,17,34;;ma bague 2&&24/12/2011&&2&&29,17,34;;";
 
   if (save != undefined && save != ''){
 
@@ -712,7 +800,7 @@ function save_bague(results){
 
     // ajoute la date
     var date = new Date();
-    value += date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + "&&";
+    value += date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + "&&";
 
     // ajoute le type de configurateur
     value += $("select[name='type_configurateur']").val() + "&&";
@@ -930,8 +1018,6 @@ function print_video(){
       var video = $('#video_lovekey');
     }
 
-    // var video = $('#video_lovekey');
-
     if (video.length > 0){
       video = video[0];
       video.play();
@@ -939,56 +1025,152 @@ function print_video(){
   }
 }
 
+// lorsque l'on clique sur un bouton de partage
+function share_click(share_button){
+  var target = '_blank';
+  if ($(this).hasClass('partage_email'))
+    target = '_system';
 
+  window.open($(this).data('sharelink'), target, 'location=no');
+}
 
+// pour ouvrir ou fermer le menu "slide"
+function toggle_slide(){
+  if (slide_state == 1){
+    slide.close();
+    slide_state = 0;
+  }
+  else if (slide_state == 0){
+    slide.open();
+    slide_state = 1;
+  }
+}
 
+// pour ouvrir ou fermer le menu de partage
+function toggle_sharing_menu(){
+  if (sharing_menu_state == 1){
+    $('#menu_partage').animate(
+      {
+        height: '0'
+      },
+      function(){
+        $('#menu_partage').hide();
+      }
+    );
+    
+    sharing_menu_state = 0;
+  }
+  else if (sharing_menu_state == 0){
+    $('#menu_partage').show(
+      function(){
+        $('#menu_partage').animate({
+          height: $(window).height() - 44
+        });
+      }
+    );
 
-// vérifie la connexion
-function checkConnection() {
+    sharing_menu_state = 1;
+  }
+}
+
+// pour afficher ou masquer la page "déconnecté"
+function toggle_disconnected(){
+   // si on est pas connecté
+  if (connected == false){
+    // configure la vue principale de l'application
+    var defaultView = { 
+      title: "Default View " + parseInt(Math.random()*1000),
+      backLabel: null,
+      view: $('#view_bagues')
+    };
+
+    // puis l'affiche
+    window.viewNavigator.pushView(defaultView);
+
+    // dit qu'on est maintenant connecté
+    connected = true;
+  }
+  // si on est pas connecté, on affiche la vue "déconnecté"
+  else if (connected == true){
+    // configure la vue "déconnecté"
+    var defaultView = { 
+      title: "Default View " + parseInt(Math.random()*1000),
+      backLabel: null,
+      view: $('#view_no_connection')
+    };
+
+    // puis l'affiche
+    window.viewNavigator.pushView(defaultView);
+
+    // dit qu'on est maintenant déconnecté
+    connected = false;
+  }
+}
+
+// revient à la vue précédente
+function popView() {
+  window.viewNavigator.popView();
+  
+  // affiche le contenu n° 1 pour la barre du haut
+  print_barreTop(1);
+}
+
+// vérifie si on est connecté ou pas et affiche la bonne vue en fonction
+function checkConnection(){
+  var connection = getConnection();
+
+  // si on a jamais  été connecté
+  if (connected == null){
+    init_app();
+  }
+  // si on est maintenant déconnecté mais qu'on était auparavant connecté
+  else if (connection == 0 && connected != false){
+    toggle_disconnected();
+  }
+  // si on est maintenant connecté mais qu'on était auparavant déconnecté
+  else if (connection > 0 && connected == false){
+    toggle_disconnected();
+  }
+
+  // reteste la connexion toutes les 5 secondes
+  setTimeout(checkConnection, 5000);
+}
+
+// retourne le type de connexion utilisé actuellement
+function getConnection() {
   try{
     var networkState = navigator.connection.type;
 
-    var states = {};
-    states[Connection.UNKNOWN]  = 'Unknown connection';
-    states[Connection.ETHERNET] = 'Ethernet connection';
-    states[Connection.WIFI]     = 'WiFi connection';
-    states[Connection.CELL_2G]  = 'Cell 2G connection';
-    states[Connection.CELL_3G]  = 'Cell 3G connection';
-    states[Connection.CELL_4G]  = 'Cell 4G connection';
-    states[Connection.CELL]     = 'Cell generic connection';
-    states[Connection.NONE]     = 'No network connection';
-
-    if (networkState == 'Connection.UNKNOWN'){
+    if (networkState == Connection.UNKNOWN){
       connexion = 0;
       alert("Attention : votre connexion à internet n'a pas pu être identifiée. Cette application à besoin d'une connexion pour fonctionner");
     }
-    else if (networkState == 'Connection.NONE'){
+    else if (networkState == Connection.NONE){
       connexion = 0;
       alert("Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner");
     }
-    else if (networkState == 'Connection.CELL_2G'){
+    else if (networkState == Connection.CELL_2G){
       connexion = 1;
       alert("Attention : vous disposez d'une connexion à internet relativement lente. L'application mettra peut-être un peu de temps à charger");
     }
-    else if (networkState == 'Connection.CELL'){
+    else if (networkState == Connection.CELL){
       connexion = 1;
       alert("Attention : vous disposez d'une connexion à internet générique. L'application mettra peut-être un peu de temps à charger");
     }
-    else if (networkState == 'Connection.CELL_3G'){
+    else if (networkState == Connection.CELL_3G){
       connexion = 2;
     }
-    else if (networkState == 'Connection.CELL_4G'){
+    else if (networkState == Connection.CELL_4G){
       connexion = 3;
     }
-    else if (networkState == 'Connection.WIFI'){
+    else if (networkState == Connection.WIFI){
       connexion = 4;
     }
-    else if (networkState == 'Connection.ETHERNET'){
+    else if (networkState == Connection.ETHERNET){
       connexion = 4;
     }
   }
   catch(err){
-    alert(err);
     connexion = 1;
   }
 

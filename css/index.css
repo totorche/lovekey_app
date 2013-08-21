@@ -344,6 +344,7 @@ img.bg{
   position: relative;
   padding: 10px 20px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 #menu_partage li img.social_icon{
@@ -374,31 +375,6 @@ img.bg{
   position: absolute;
   right: 10px;
   cursor: pointer;
-}
-
-#menu_partage .partage_text{
-  display: block;
-  margin: 10px 0;
-}
-#menu_partage a.addthis_link{
-  height: 40px;
-  width: 40px;
-  display: block;
-  vertical-align: middle;
-  margin-right: 10px;
-  float: left;
-}
-
-#menu_partage a.addthis_button_pinterest{
-  /*height: 40px;
-  width: 40px;
-  display: block;
-  vertical-align: middle;
-  margin-right: 10px;*/
-  background: url('../img/pinterest.png');
-  background-size: 40px 40px;
-  /*background-size: 40px 40px;
-  float: left;*/
 }
 
 
