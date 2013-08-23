@@ -219,6 +219,9 @@
 
       $(document).ready( function() {
         checkConnection();
+
+        // reteste la connexion toutes les 5 secondes
+        setTimeout(hideSplashScreen, 10000);
       });
 
     </script>

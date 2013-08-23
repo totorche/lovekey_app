@@ -1118,6 +1118,7 @@ function popView() {
 // vérifie si on est connecté ou pas et affiche la bonne vue en fonction
 function checkConnection(){
   var connection = getConnection();
+  alert('1 : ' + connection + ' - ' + connected);
 
   // si on a jamais  été connecté
   if (connected == null){
@@ -1175,4 +1176,9 @@ function getConnection() {
   }
 
   return connexion;
+}
+
+// pour iOS, pour masquer le splashscreen quand on veut
+function hideSplashScreen(){
+  navigator.splashscreen.hide();
 }
