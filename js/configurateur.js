@@ -41,13 +41,13 @@ function init_app(){
       backLabel: null,
       view: $('#view_no_connection')
     };
-
+alert('1');
     // configure le ViewNavigator
     window.viewNavigator = new ViewNavigator('body');
-
+alert('2');
     // et y ajoute la première vue
     window.viewNavigator.pushView(defaultView);
-
+alert('3');
     // dit que l'on est pas connecté
     connected = 0;
     alert('view no connect finished');
@@ -1116,7 +1116,7 @@ function popView() {
 // vérifie si on est connecté ou pas et affiche la bonne vue en fonction
 function checkConnection(){
   var connection = getConnection();
-  alert('1 : ' + connection + ' - ' + connected);
+  // alert('1 : ' + connection + ' - ' + connected);
 
   // si l'application n'a pas encore été initialisée
   if (connected == null){
