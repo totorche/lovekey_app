@@ -31,9 +31,10 @@ function init_app(){
 
    // vérifie la connexion à internet
   var connexion = getConnection();
-alert(connexion);
+
   // s'il n'y a pas de connexion
   if (connexion < 1){
+    alert('view no connect starting');
     // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
     var defaultView = { 
       title: "Default View " + parseInt(Math.random()*1000),
@@ -48,13 +49,10 @@ alert(connexion);
     window.viewNavigator.pushView(defaultView);
 
     // dit que l'on est pas connecté
-    connected = false;
-
+    connected = 0;
+    alert('view no connect finished');
     return false;
   }
-
-  // dit que l'on est connecté
-  connected = true;
 
   // configure la première vue (le configurateur)
   var defaultView = { 
@@ -147,7 +145,7 @@ alert(connexion);
   $("#menu_partage").on("click", "li.partage", share_click);
 
   // dit que l'on est connecté
-  connected = true;
+  connected = 2;
 }
 
 // va sur le configurateur online (sur le site web) avec les bonnes options sélectionnées
@@ -1076,7 +1074,7 @@ function toggle_sharing_menu(){
 // pour afficher ou masquer la page "déconnecté"
 function toggle_disconnected(){
    // si on est pas connecté
-  if (connected == false){
+  if (connected == 1){
     // configure la vue principale de l'application
     var defaultView = { 
       title: "Default View " + parseInt(Math.random()*1000),
@@ -1088,10 +1086,10 @@ function toggle_disconnected(){
     window.viewNavigator.pushView(defaultView);
 
     // dit qu'on est maintenant connecté
-    connected = true;
+    connected = 2;
   }
   // si on est pas connecté, on affiche la vue "déconnecté"
-  else if (connected == true){
+  else if (connected == 2){
     // configure la vue "déconnecté"
     var defaultView = { 
       title: "Default View " + parseInt(Math.random()*1000),
@@ -1103,7 +1101,7 @@ function toggle_disconnected(){
     window.viewNavigator.pushView(defaultView);
 
     // dit qu'on est maintenant déconnecté
-    connected = false;
+    connected = 1;
   }
 }
 
@@ -1120,21 +1118,26 @@ function checkConnection(){
   var connection = getConnection();
   alert('1 : ' + connection + ' - ' + connected);
 
-  // si on a jamais  été connecté
+  // si l'application n'a pas encore été initialisée
   if (connected == null){
     init_app();
   }
   // si on est maintenant déconnecté mais qu'on était auparavant connecté
-  else if (connection == 0 && connected != false){
+  else if (connection == 0 && connected == 2){
     toggle_disconnected();
   }
+  // si on est maintenant connecté mais qu'on a jamais été connecté auparavant
+  else if (connection > 0 && connected == 0){
+    init_app();
+  }
   // si on est maintenant connecté mais qu'on était auparavant déconnecté
-  else if (connection > 0 && connected == false){
+  else if (connection > 0 && connected == 1){
     toggle_disconnected();
   }
 
   // reteste la connexion toutes les 5 secondes
   setTimeout(checkConnection, 5000);
+  alert('timeout');
 }
 
 // retourne le type de connexion utilisé actuellement
