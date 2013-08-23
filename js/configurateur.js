@@ -33,7 +33,7 @@ function init_app(){
   var connexion = getConnection();
 
   // s'il n'y a pas de connexion
-  if (connexion < 1){
+  if (connexion > 0){
     alert('view no connect starting');
     // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
     var defaultView = { 
