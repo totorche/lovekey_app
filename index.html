@@ -217,14 +217,14 @@
     <script type="text/javascript">
       app.initialize();
 
-      alert('1');
+      // alert('1');
+      checkConnection();
+
+      // reteste la connexion toutes les 5 secondes
+      setTimeout(hideSplashScreen, 10000);
 
       $(document).ready( function() {
-        alert('2');
-        checkConnection();
-
-        // reteste la connexion toutes les 5 secondes
-        setTimeout(hideSplashScreen, 10000);
+        // alert('2');
       });
 
     </script>
