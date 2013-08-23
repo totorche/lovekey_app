@@ -31,7 +31,7 @@ function init_app(){
 
    // vérifie la connexion à internet
   var connexion = getConnection();
-
+alert(connexion);
   // s'il n'y a pas de connexion
   if (connexion < 1){
     // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
@@ -1003,11 +1003,11 @@ function modify_saves(){
 // affiche la vidéo
 function print_video(){
   // si la connexion est minimum en 3G, on lit la vidéo via Vimeo
-  if (connexion >= 2){
-    var ref = window.open('http://lovekey.com/app/video.html', '_self');
-  }
+  // if (connexion >= 2){
+  //   var ref = window.open('http://lovekey.com/app/video.html', '_self');
+  // }
   // sinon on lit la vidéo en local
-  else{
+  // else{
     if (arguments.length > 0){
       var video = $(arguments[0]);
 
@@ -1022,7 +1022,7 @@ function print_video(){
       video = video[0];
       video.play();
     }
-  }
+  // }
 }
 
 // lorsque l'on clique sur un bouton de partage
