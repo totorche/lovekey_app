@@ -1016,18 +1016,18 @@ function print_video(){
     var video = "";
 
     // si un argument (au moins) a été passé à la fonction
-    if (arguments.length > 0){
-      // si cet argument est une chaîne de caractères
-      if (typeof arguments[0] == "string"){
-        // on récupert l'élément correspondant à l'objet passé en paramètre (ou sélectecteur)
-        video = $(arguments[0]);
-        console.log(video);
-        console.log(video.length);
+    // if (arguments.length > 0){
+    //   // si cet argument est une chaîne de caractères
+    //   if (typeof arguments[0] == "string"){
+    //     // on récupert l'élément correspondant à l'objet passé en paramètre (ou sélectecteur)
+    //     video = $(arguments[0]);
+    //     console.log(video);
+    //     console.log(video.length);
 
-        if (video.length == 0)
-          video = "";
-      }
-    }
+    //     if (video.length == 0)
+    //       video = "";
+    //   }
+    // }
 
     // si la vidéo n'a pas été récupérée précédemment, on récupert la vidéo par défaut
     if (video == ""){
@@ -1038,8 +1038,6 @@ function print_video(){
     if (video.length > 0){
       video = video[video.length - 1];
       video.play();
-console.log(video);
-console.log('play');
     }
   // }
 }
@@ -1168,7 +1166,7 @@ function checkConnection(){
   }
 
   // reteste la connexion toutes les 5 secondes
-  // setTimeout(checkConnection, 5000);
+  setTimeout(checkConnection, 5000);
 }
 
 // retourne le type de connexion utilisé actuellement
@@ -1211,9 +1209,4 @@ function updateConnection() {
 // pour iOS, pour masquer le splashscreen quand on veut
 function hideSplashScreen(){
   navigator.splashscreen.hide();
-}
-
-function temp(){
-  // connexion = 3;
-  toggle_disconnected();
 }
