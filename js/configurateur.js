@@ -33,7 +33,7 @@ function init_app(){
   updateConnection();
 
   // s'il n'y a pas de connexion
-  if (connexion < 10){
+  if (connexion < 1){
     // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
     var defaultView = {
       title: "View no connection",
