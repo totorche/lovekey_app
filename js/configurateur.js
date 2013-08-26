@@ -33,7 +33,7 @@ function init_app(){
   updateConnection();
 
   // s'il n'y a pas de connexion
-  if (connexion < 1){
+  if (connexion < 10){
     // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
     var defaultView = {
       title: "View no connection",
@@ -51,12 +51,12 @@ function init_app(){
     connected = 0;
 
     // affiche un message d'avertissement
-    navigator.notification.alert(
-      "Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner.\n\r\n\rL'application se chargera automatiquement une fois qu'une connexion sera disponible.",  // message
-      null,                       // callback 
-      "Connexion indisponible",   // titre
-      'Ok'                        // texte par défaut
-    );
+    // navigator.notification.alert(
+    //   "Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner.\n\r\n\rL'application se chargera automatiquement une fois qu'une connexion sera disponible.",  // message
+    //   null,                       // callback 
+    //   "Connexion indisponible",   // titre
+    //   'Ok'                        // texte par défaut
+    // );
 
     return false;
   }
@@ -1013,20 +1013,26 @@ function print_video(){
   // }
   // sinon on lit la vidéo en local
   // else{
-    console.log(arguments);
+    var video = "";
+
+    // si un argument (au moins) a été passé à la fonction
     if (arguments.length > 0){
-      console.log('arguments !');
-      var video = $(arguments[0]);
+      // si cet argument est une chaîne de caractères
+      if (typeof arguments[0] == "string"){
+        // on récupert l'élément correspondant à l'objet passé en paramètre (ou sélectecteur)
+        video = $(arguments[0]);
 
-      if (video.length == 0)
-        var video = $('#video_lovekey');
+        if (video.length == 0)
+          video = "";
+      }
     }
-    else{
+
+    // si la vidéo n'a pas été récupérée précédemment, on récupert la vidéo par défaut
+    if (video == ""){
       var video = $('#video_lovekey');
-      alert(video);
-      console.log(video);
     }
 
+    // puis, si elle a été trouvée, on la joue
     if (video.length > 0){
       video = video[0];
       video.play();
@@ -1136,7 +1142,7 @@ function checkConnection(){
     init_app();
   }
   // si on est maintenant déconnecté mais qu'on était auparavant connecté
-  else if (connection == 0 && connected == 2){
+  else if (connexion == 0 && connected == 2){
     toggle_disconnected();
     navigator.notification.alert(
       "Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner.\n\r\n\rL'application se chargera automatiquement une fois qu'une connexion sera disponible.",  // message
@@ -1146,16 +1152,16 @@ function checkConnection(){
     );
   }
   // si on est maintenant connecté mais qu'on a jamais été connecté auparavant
-  else if (connection > 0 && connected == 0){
+  else if (connexion > 0 && connected == 0){
     init_app();
   }
   // si on est maintenant connecté mais qu'on était auparavant déconnecté
-  else if (connection > 0 && connected == 1){
+  else if (connexion > 0 && connected == 1){
     toggle_disconnected();
   }
 
   // affiche un message si la connexion est devenue lente (on est toutefois toujours connecté)
-  if (connection == 1 && old_connexion > 1 && connected == 2){
+  if (connexion == 1 && old_connexion > 1 && connected == 2){
     navigator.notification.alert(
       "Attention : vous disposez d'une connexion à internet relativement lente. L'application mettra peut-être un peu de temps à charger",  // message
       null,                       // callback 
