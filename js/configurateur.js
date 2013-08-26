@@ -34,24 +34,24 @@ function init_app(){
 
   // s'il n'y a pas de connexion
   if (connexion < 1){
-    alert('view no connect starting');
+    // alert('view no connect starting');
     // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
-    // var defaultView = {
-    //   title: "View no connection",
-    //   backLabel: null,
-    //   // view: $('#view_no_connection')
-    //   view: $('<div>no connection...</div>')
-    // };
-alert($('#view_no_connection'));
+    var defaultView = {
+      title: "View no connection",
+      backLabel: null,
+      view: $('#view_no_connection')
+      // view: $('<div>no connection...</div>')
+    };
+// alert($('#view_no_connection'));
     // configure le ViewNavigator
     window.viewNavigator = new ViewNavigator('body');
-alert('2');
+// alert('2');
     // et y ajoute la première vue
     window.viewNavigator.pushView(defaultView);
-alert('3');
+// alert('3');
     // dit que l'on est pas connecté
     connected = 0;
-    alert('view no connect finished');
+    // alert('view no connect finished');
     return false;
   }
 
