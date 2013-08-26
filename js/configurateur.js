@@ -36,12 +36,12 @@ function init_app(){
   if (connexion < 1){
     alert('view no connect starting');
     // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
-    var defaultView = {
-      title: "View no connection",
-      backLabel: null,
-      // view: $('#view_no_connection')
-      view: $('<div>no connection...</div>')
-    };
+    // var defaultView = {
+    //   title: "View no connection",
+    //   backLabel: null,
+    //   // view: $('#view_no_connection')
+    //   view: $('<div>no connection...</div>')
+    // };
 alert('1');
     // configure le ViewNavigator
     window.viewNavigator = new ViewNavigator('body');
