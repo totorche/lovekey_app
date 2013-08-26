@@ -1036,8 +1036,9 @@ function print_video(){
     // puis, si elle a été trouvée, on la joue
     if (video.length > 0){
       video = video[0];
-console.log(video);
       video.play();
+console.log(video);
+console.log('play');
     }
   // }
 }
@@ -1166,7 +1167,7 @@ function checkConnection(){
   }
 
   // reteste la connexion toutes les 5 secondes
-  setTimeout(checkConnection, 5000);
+  // setTimeout(checkConnection, 5000);
 }
 
 // retourne le type de connexion utilisé actuellement
@@ -1209,4 +1210,9 @@ function updateConnection() {
 // pour iOS, pour masquer le splashscreen quand on veut
 function hideSplashScreen(){
   navigator.splashscreen.hide();
+}
+
+function temp(){
+  // connexion = 3;
+  toggle_disconnected();
 }
