@@ -38,7 +38,7 @@ function init_app(){
     var defaultView = {
       title: "View no connection",
       backLabel: null,
-      view: $('#view_no_connection')
+      view: $('#view_no_connection').clone()
     };
 
     // configure le ViewNavigator
@@ -1114,7 +1114,7 @@ function toggle_disconnected(){
     var defaultView = { 
       title: "Default View " + parseInt(Math.random()*1000),
       backLabel: null,
-      view: $('#view_no_connection')
+      view: $('#view_no_connection').clone()
     };
 
     // puis l'affiche
