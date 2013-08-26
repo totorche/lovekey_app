@@ -42,7 +42,7 @@ function init_app(){
     //   // view: $('#view_no_connection')
     //   view: $('<div>no connection...</div>')
     // };
-alert('1');
+alert($('#view_no_connection'));
     // configure le ViewNavigator
     window.viewNavigator = new ViewNavigator('body');
 alert('2');
