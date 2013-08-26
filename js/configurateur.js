@@ -1021,6 +1021,8 @@ function print_video(){
     }
     else{
       var video = $('#video_lovekey');
+      alert(video);
+      console.log(video);
     }
 
     if (video.length > 0){
