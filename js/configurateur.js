@@ -33,7 +33,7 @@ function init_app(){
   updateConnection();
 
   // s'il n'y a pas de connexion
-  if (connexion < 1){
+  if (connexion < 10){
     // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
     var defaultView = {
       title: "View no connection",
@@ -1018,9 +1018,12 @@ function print_video(){
     // si un argument (au moins) a été passé à la fonction
     if (arguments.length > 0){
       // si cet argument est une chaîne de caractères
+      console.log(typeof arguments[0]);
       if (typeof arguments[0] == "string"){
         // on récupert l'élément correspondant à l'objet passé en paramètre (ou sélectecteur)
         video = $(arguments[0]);
+        console.log(video);
+        console.log(video.length);
 
         if (video.length == 0)
           video = "";
@@ -1029,9 +1032,9 @@ function print_video(){
 
     // si la vidéo n'a pas été récupérée précédemment, on récupert la vidéo par défaut
     if (video == ""){
-      var video = $('#video_lovekey');
+      video = $('#video_lovekey');
     }
-
+console.log(video);
     // puis, si elle a été trouvée, on la joue
     if (video.length > 0){
       video = video[0];
@@ -1092,17 +1095,7 @@ function toggle_sharing_menu(){
 function toggle_disconnected(){
    // si on est connecté
   if (connected == 1){
-    // configure la vue principale de l'application
-    // var defaultView = { 
-    //   title: "Default View " + parseInt(Math.random()*1000),
-    //   backLabel: null,
-    //   view: $('#view_bagues')
-    // };
-
-    // // puis l'affiche
-    // window.viewNavigator.pushView(defaultView);
-
-    // revient à la vue précédente
+    // revient à la vue précédente (vue principale)
     window.viewNavigator.popView();
 
     // dit qu'on est maintenant connecté
