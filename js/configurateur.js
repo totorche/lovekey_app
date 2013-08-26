@@ -30,28 +30,34 @@ var connexion = 0;
 function init_app(){
 
    // vérifie la connexion à internet
-  var connexion = getConnection();
+  updateConnection();
 
   // s'il n'y a pas de connexion
   if (connexion < 1){
-    // alert('view no connect starting');
     // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
     var defaultView = {
       title: "View no connection",
       backLabel: null,
       view: $('#view_no_connection')
-      // view: $('<div>no connection...</div>')
     };
-// alert($('#view_no_connection'));
+
     // configure le ViewNavigator
     window.viewNavigator = new ViewNavigator('body');
-// alert('2');
+
     // et y ajoute la première vue
     window.viewNavigator.pushView(defaultView);
-// alert('3');
+
     // dit que l'on est pas connecté
     connected = 0;
-    // alert('view no connect finished');
+
+    // affiche un message d'avertissement
+    navigator.notification.alert(
+      "Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner.\n\r\n\rL'application se chargera automatiquement une fois qu'une connexion sera disponible.",  // message
+      null,                       // callback 
+      "Connexion indisponible",   // titre
+      'Ok'                        // texte par défaut
+    );
+
     return false;
   }
 
@@ -1116,8 +1122,10 @@ function popView() {
 
 // vérifie si on est connecté ou pas et affiche la bonne vue en fonction
 function checkConnection(){
-  var connection = getConnection();
-  // alert('1 : ' + connection + ' - ' + connected);
+  var old_connexion = connexion;
+
+  // vérifie la connexion à internet
+  updateConnection();
 
   // si l'application n'a pas encore été initialisée
   if (connected == null){
@@ -1126,6 +1134,12 @@ function checkConnection(){
   // si on est maintenant déconnecté mais qu'on était auparavant connecté
   else if (connection == 0 && connected == 2){
     toggle_disconnected();
+    navigator.notification.alert(
+      "Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner.\n\r\n\rL'application se chargera automatiquement une fois qu'une connexion sera disponible.",  // message
+      null,                       // callback 
+      "Connexion indisponible",   // titre
+      'Ok'                        // texte par défaut
+    );
   }
   // si on est maintenant connecté mais qu'on a jamais été connecté auparavant
   else if (connection > 0 && connected == 0){
@@ -1136,31 +1150,36 @@ function checkConnection(){
     toggle_disconnected();
   }
 
+  // affiche un message si la connexion est devenue lente (on est toutefois toujours connecté)
+  if (connection == 1 && old_connexion > 1 && connected == 2){
+    navigator.notification.alert(
+      "Attention : vous disposez d'une connexion à internet relativement lente. L'application mettra peut-être un peu de temps à charger",  // message
+      null,                       // callback 
+      "Connexion lente",   // titre
+      'Ok'                        // texte par défaut
+    );
+  }
+
   // reteste la connexion toutes les 5 secondes
   setTimeout(checkConnection, 5000);
-  alert('timeout');
 }
 
 // retourne le type de connexion utilisé actuellement
-function getConnection() {
+function updateConnection() {
   try{
     var networkState = navigator.connection.type;
 
     if (networkState == Connection.UNKNOWN){
       connexion = 0;
-      alert("Attention : votre connexion à internet n'a pas pu être identifiée. Cette application à besoin d'une connexion pour fonctionner");
     }
     else if (networkState == Connection.NONE){
       connexion = 0;
-      alert("Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner");
     }
     else if (networkState == Connection.CELL_2G){
       connexion = 1;
-      alert("Attention : vous disposez d'une connexion à internet relativement lente. L'application mettra peut-être un peu de temps à charger");
     }
     else if (networkState == Connection.CELL){
       connexion = 1;
-      alert("Attention : vous disposez d'une connexion à internet générique. L'application mettra peut-être un peu de temps à charger");
     }
     else if (networkState == Connection.CELL_3G){
       connexion = 2;

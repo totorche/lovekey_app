@@ -170,20 +170,6 @@
       </div>
       <!-- Fin de la vue des bagues sauvegardées -->
 
-      <!-- Vue de la vidéo -->
-      <div id="view_video">
-
-        <!-- Affiche la barre du haut -->
-        <div class="barre_top">
-          <a href='javascript: popView();' title="Retourner au configurateur" id="bouton_retour" class="bouton">Retour</a>
-        </div>
-
-       <!--  <video id="1" autobuffer width="100%" tabindex="0">
-          <source src="lovekey.mp4" type="video/mp4" />
-        </video> -->
-
-      </div>
-      <!-- Fin de la vue de la vidéo -->
 
       <!-- Vue lorsqu'il n'y a pas de connexion à Internet -->
       <div id="view_no_connection">
@@ -217,13 +203,12 @@
     <script type="text/javascript">
       app.initialize();
 
-      checkConnection();
+      $(document).ready( function() {
+        checkConnection();
 
-      // reteste la connexion toutes les 5 secondes
-      setTimeout(hideSplashScreen, 10000);
-
-      // $(document).ready( function() {
-      // });
+        // reteste la connexion toutes les 5 secondes
+        setTimeout(hideSplashScreen, 10000);
+      });
 
     </script>
   </body>
