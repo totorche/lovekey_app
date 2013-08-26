@@ -1013,7 +1013,9 @@ function print_video(){
   // }
   // sinon on lit la vidéo en local
   // else{
+    console.log(arguments);
     if (arguments.length > 0){
+      console.log('arguments !');
       var video = $(arguments[0]);
 
       if (video.length == 0)
