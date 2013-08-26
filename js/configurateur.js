@@ -1031,11 +1031,12 @@ function print_video(){
 
     // si la vidéo n'a pas été récupérée précédemment, on récupert la vidéo par défaut
     if (video == ""){
-      video = $('#video_lovekey');
+      // video = $('#video_lovekey');
+      video = $('video');
     }
     // puis, si elle a été trouvée, on la joue
     if (video.length > 0){
-      video = video[0];
+      video = video[video.length - 1];
       video.play();
 console.log(video);
 console.log('play');
