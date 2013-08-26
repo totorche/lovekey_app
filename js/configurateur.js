@@ -1013,32 +1013,16 @@ function print_video(){
   // }
   // sinon on lit la vidéo en local
   // else{
-    var video = "";
 
-    // si un argument (au moins) a été passé à la fonction
-    // if (arguments.length > 0){
-    //   // si cet argument est une chaîne de caractères
-    //   if (typeof arguments[0] == "string"){
-    //     // on récupert l'élément correspondant à l'objet passé en paramètre (ou sélectecteur)
-    //     video = $(arguments[0]);
-    //     console.log(video);
-    //     console.log(video.length);
+    // récupert les vidéos du site
+    var video = $('video');
 
-    //     if (video.length == 0)
-    //       video = "";
-    //   }
-    // }
-
-    // si la vidéo n'a pas été récupérée précédemment, on récupert la vidéo par défaut
-    if (video == ""){
-      // video = $('#video_lovekey');
-      video = $('video');
-    }
-    // puis, si elle a été trouvée, on la joue
+    // si des vidéos ont été trouvées, on joue la dernière
     if (video.length > 0){
       video = video[video.length - 1];
       video.play();
     }
+    
   // }
 }
 
