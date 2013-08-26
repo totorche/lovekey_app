@@ -51,12 +51,12 @@ function init_app(){
     connected = 0;
 
     // affiche un message d'avertissement
-    // navigator.notification.alert(
-    //   "Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner.\n\r\n\rL'application se chargera automatiquement une fois qu'une connexion sera disponible.",  // message
-    //   null,                       // callback 
-    //   "Connexion indisponible",   // titre
-    //   'Ok'                        // texte par défaut
-    // );
+    navigator.notification.alert(
+      "Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner.\n\r\n\rL'application se chargera automatiquement une fois qu'une connexion sera disponible.",  // message
+      null,                       // callback 
+      "Connexion indisponible",   // titre
+      'Ok'                        // texte par défaut
+    );
 
     return false;
   }
@@ -1090,17 +1090,20 @@ function toggle_sharing_menu(){
 
 // pour afficher ou masquer la page "déconnecté"
 function toggle_disconnected(){
-   // si on est pas connecté
+   // si on est connecté
   if (connected == 1){
     // configure la vue principale de l'application
-    var defaultView = { 
-      title: "Default View " + parseInt(Math.random()*1000),
-      backLabel: null,
-      view: $('#view_bagues')
-    };
+    // var defaultView = { 
+    //   title: "Default View " + parseInt(Math.random()*1000),
+    //   backLabel: null,
+    //   view: $('#view_bagues')
+    // };
 
-    // puis l'affiche
-    window.viewNavigator.pushView(defaultView);
+    // // puis l'affiche
+    // window.viewNavigator.pushView(defaultView);
+
+    // revient à la vue précédente
+    window.viewNavigator.popView();
 
     // dit qu'on est maintenant connecté
     connected = 2;
