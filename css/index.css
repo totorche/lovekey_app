@@ -144,7 +144,8 @@ h2{
   width: 100%;
   height: 44px;
   background: url('../img/barre_top.jpg');
-  position: fixed;
+  /*position: fixed;*/
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -210,7 +211,8 @@ h2{
   width: 100%;
   height: 55px;
   background: url('../img/barre_bottom_background.png') repeat-x left bottom;
-  position: fixed;
+  /*position: fixed;*/
+  position: absolute;
   z-index: 1000;
   bottom: 0;
   left: 0;
@@ -236,6 +238,7 @@ a.boutons_bottom{
   overflow: visible;
   padding-top: 31px;
   box-sizing: border-box;
+  /*border: solid 1px #ff0000;*/
 }
 
 #bouton_charger{
@@ -376,6 +379,34 @@ img.bg{
   right: 10px;
   cursor: pointer;
 }
+
+#video_lovekey{
+  position: absolute;
+  top: 0;
+  left: 0;
+  /*width: 100%;
+  height: 100%;*/
+  z-index: 1002;
+  /*visibility: hidden;*/
+  display: none;
+}
+
+.video video{
+  /*width: 100%;
+  height: 100%;*/
+}
+
+/*#main_video{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1002;
+  visibility: hidden;
+}*/
+
+/*#main_video_logo{
+  display: none;
+}*/
 
 
 

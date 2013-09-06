@@ -27,6 +27,9 @@ var connected = null;  // pour savoir si on est actuellement connecté ou pas
 // 4 : connexion Ethernet ou Wifi
 var connexion = 0;
 
+// pour le bruit d'un click
+var clickSound = '';
+
 function init_app(){
 
    // vérifie la connexion à internet
@@ -53,7 +56,7 @@ function init_app(){
     // affiche un message d'avertissement
     navigator.notification.alert(
       "Attention : Vous ne disposez pas de connexion à internet. Cette application à besoin d'une connexion pour fonctionner.\n\r\n\rL'application se chargera automatiquement une fois qu'une connexion sera disponible.",  // message
-      null,                       // callback 
+      null,                       // callback
       "Connexion indisponible",   // titre
       'Ok'                        // texte par défaut
     );
@@ -121,39 +124,58 @@ function init_app(){
 
 
   // pour afficher/masquer le menu
-  $('#bouton_menu').click(toggle_slide);
+  $('#bouton_menu').on("touchend", toggle_slide);
 
   // pour afficher la bague n° 1
-  $('#bouton_bague_1').click(function(){
+  $('#bouton_bague_1').on("touchend", function(){
     change_bague(1);
   });
 
   // pour afficher la bague n° 2
-  $('#bouton_bague_2').click(function(){
+  $('#bouton_bague_2').on("touchend", function(){
     change_bague(2);
   });
 
   // pour la sauvegarde de la bague
-  $('#bouton_enregistrer').click(save_confirmation);
+  $('#bouton_enregistrer').on("touchend", save_confirmation);
 
   // pour charger les sauvegardes des bagues
-  $('#bouton_charger').click(print_saves);
+  $('#bouton_charger').on("touchend", print_saves);
 
   // pour la vidéo
-  $('#bouton_video').click(print_video);
+  $('#bouton_video').on("touchend", print_video);
 
   // pour le partage
-  $('#bouton_partager').click(toggle_sharing_menu);
+  $('#bouton_partager').on("touchend", toggle_sharing_menu);
 
   // pour fermer la fenêtre de partage
-  $('#partage_fermer').click(toggle_sharing_menu);
+  $('#partage_fermer').on("touchend", toggle_sharing_menu);
 
   // lors d'un clic sur un bouton de partage
-  $("#menu_partage").on("click", "li.partage", share_click);
+  $("#menu_partage").on("touchend", "li.partage", share_click);
 
+  // pour le bouton de retour lorsque l'on est dans les sauvegarde
+  $("#bouton_retour").on("touchend", popView);
+
+  // pour le bouton qui permet de supprimer une sauvegarde
+  $("#bouton_modifier_sauvegardes").on("touchend", modify_saves);
+
+  // pour la vidéo "no connection"
+  $("#bouton_video_no_connection").on("touchend", print_video);
+
+  // charge le son d'un click
+  clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
+  
   // dit que l'on est connecté
   connected = 2;
 }
+
+// retourne le chemin du répertoire des données de l'application
+function getPhoneGapPath() {
+  var path = window.location.pathname;
+  path = path.substr( path, path.length - 10 );
+  return 'file://' + path;
+};
 
 // va sur le configurateur online (sur le site web) avec les bonnes options sélectionnées
 function goto_website(){
@@ -296,6 +318,7 @@ function orientationChange(){
 
 // redimensionne les bagues selon l'orientation de l'appareil
 function change_bague_size(){
+  console.log('change');
   if (orientation_value == "paysage"){
     $("div.Magic360Contener").css({
       'width': '183px',
@@ -310,6 +333,11 @@ function change_bague_size(){
       $('.articles_pictures').css('width', '203px');
     else if (type_configurateur == 3 || type_configurateur == 4)
       $('.articles_pictures').css('width', '400px');
+
+    // Magic360.stop('image_360_1');
+    // Magic360.stop('image_360_2');
+    // Magic360.start('image_360_1');
+    // Magic360.start('image_360_2');
   }
   else if (orientation_value == "portrait"){
     $("div.Magic360Contener").css({
@@ -318,6 +346,9 @@ function change_bague_size(){
     });
 
     $('.articles_pictures').css('width', '255px');
+
+    // Magic360.stop('image_360_1');
+    // Magic360.start('image_360_1');
   }
 }
 
@@ -740,6 +771,8 @@ var modify_saves_open = false;
 
 // affiche une boite de dialogue pour demander le nom de la sauvegarde à l'utilisateur
 function save_confirmation() {
+  clickSound.play();
+
   navigator.notification.prompt(
     'Sous quel nom voulez-vous sauvegarder votre bague ?',  // message
     save_bague,                   // callback to invoke
@@ -747,6 +780,8 @@ function save_confirmation() {
     ['Valider','Annuler'],        // buttonLabels
     'ma bague Lovekey'            // texte par défaut
   );
+
+  e.stopPropagation();
 }
 
 // charge toutes les sauvegardes
@@ -869,6 +904,8 @@ function remove_save(index_to_remove){
 
 // affiche les sauvegarde disponibles
 function print_saves(){
+  clickSound.play();
+
   // met à jour les sauvegardes
   load_saves();
 
@@ -909,6 +946,8 @@ function print_saves(){
 
   // dit que les boutons de suppression sont fermés
   modify_saves_open = false;
+
+  e.stopPropagation();
 }
 
 // affiche les sauvegarde à partir d'un tableau de sauvegardes donné
@@ -964,6 +1003,8 @@ function load_bague(type_configurateur, options){
 
 // affiche la possibilité de modifier (supprimer) les sauvegardes
 function modify_saves(){
+
+  clickSound.play();
   
   var delete_button_width = $(".save_modify").width() + 40;
 
@@ -999,6 +1040,8 @@ function modify_saves(){
 
     modify_saves_open = true;
   }
+
+  e.stopPropagation();
 }
 
 
@@ -1007,6 +1050,11 @@ function modify_saves(){
 
 // affiche la vidéo
 function print_video(){
+  // $('#main_video').css('visibility', 'visible');
+  // jwplayer().resize('100%', '100%');
+  // jwplayer().setFullscreen(true);
+  // jwplayer().play(true);
+
   // si la connexion est minimum en 3G, on lit la vidéo via Vimeo
   // if (connexion >= 2){
   //   var ref = window.open('http://lovekey.com/app/video.html', '_self');
@@ -1014,29 +1062,86 @@ function print_video(){
   // sinon on lit la vidéo en local
   // else{
 
-    // récupert les vidéos du site
-    var video = $('video');
 
-    // si des vidéos ont été trouvées, on joue la dernière
-    if (video.length > 0){
-      video = video[video.length - 1];
-      video.play();
+
+    // récupert les vidéos du site
+    // var video = $('video');
+
+    // // si des vidéos ont été trouvées, on joue la dernière
+    // if (video.length > 0){
+    //   video = video[video.length - 1];
+    //   video.play();
+    // }
+
+    clickSound.play();
+
+    if ($("video#video_lovekey").length > 0){
+      videojs("video_lovekey", { 
+        "controls": true, 
+        "autoplay": true, 
+        "preload": true, 
+        "width": "100%", 
+        "height": "100%",
+        "customControlsOnMobile": true
+      }, 
+      function(){
+        // this.width($(window).width());
+        // this.height($(window).height());
+        $("#video_lovekey").css('display', 'block');
+        console.log('play');
+        this.play();
+        console.log('played');
+
+        this.on("pause", hide_video);
+        this.on("ended", hide_video);
+      });
     }
-    
+    else{
+      $("#video_lovekey").css('display', 'block');
+      var myPlayer = videojs("video_lovekey");
+      // myPlayer.requestFullScreen();
+      myPlayer.play();
+      // myPlayer.width($(window).width());
+      // myPlayer.height($(window).height());
+
+      // myPlayer.on("pause", hide_video);
+      // myPlayer.on("ended", hide_video);
+    }
   // }
+
+  e.stopPropagation();
+}
+
+// masque la vidéo
+function hide_video(){
+  // si on passe de "play" à "pause" ou qu'on quitte le mode "plein écran"
+  // if (infos.newstate == "PAUSED" || infos.fullscreen == false){
+  //   jwplayer().resize('0', '0');
+  //   jwplayer().play(false);
+  //   jwplayer().setFullscreen(false);
+  //   $('#main_video').css('visibility', 'hidden');
+  // }
+
+  $("#video_lovekey").css('display', 'none');
 }
 
 // lorsque l'on clique sur un bouton de partage
 function share_click(share_button){
+  clickSound.play();
+
   var target = '_blank';
   if ($(this).hasClass('partage_email'))
     target = '_system';
 
   window.open($(this).data('sharelink'), target, 'location=no');
+
+  e.stopPropagation();
 }
 
 // pour ouvrir ou fermer le menu "slide"
 function toggle_slide(){
+  clickSound.play();
+
   if (slide_state == 1){
     slide.close();
     slide_state = 0;
@@ -1045,10 +1150,14 @@ function toggle_slide(){
     slide.open();
     slide_state = 1;
   }
+
+  e.stopPropagation();
 }
 
 // pour ouvrir ou fermer le menu de partage
-function toggle_sharing_menu(){
+function toggle_sharing_menu(e){
+  clickSound.play();
+
   if (sharing_menu_state == 1){
     $('#menu_partage').animate(
       {
@@ -1072,6 +1181,8 @@ function toggle_sharing_menu(){
 
     sharing_menu_state = 1;
   }
+  
+  e.stopPropagation();
 }
 
 // pour afficher ou masquer la page "déconnecté"
@@ -1103,10 +1214,14 @@ function toggle_disconnected(){
 
 // revient à la vue précédente
 function popView() {
+  clickSound.play();
+
   window.viewNavigator.popView();
   
   // affiche le contenu n° 1 pour la barre du haut
   print_barreTop(1);
+
+  e.stopPropagation();
 }
 
 // vérifie si on est connecté ou pas et affiche la bonne vue en fonction

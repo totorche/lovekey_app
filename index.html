@@ -52,7 +52,10 @@
     <!-- Configurateur -->
     <script type="text/javascript" src="js/configurateur.js"></script>
 
-    
+    <link href="js/video-js/video-js.css" rel="stylesheet">
+    <script src="js/video-js/video.js"></script>
+
+
 
 
     <div id="app_container" style="display: none;">
@@ -92,11 +95,11 @@
 
             <!-- Affiche la barre du haut -->
             <div class="barre_top">
-                <a href='#' title="Afficher le menu" id="bouton_menu"></a>
+                <a href='javascript: return false;' title="Afficher le menu" id="bouton_menu"></a>
 
                 <div id="boutons_bagues">
-                  <a href='#' title="Afficher la bague n° 1" id="bouton_bague_1" class="bouton_bague">Bague 1</a>
-                  <a href='#' title="Afficher la bague n° 2" id="bouton_bague_2" class="bouton_bague">Bague 2</a>
+                  <a href='javascript: return false;' title="Afficher la bague n° 1" id="bouton_bague_1" class="bouton_bague">Bague 1</a>
+                  <a href='javascript: return false;' title="Afficher la bague n° 2" id="bouton_bague_2" class="bouton_bague">Bague 2</a>
                 </div>
             </div>
 
@@ -108,21 +111,23 @@
 
             <div class="barre_bottom">
               <div class="bouton_centre">
-                <a href='#' title="Charger" id="bouton_charger" class="boutons_bottom">Charger</a>
-                <a href='#' title="Enregistrer" id="bouton_enregistrer" class="boutons_bottom">Sauver</a>
+                <a href='javascript: return false;' title="Charger" id="bouton_charger" class="boutons_bottom">Charger</a>
+                <a href='javascript: return false;' title="Enregistrer" id="bouton_enregistrer" class="boutons_bottom">Sauver</a>
                 <a href='javascript: goto_website();' title="Acheter" id="bouton_acheter" class="boutons_bottom">Acheter</a>
-                <a href='#' title="Vidéo" id="bouton_video" class="boutons_bottom">Vidéo</a>
-                <a href='#' title="Partager" id="bouton_partager" class="boutons_bottom">Partager</a>
+                <a href='javascript: return false;' title="Vidéo" id="bouton_video" class="boutons_bottom">Vidéo</a>
+                <a href='javascript: return false;' title="Partager" id="bouton_partager" class="boutons_bottom">Partager</a>
               </div>
             </div>
+          <!-- Pour la vidéo en local -->
+          <!-- <div id="main_video" class="video" style="visibility: hidden;"> -->
+          <!-- <div class="video"> -->
+            <video id="video_lovekey" width="100%" tabindex="0" preload="auto" controls
+            class="video-js vjs-default-skin">
+              <source src="http://www.broken-links.com/tests/media/BBB_480_HB.mp4" type='video/mp4' />
+            </video>
+          <!-- </div> -->
           </div>
           
-          <!-- Pour la vidéo en local -->
-          <div class="video" style="visibility: hidden;">
-            <video id="video_lovekey" autobuffer width="100%" tabindex="0" preload="auto">
-              <source src="lovekey.mp4" type="video/mp4" />
-            </video>
-          </div>
         </div>
 
         <div id="menu_partage">
@@ -186,7 +191,7 @@
         </p>
 
         <p>
-          <a href="javascript: print_video();" title="Lancer la vidéo"><img src="img/play.png" alt="Play" class="video" /></a>
+          <a href="javascript: print_video();" title="Lancer la vidéo" id="bouton_video_no_connection"><img src="img/play.png" alt="Play" class="video" /></a>
         </p>
 
         <div class="video" style="visibility: hidden;">
@@ -203,12 +208,17 @@
     <script type="text/javascript">
       app.initialize();
 
-      $(document).ready( function() {
-        checkConnection();
+      var ready = false;
 
-        // reteste la connexion toutes les 5 secondes
-        setTimeout(hideSplashScreen, 10000);
-      });
+      document.addEventListener("deviceready",onDeviceReady,false);
+
+      function onDeviceReady(){
+        checkConnection();
+      }
+
+      // $(document).ready( function() {
+      //   checkConnection();
+      // });
 
     </script>
   </body>
