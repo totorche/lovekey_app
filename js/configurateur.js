@@ -1087,10 +1087,9 @@ function print_video(){
       function(){
         // this.width($(window).width());
         // this.height($(window).height());
+        this.src({src: getPhoneGapPath() + "lovekey.mp4" });
         $("#video_lovekey").css('display', 'block');
-        console.log('play');
         this.play();
-        console.log('played');
 
         this.on("pause", hide_video);
         this.on("ended", hide_video);
@@ -1100,7 +1099,11 @@ function print_video(){
       $("#video_lovekey").css('display', 'block');
       var myPlayer = videojs("video_lovekey");
       // myPlayer.requestFullScreen();
-      myPlayer.play();
+      
+
+      // myPlayer.play();
+
+
       // myPlayer.width($(window).width());
       // myPlayer.height($(window).height());
 
