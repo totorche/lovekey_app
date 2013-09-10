@@ -1047,6 +1047,7 @@ function modify_saves(){
 
 
 var is_video_showing = false;
+var video_state = 0;
 
 // affiche la vidéo
 function print_video(){
@@ -1081,11 +1082,11 @@ function print_video(){
     if ($("video#video_lovekey").length > 0){
       videojs("video_lovekey", { 
         "controls": true, 
-        "autoplay": true, 
+        /*"autoplay": true, */
         "preload": true, 
         "width": "100%", 
-        "height": "100%"/*,
-        "customControlsOnMobile": true*/
+        "height": "100%",
+        "customControlsOnMobile": true
       }, 
       function(){
         // this.width($(window).width());
@@ -1094,12 +1095,14 @@ function print_video(){
         $("#video_lovekey").css('display', 'block');
         this.play();
 
-        // this.on("pause", hide_video);
-        this.on("ended", hide_video);
+        this.on("pause", hide_video);
+        // this.on("ended", hide_video);
         // $("#video_lovekey").on('touchend', hide_video);
 
         is_video_showing = true;
       });
+
+      video_state = 2;
     }
     else{
       // keep_video_showing = true;
@@ -1115,11 +1118,9 @@ function print_video(){
       // myPlayer.requestFullScreen();
       
 
-      // myPlayer.play();
+      myPlayer.play();
       is_video_showing = true;
-
-      // myPlayer.width($(window).width());
-      // myPlayer.height($(window).height());
+      video_state = 1;
 
     }
   // }
@@ -1129,17 +1130,12 @@ function print_video(){
 
 // masque la vidéo
 function hide_video(){
-  if (is_video_showing){
-    alert('hide');
-    // si on passe de "play" à "pause" ou qu'on quitte le mode "plein écran"
-    // if (infos.newstate == "PAUSED" || infos.fullscreen == false){
-    //   jwplayer().resize('0', '0');
-    //   jwplayer().play(false);
-    //   jwplayer().setFullscreen(false);
-    //   $('#main_video').css('visibility', 'hidden');
-    // }
-
+  if (video_state == 2){
     $("#video_lovekey").css('display', 'none');
+    is_video_showing = false;
+  }
+  else if(video_state == 1){
+    video_state = 2;
   }
 }
 
