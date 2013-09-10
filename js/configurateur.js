@@ -1046,10 +1046,13 @@ function modify_saves(){
 
 
 
-
+var is_video_showing = false;
 
 // affiche la vidéo
 function print_video(){
+  // alert('nb : ' + $("video#video_lovekey").length);
+  // return true;
+
   // $('#main_video').css('visibility', 'visible');
   // jwplayer().resize('100%', '100%');
   // jwplayer().setFullscreen(true);
@@ -1081,34 +1084,43 @@ function print_video(){
         "autoplay": true, 
         "preload": true, 
         "width": "100%", 
-        "height": "100%",
-        "customControlsOnMobile": true
+        "height": "100%"/*,
+        "customControlsOnMobile": true*/
       }, 
       function(){
         // this.width($(window).width());
         // this.height($(window).height());
-        this.src({src: getPhoneGapPath() + "lovekey.mp4" });
+        // this.src({src: getPhoneGapPath() + "lovekey.mp4" });
         $("#video_lovekey").css('display', 'block');
         this.play();
 
-        this.on("pause", hide_video);
+        // this.on("pause", hide_video);
         this.on("ended", hide_video);
+        // $("#video_lovekey").on('touchend', hide_video);
+
+        is_video_showing = true;
       });
     }
     else{
-      $("#video_lovekey").css('display', 'block');
+      // keep_video_showing = true;
+
+      // alert('showing...');
       var myPlayer = videojs("video_lovekey");
+      // alert('showing2...');
+      // myPlayer.on("pause", function(){});
+      // alert('showing3...');
+      // myPlayer.on("ended", function(){});
+      // alert('showing4...');
+      $("#video_lovekey").css('display', 'block');
       // myPlayer.requestFullScreen();
       
 
       // myPlayer.play();
-
+      is_video_showing = true;
 
       // myPlayer.width($(window).width());
       // myPlayer.height($(window).height());
 
-      // myPlayer.on("pause", hide_video);
-      // myPlayer.on("ended", hide_video);
     }
   // }
 
@@ -1117,15 +1129,18 @@ function print_video(){
 
 // masque la vidéo
 function hide_video(){
-  // si on passe de "play" à "pause" ou qu'on quitte le mode "plein écran"
-  // if (infos.newstate == "PAUSED" || infos.fullscreen == false){
-  //   jwplayer().resize('0', '0');
-  //   jwplayer().play(false);
-  //   jwplayer().setFullscreen(false);
-  //   $('#main_video').css('visibility', 'hidden');
-  // }
+  if (is_video_showing){
+    alert('hide');
+    // si on passe de "play" à "pause" ou qu'on quitte le mode "plein écran"
+    // if (infos.newstate == "PAUSED" || infos.fullscreen == false){
+    //   jwplayer().resize('0', '0');
+    //   jwplayer().play(false);
+    //   jwplayer().setFullscreen(false);
+    //   $('#main_video').css('visibility', 'hidden');
+    // }
 
-  $("#video_lovekey").css('display', 'none');
+    $("#video_lovekey").css('display', 'none');
+  }
 }
 
 // lorsque l'on clique sur un bouton de partage
