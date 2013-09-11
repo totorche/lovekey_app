@@ -1079,7 +1079,7 @@ function print_video(){
     // }
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-    window.resolveLocalFileSystemURI("file:///lovekey.mp4", onResolveSuccess, fail);
+    window.resolveLocalFileSystemURI("file:///android_asset/www/lovekey.mp4", onResolveSuccess, fail);
     window.resolveLocalFileSystemURI(getPhoneGapPath() + "lovekey_test.mp4", onResolveSuccess, fail);
 
     clickSound.play();
