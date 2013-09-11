@@ -43,7 +43,6 @@ function init_app(){
     $('#message_video_patienter').hide();
     $('#video_lovekey').find('source').attr('src', 'http://lovekey.com/lovekey_mobile.mp4');
   }
-  alert(platform);
 
    // vérifie la connexion à internet
   updateConnection();
@@ -76,14 +75,14 @@ function init_app(){
 
     return false;
   }
-
+alert('1');
   // configure la première vue (le configurateur)
   var defaultView = { 
     title: "Default View " + parseInt(Math.random()*1000),
     backLabel: null,
     view: $('#view_bagues')
   };
-
+alert('2');
   // configure le ViewNavigator
   window.viewNavigator = new ViewNavigator('body');
 
@@ -92,7 +91,7 @@ function init_app(){
 
   // configure la sidebar
   slide = new SlidingView('sidebar', 'body');
-
+alert('3');
   // récupert les différentes valeurs nécessaires
   $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
     
@@ -122,6 +121,7 @@ function init_app(){
 
     // initialise l'affichage
     change_type_configurateur(configurateur_type);
+    alert('4');
   });
 
   // lors d'un changement de type de configurateur
@@ -148,7 +148,7 @@ function init_app(){
   $('#bouton_bague_2').on("touchend", function(){
     change_bague(2);
   });
-
+alert('5');
   // pour la sauvegarde de la bague
   $('#bouton_enregistrer').on("touchend", save_confirmation);
 
@@ -178,10 +178,11 @@ function init_app(){
 
   // lors d'un redimensionnement de la fenêtre (changement d'orientation)
   $(window).resize(window_change_size);
+  alert('6');
 
   // charge le son d'un click
   clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
-  
+  alert('7');
   // dit que l'on est connecté
   connected = 2;
 }
