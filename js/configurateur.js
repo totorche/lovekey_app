@@ -384,7 +384,7 @@ function change_type_configurateur(val){
   if ($("select[name='type_configurateur']").val() != val){
     $("select[name='type_configurateur']").val(val);
   }
-
+alert('1');
   var options = new Array();
   
   // récupert les options (à partir du 2è paramètre)
@@ -395,7 +395,7 @@ function change_type_configurateur(val){
 
     x++;
   }
-
+alert('2');
   // stock le type de configurateur
   window.localStorage.setItem("type_configurateur", val);
 
@@ -447,6 +447,7 @@ function change_type_configurateur(val){
 
     $('#boutons_bagues').css('display', 'block');
   }
+  alert('val : ' + val);
 }
 
 /**
