@@ -1079,6 +1079,8 @@ function print_video(){
     // }
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+    window.resolveLocalFileSystemURI("file:///lovekey.mp4", onResolveSuccess, fail);
+    window.resolveLocalFileSystemURI(getPhoneGapPath() + "lovekey_test.mp4", onResolveSuccess, fail);
 
     clickSound.play();
 
@@ -1092,12 +1094,10 @@ function print_video(){
         "customControlsOnMobile": true
       }, 
       function(){
-        // this.width($(window).width());
-        // this.height($(window).height());
         // this.src({src: getPhoneGapPath() + "lovekey_test.mp4" });
         // this.src({ type: "video/mp4", src: "http://lovekey.com/test.mp4" });
-        // this.src({ type: "video/mp4", src: "file:///mnt/sdcard/external_sd/lovekey_test.mp4" });
-        this.src({ type: "video/mp4", src: "lovekey_test.mp4" });
+        this.src({ type: "video/mp4", src: "file:///storage/sdcard0/lovekey_test.mp4" });
+        // this.src({ type: "video/mp4", src: "lovekey_test.mp4" });
         // this.src({src: 'http://lovekey.com/test.mp4'});
         $("#video_lovekey").css('display', 'block');
         this.play();
@@ -1331,6 +1331,10 @@ function hideSplashScreen(){
   navigator.splashscreen.hide();
 }
 
+function copy_video(){
+  // window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+}
+
 function onFileSystemSuccess(fileSystem) {
   alert(fileSystem.name);
   alert(fileSystem.root.name);
@@ -1338,6 +1342,10 @@ function onFileSystemSuccess(fileSystem) {
   console.log(fileSystem.name);
   console.log(fileSystem.root.name);
   console.log(fileSystem.root);
+}
+
+function onResolveSuccess(fileEntry) {
+  console.log(fileEntry.name);
 }
 
 function fail(evt) {
