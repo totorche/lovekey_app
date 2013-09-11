@@ -75,14 +75,14 @@ function init_app(){
 
     return false;
   }
-alert('1');
+
   // configure la première vue (le configurateur)
   var defaultView = { 
     title: "Default View " + parseInt(Math.random()*1000),
     backLabel: null,
     view: $('#view_bagues')
   };
-alert('2');
+
   // configure le ViewNavigator
   window.viewNavigator = new ViewNavigator('body');
 
@@ -91,7 +91,7 @@ alert('2');
 
   // configure la sidebar
   slide = new SlidingView('sidebar', 'body');
-alert('3');
+
   // récupert les différentes valeurs nécessaires
   $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
     
@@ -121,7 +121,6 @@ alert('3');
 
     // initialise l'affichage
     change_type_configurateur(configurateur_type);
-    alert('4');
   });
 
   // lors d'un changement de type de configurateur
@@ -148,7 +147,7 @@ alert('3');
   $('#bouton_bague_2').on("touchend", function(){
     change_bague(2);
   });
-alert('5');
+
   // pour la sauvegarde de la bague
   $('#bouton_enregistrer').on("touchend", save_confirmation);
 
@@ -178,11 +177,10 @@ alert('5');
 
   // lors d'un redimensionnement de la fenêtre (changement d'orientation)
   $(window).resize(window_change_size);
-  alert('6');
 
   // charge le son d'un click
   clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
-  alert('7');
+
   // dit que l'on est connecté
   connected = 2;
 }
@@ -1329,4 +1327,9 @@ function updateConnection() {
   }
 
   return connexion;
+}
+
+// pour iOS, pour masquer le splashscreen quand on veut
+function hideSplashScreen(){
+  navigator.splashscreen.hide();
 }
