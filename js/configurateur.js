@@ -1048,6 +1048,7 @@ function modify_saves(){
 
 var is_video_showing = false;
 var video_state = 0;
+var video_url = "";
 
 // affiche la vidéo
 function print_video(){
@@ -1091,7 +1092,11 @@ function print_video(){
       function(){
         // this.width($(window).width());
         // this.height($(window).height());
-        // this.src({src: getPhoneGapPath() + "lovekey.mp4" });
+        // this.src({src: getPhoneGapPath() + "lovekey_test.mp4" });
+        // this.src({ type: "video/mp4", src: "http://lovekey.com/test.mp4" });
+        // this.src({ type: "video/mp4", src: "file:///mnt/sdcard/external_sd/lovekey_test.mp4" });
+        this.src({ type: "video/mp4", src: "lovekey_test.mp4" });
+        // this.src({src: 'http://lovekey.com/test.mp4'});
         $("#video_lovekey").css('display', 'block');
         this.play();
 
