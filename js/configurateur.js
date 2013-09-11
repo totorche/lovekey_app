@@ -1078,6 +1078,8 @@ function print_video(){
     //   video.play();
     // }
 
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+
     clickSound.play();
 
     if ($("video#video_lovekey").length > 0){
@@ -1327,4 +1329,17 @@ function updateConnection() {
 // pour iOS, pour masquer le splashscreen quand on veut
 function hideSplashScreen(){
   navigator.splashscreen.hide();
+}
+
+function onFileSystemSuccess(fileSystem) {
+  alert(fileSystem.name);
+  alert(fileSystem.root.name);
+  alert(fileSystem.root);
+  console.log(fileSystem.name);
+  console.log(fileSystem.root.name);
+  console.log(fileSystem.root);
+}
+
+function fail(evt) {
+  alert(evt.target.error.code);
 }
