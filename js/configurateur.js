@@ -1077,7 +1077,7 @@ function print_video(){
     //   video = video[video.length - 1];
     //   video.play();
     // }
-
+    console.log('dir : ' + getPhoneGapPath());
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
     window.resolveLocalFileSystemURI("file:///android_asset/www/lovekey.mp4", onResolveSuccess, fail);
     window.resolveLocalFileSystemURI(getPhoneGapPath() + "lovekey_test.mp4", onResolveSuccess, fail);
@@ -1336,9 +1336,6 @@ function copy_video(){
 }
 
 function onFileSystemSuccess(fileSystem) {
-  alert(fileSystem.name);
-  alert(fileSystem.root.name);
-  alert(fileSystem.root);
   console.log(fileSystem.name);
   console.log(fileSystem.root.name);
   console.log(fileSystem.root);
@@ -1349,5 +1346,6 @@ function onResolveSuccess(fileEntry) {
 }
 
 function fail(evt) {
-  alert(evt.target.error.code);
+  console.log("erreur : ");
+  console.log(evt);
 }
