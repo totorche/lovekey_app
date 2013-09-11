@@ -1,3 +1,5 @@
+var platform = "";
+
 var gamme_bague = "alliance";
 
 var article_id = null;
@@ -31,6 +33,17 @@ var connexion = 0;
 var clickSound = '';
 
 function init_app(){
+
+  // détecte la plateforme sur laquelle est lancée l'application
+  platform = device.platform;
+
+  // si on est Android, on masque le bouton permettant de lire la vidéo si pas de connexion
+  if (platform == "Android"){
+    $('#bouton_video_no_connection').hide();
+    $('#message_video_patienter').hide();
+    $('#video_lovekey').find('source').attr('src', 'http://lovekey.com/lovekey_mobile.mp4');
+  }
+  alert(platform);
 
    // vérifie la connexion à internet
   updateConnection();
@@ -162,6 +175,9 @@ function init_app(){
 
   // pour la vidéo "no connection"
   $("#bouton_video_no_connection").on("touchend", print_video);
+
+  // lors d'un redimensionnement de la fenêtre (changement d'orientation)
+  $(window).resize(window_change_size);
 
   // charge le son d'un click
   clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
@@ -316,9 +332,27 @@ function orientationChange(){
   change_bague_size();
 }
 
+function window_change_size(){
+  // redimensionne et replace l'image de fond
+  var $img_background = $('img.bg');
+  $img_background.height($img_background.parent().height() - 99);
+  $img_background.css('left', ($img_background.parent().width() - $img_background.width()) / 2);
+
+  // recharge les bagues pour corriger un problème de taille de l'image de la bague
+  if (orientation_value == "paysage"){
+    Magic360.stop('image_360_1');
+    Magic360.stop('image_360_2');
+    Magic360.start('image_360_1');
+    Magic360.start('image_360_2');
+  }
+  else if (orientation_value == "portrait"){
+    Magic360.stop('image_360_1');
+    Magic360.start('image_360_1');
+  }
+}
+
 // redimensionne les bagues selon l'orientation de l'appareil
 function change_bague_size(){
-  console.log('change');
   if (orientation_value == "paysage"){
     $("div.Magic360Contener").css({
       'width': '183px',
@@ -333,11 +367,6 @@ function change_bague_size(){
       $('.articles_pictures').css('width', '203px');
     else if (type_configurateur == 3 || type_configurateur == 4)
       $('.articles_pictures').css('width', '400px');
-
-    // Magic360.stop('image_360_1');
-    // Magic360.stop('image_360_2');
-    // Magic360.start('image_360_1');
-    // Magic360.start('image_360_2');
   }
   else if (orientation_value == "portrait"){
     $("div.Magic360Contener").css({
@@ -346,9 +375,6 @@ function change_bague_size(){
     });
 
     $('.articles_pictures').css('width', '255px');
-
-    // Magic360.stop('image_360_1');
-    // Magic360.start('image_360_1');
   }
 }
 
@@ -1046,20 +1072,10 @@ function modify_saves(){
 
 
 
-var is_video_showing = false;
 var video_state = 0;
-var video_url = "";
 
 // affiche la vidéo
 function print_video(){
-  // alert('nb : ' + $("video#video_lovekey").length);
-  // return true;
-
-  // $('#main_video').css('visibility', 'visible');
-  // jwplayer().resize('100%', '100%');
-  // jwplayer().setFullscreen(true);
-  // jwplayer().play(true);
-
   // si la connexion est minimum en 3G, on lit la vidéo via Vimeo
   // if (connexion >= 2){
   //   var ref = window.open('http://lovekey.com/app/video.html', '_self');
@@ -1067,25 +1083,23 @@ function print_video(){
   // sinon on lit la vidéo en local
   // else{
 
+  clickSound.play();
 
-
+  // si on est sur une plateforme iOS
+  if (platform == 'iOS'){
     // récupert les vidéos du site
-    // var video = $('video');
+    var video = $('video');
 
-    // // si des vidéos ont été trouvées, on joue la dernière
-    // if (video.length > 0){
-    //   video = video[video.length - 1];
-    //   video.play();
-    // }
-    console.log('dir : ' + getPhoneGapPath());
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-    window.resolveLocalFileSystemURI("file:///android_asset/www/lovekey.mp4", onResolveSuccess, fail);
-    window.resolveLocalFileSystemURI(getPhoneGapPath() + "lovekey_test.mp4", onResolveSuccess, fail);
-    window.resolveLocalFileSystemURI("file:///storage/sdcard0/lovekey_test.mp4", onResolveSuccess, fail);
-    
-
-    clickSound.play();
-
+    // si des vidéos ont été trouvées, on joue la dernière
+    if (video.length > 0){
+      video = video[video.length - 1];
+      video.play();
+    }
+  }
+  // si on est sur une plateforme Android
+  else if(platform == "Android"){
+    // on doit gérer la vidéo via le plugin videojs
+    // si le plugin n'a pas encore chargé la vidéo, on le fait
     if ($("video#video_lovekey").length > 0){
       videojs("video_lovekey", { 
         "controls": true, 
@@ -1096,43 +1110,32 @@ function print_video(){
         "customControlsOnMobile": true
       }, 
       function(){
-        // this.src({src: getPhoneGapPath() + "lovekey_test.mp4" });
-        // this.src({ type: "video/mp4", src: "http://lovekey.com/test.mp4" });
-        this.src({ type: "video/mp4", src: "file:///storage/sdcard0/lovekey_test.mp4" });
-        // this.src({ type: "video/mp4", src: "lovekey_test.mp4" });
-        // this.src({src: 'http://lovekey.com/test.mp4'});
+        // affiche la vidéo online
+        this.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
         $("#video_lovekey").css('display', 'block');
+
+        // et la joue
         this.play();
 
+        // masque la vidéo lorsque l'on appuye sur "Pause" ou que la lecture de la vidéo est terminée
         this.on("pause", hide_video);
-        // this.on("ended", hide_video);
-        // $("#video_lovekey").on('touchend', hide_video);
-
-        is_video_showing = true;
+        this.on("ended", hide_video);
       });
 
       video_state = 2;
     }
+    // si le plugin est déjà prêt
     else{
-      // keep_video_showing = true;
-
-      // alert('showing...');
+      // affiche la vidéo
       var myPlayer = videojs("video_lovekey");
-      // alert('showing2...');
-      // myPlayer.on("pause", function(){});
-      // alert('showing3...');
-      // myPlayer.on("ended", function(){});
-      // alert('showing4...');
       $("#video_lovekey").css('display', 'block');
-      // myPlayer.requestFullScreen();
-      
 
+      // et la joue
       myPlayer.play();
-      is_video_showing = true;
-      video_state = 1;
 
+      video_state = 1;
     }
-  // }
+  }
 
   e.stopPropagation();
 }
@@ -1141,7 +1144,6 @@ function print_video(){
 function hide_video(){
   if (video_state == 2){
     $("#video_lovekey").css('display', 'none');
-    is_video_showing = false;
   }
   else if(video_state == 1){
     video_state = 2;
@@ -1326,28 +1328,4 @@ function updateConnection() {
   }
 
   return connexion;
-}
-
-// pour iOS, pour masquer le splashscreen quand on veut
-function hideSplashScreen(){
-  navigator.splashscreen.hide();
-}
-
-function copy_video(){
-  // window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-}
-
-function onFileSystemSuccess(fileSystem) {
-  console.log(fileSystem.name);
-  console.log(fileSystem.root.name);
-  console.log(fileSystem.root);
-}
-
-function onResolveSuccess(fileEntry) {
-  console.log(fileEntry.name);
-}
-
-function fail(evt) {
-  console.log("erreur : ");
-  console.log(evt);
 }
