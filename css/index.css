@@ -522,7 +522,7 @@ ul.sauvegarde_bagues li img.fleche_droite{
   font-size: 2.3em;
 }
 
-#view_no_connection img.video{
+#view_no_connection img.video_link{
   width: 150px;
 }
 
@@ -540,7 +540,7 @@ ul.sauvegarde_bagues li img.fleche_droite{
     margin-top: 30px;
   }
 
-  #view_no_connection img.video{
+  #view_no_connection img.video_link{
     width: 75px;
   }
 }

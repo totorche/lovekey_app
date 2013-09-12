@@ -1112,7 +1112,7 @@ function print_video(){
         /*"autoplay": true, */
         "preload": true, 
         "width": "100%", 
-        "height": "100%",
+        "height": "90%",
         "customControlsOnMobile": true
       }, 
       function(){
