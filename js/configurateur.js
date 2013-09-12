@@ -1348,8 +1348,3 @@ function updateConnection() {
 
   return connexion;
 }
-
-// pour iOS, pour masquer le splashscreen quand on veut
-function hideSplashScreen(){
-  navigator.splashscreen.hide();
-}

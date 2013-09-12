@@ -216,8 +216,11 @@
 
       function onDeviceReady(){
         checkConnection();
-      }
 
+        setTimeout(function() {
+          navigator.splashscreen.hide();
+        }, 2000);
+      }
     </script>
   </body>
 </html>
