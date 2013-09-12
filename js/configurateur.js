@@ -42,6 +42,13 @@ function init_app(){
     $('#bouton_video_no_connection').hide();
     $('#message_video_patienter').hide();
     $('#video_lovekey').find('source').attr('src', 'http://lovekey.com/lovekey_mobile.mp4');
+    // $('.video').addClass("android");
+    $('#video_lovekey').addClass("android");
+
+    $('#video_lovekey').on('touchend', show_video_controls);
+  }
+  else if (platform == "iOS"){
+    $('#video_lovekey').wrap('<div class="video" />');
   }
 
    // vérifie la connexion à internet
@@ -384,7 +391,7 @@ function change_type_configurateur(val){
   if ($("select[name='type_configurateur']").val() != val){
     $("select[name='type_configurateur']").val(val);
   }
-alert('1');
+
   var options = new Array();
   
   // récupert les options (à partir du 2è paramètre)
@@ -395,7 +402,7 @@ alert('1');
 
     x++;
   }
-alert('2');
+
   // stock le type de configurateur
   window.localStorage.setItem("type_configurateur", val);
 
@@ -447,7 +454,6 @@ alert('2');
 
     $('#boutons_bagues').css('display', 'block');
   }
-  alert('val : ' + val);
 }
 
 /**
@@ -1113,6 +1119,7 @@ function print_video(){
         // affiche la vidéo online
         this.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
         $("#video_lovekey").css('display', 'block');
+        // $(".video.android").css('display', 'block');
 
         // et la joue
         this.play();
@@ -1129,6 +1136,10 @@ function print_video(){
       // affiche la vidéo
       var myPlayer = videojs("video_lovekey");
       $("#video_lovekey").css('display', 'block');
+      // $(".video.android").css('display', 'block');
+
+      $(".vjs-control-bar").css('visibility', 'visible');
+      $(".vjs-control-bar").fadeIn();
 
       // et la joue
       myPlayer.play();
@@ -1144,10 +1155,18 @@ function print_video(){
 function hide_video(){
   if (video_state == 2){
     $("#video_lovekey").css('display', 'none');
+    // $(".video.android").css('display', 'none');
   }
   else if(video_state == 1){
     video_state = 2;
   }
+}
+
+function show_video_controls(){
+  $(".vjs-control-bar").css('visibility', 'visible');
+  $(".vjs-control-bar").css('z-index', '1003');
+  $(".vjs-control-bar").fadeIn();
+  $(".vjs-control-bar").show();
 }
 
 // lorsque l'on clique sur un bouton de partage
