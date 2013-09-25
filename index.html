@@ -21,11 +21,13 @@
   <head>
       <meta charset="utf-8" />
       <meta name="format-detection" content="telephone=no" />
-      <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />-->
+      <!-- <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> -->
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=480" />
       <link rel="stylesheet" type="text/css" href="css/index.css" />
       <title>Lovekey</title>
   </head>
-  <body onorientationchange="orientationChange();">
+
+  <body>
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
@@ -113,7 +115,7 @@
               <div class="bouton_centre">
                 <a href='javascript: return false;' title="Charger" id="bouton_charger" class="boutons_bottom">Charger</a>
                 <a href='javascript: return false;' title="Enregistrer" id="bouton_enregistrer" class="boutons_bottom">Sauver</a>
-                <a href='javascript: goto_website();' title="Acheter" id="bouton_acheter" class="boutons_bottom">Acheter</a>
+                <a href='javascript: return false;' title="Acheter" id="bouton_acheter" class="boutons_bottom">Acheter</a>
                 <a href='javascript: return false;' title="Vidéo" id="bouton_video" class="boutons_bottom">Vidéo</a>
                 <a href='javascript: return false;' title="Partager" id="bouton_partager" class="boutons_bottom">Partager</a>
               </div>
@@ -168,8 +170,8 @@
 
         <!-- Affiche la barre du haut -->
         <div class="barre_top">
-          <a href='javascript: popView();' title="Retourner au configurateur" id="bouton_retour" class="bouton">Retour</a>
-          <a href='javascript: modify_saves();' title="Modifier les sauvegardes" id="bouton_modifier_sauvegardes" class="bouton">Modifier</a>
+          <a href='javascript: return false;' title="Retourner au configurateur" id="bouton_retour" class="bouton bouton_retour">Retour</a>
+          <a href='javascript: return false;' title="Modifier les sauvegardes" id="bouton_modifier_sauvegardes" class="bouton bouton_modifier_sauvegardes">Modifier</a>
         </div>
 
         <ul class='sauvegarde_bagues'></ul>

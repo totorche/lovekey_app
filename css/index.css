@@ -294,7 +294,7 @@ img.bg{
 }
 
 .article2_picture{
-  display: none;
+  /*display: none;*/
 }
 
 .articles_pictures{
@@ -321,7 +321,6 @@ img.bg{
 }
 
 #menu_partage{
-  /*display: none;*/
   position: absolute;
   bottom: 0;
   left: 0;

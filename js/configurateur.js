@@ -17,7 +17,6 @@ var buy_link = "";
 var orientation_value = "";
 
 var slide = null;
-var slide_state = 0;
 var sharing_menu_state = 0;
 var connected = null;  // pour savoir si on est actuellement connecté ou pas
 
@@ -32,13 +31,19 @@ var connexion = 0;
 // pour le bruit d'un click
 var clickSound = '';
 
+
+// initialise l'application
 function init_app(){
 
   // détecte la plateforme sur laquelle est lancée l'application
   platform = device.platform;
 
-  // si on est Android, on masque le bouton permettant de lire la vidéo si pas de connexion
+  // si on est Android
   if (platform == "Android"){
+    // on change le viewport
+    // $('meta[name=viewport]').attr('content', 'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=480');
+
+    // on masque le bouton permettant de lire la vidéo si pas de connexion
     $('#bouton_video_no_connection').hide();
     $('#message_video_patienter').hide();
     $('#video_lovekey').find('source').attr('src', 'http://lovekey.com/lovekey_mobile.mp4');
@@ -141,7 +146,6 @@ function init_app(){
   // appelle le changement d'orientation pour initialiser l'affichage correctement
   orientationChange();
 
-
   // pour afficher/masquer le menu
   $('#bouton_menu').on("touchend", toggle_slide);
 
@@ -161,6 +165,9 @@ function init_app(){
   // pour charger les sauvegardes des bagues
   $('#bouton_charger').on("touchend", print_saves);
 
+  // pour le lien vers la page du site Internet
+  $('#bouton_acheter').on("touchend", goto_website);
+
   // pour la vidéo
   $('#bouton_video').on("touchend", print_video);
 
@@ -174,10 +181,10 @@ function init_app(){
   $("#menu_partage").on("touchend", "li.partage", share_click);
 
   // pour le bouton de retour lorsque l'on est dans les sauvegarde
-  $("#bouton_retour").on("touchend", popView);
+  $("body").on("touchend", ".bouton_retour", popView);
 
   // pour le bouton qui permet de supprimer une sauvegarde
-  $("#bouton_modifier_sauvegardes").on("touchend", modify_saves);
+  $("body").on("touchend", ".bouton_modifier_sauvegardes", modify_saves);
 
   // pour la vidéo "no connection"
   $("#bouton_video_no_connection").on("touchend", print_video);
@@ -279,55 +286,105 @@ function change_link_to_website(){
 
 // lors d'un changement d'orientation de l'appareil
 function orientationChange(){
-  switch(window.orientation){
-    case -90:
-    case 90:
-    case undefined:
-      // paysage
-      orientation_value = "paysage";
 
-      // affiche les 2 bagues
-      $('.article_picture').show();
+  // vérifie l'orientation de l'appareil
+  if ($(window).height() >= $(window).width())
+    orientation_value = "portrait";
+  else
+    orientation_value = "paysage";
 
-      // masque les boutons de changement de bague
-      $('#boutons_bagues').hide();
-      
-      // recentre les images
-      $('.articles_pictures').css('margin-top', '44px');
+  // si on est en mode "paysage"
+  if (orientation_value == "paysage"){
+    // affiche les 2 bagues
+    $('.article_picture').show();
 
-      // masque le logo
-      $('#sidebar .logo').hide();
-      $('#sidebar .logo_petit').hide();
-      $('#sidebar .options').css('margin-top', '0');
-      $('#sidebar').css('background-position', 'center -62px');
-      break; 
-    default:
-      // portrait
-      orientation_value = "portrait";
+    // masque les boutons de changement de bague
+    $('#boutons_bagues').hide();
+    
+    // recentre les images
+    $('.articles_pictures').css('margin-top', '44px');
 
-      // masque la 2ème bague
-      $('.article2_picture').hide();
-
-      // vérifie le type de configurateur
-      var type_configurateur = $("select[name='type_configurateur']").val();
-
-      // si 2 bagues sont affichées on affiche les boutons de changement de bague
-      if (type_configurateur == 3 || type_configurateur == 4)
-        $('#boutons_bagues').show();
-
-      // recentre les images
-      $('.articles_pictures').css('margin-top', '84px');
-
-      // affiche le logo
-      $('#sidebar .logo').show();
-      $('#sidebar .logo_petit').show();
-      $('#sidebar .options').css('margin-top', '20px');
-      $('#sidebar').css('background-position', 'center 0');
-
-      // sélectionne le bouton de la bague n° 1
-      change_bague(1);
-      break; 
+    // masque le logo
+    $('#sidebar .logo').hide();
+    $('#sidebar .logo_petit').hide();
+    $('#sidebar .options').css('margin-top', '0');
+    $('#sidebar').css('background-position', 'center -62px');
   }
+  // si on est en mode "portrait"
+  if (orientation_value == "portrait"){
+    // masque la 2ème bague
+    $('.article2_picture').hide();
+
+    // vérifie le type de configurateur
+    var type_configurateur = $("select[name='type_configurateur']").val();
+
+    // si 2 bagues sont affichées on affiche les boutons de changement de bague
+    if (type_configurateur == 3 || type_configurateur == 4)
+      $('#boutons_bagues').show();
+
+    // recentre les images
+    $('.articles_pictures').css('margin-top', '84px');
+
+    // affiche le logo
+    $('#sidebar .logo').show();
+    $('#sidebar .logo_petit').show();
+    $('#sidebar .options').css('margin-top', '20px');
+    $('#sidebar').css('background-position', 'center 0');
+
+    // sélectionne le bouton de la bague n° 1
+    change_bague(1);
+  }
+
+
+  // switch(window.orientation){
+  //   case -90:
+  //   case 90:
+  //   case undefined:
+  //     // paysage
+  //     orientation_value = "paysage";
+
+  //     // affiche les 2 bagues
+  //     $('.article_picture').show();
+
+  //     // masque les boutons de changement de bague
+  //     $('#boutons_bagues').hide();
+      
+  //     // recentre les images
+  //     $('.articles_pictures').css('margin-top', '44px');
+
+  //     // masque le logo
+  //     $('#sidebar .logo').hide();
+  //     $('#sidebar .logo_petit').hide();
+  //     $('#sidebar .options').css('margin-top', '0');
+  //     $('#sidebar').css('background-position', 'center -62px');
+  //     break; 
+  //   default:
+  //     // portrait
+  //     orientation_value = "portrait";
+
+  //     // masque la 2ème bague
+  //     $('.article2_picture').hide();
+
+  //     // vérifie le type de configurateur
+  //     var type_configurateur = $("select[name='type_configurateur']").val();
+
+  //     // si 2 bagues sont affichées on affiche les boutons de changement de bague
+  //     if (type_configurateur == 3 || type_configurateur == 4)
+  //       $('#boutons_bagues').show();
+
+  //     // recentre les images
+  //     $('.articles_pictures').css('margin-top', '84px');
+
+  //     // affiche le logo
+  //     $('#sidebar .logo').show();
+  //     $('#sidebar .logo_petit').show();
+  //     $('#sidebar .options').css('margin-top', '20px');
+  //     $('#sidebar').css('background-position', 'center 0');
+
+  //     // sélectionne le bouton de la bague n° 1
+  //     change_bague(1);
+  //     break; 
+  // }
 
   // redimensionne et replace l'image de fond
   var $img_background = $('img.bg');
@@ -338,22 +395,52 @@ function orientationChange(){
   change_bague_size();
 }
 
+
 function window_change_size(){
+  // vérifie l'orientation
+  orientationChange();
+
+  // redimensionne les bagues selon l'orientation de l'appareil
+  change_bague_size();
+
   // redimensionne et replace l'image de fond
-  var $img_background = $('img.bg');
-  $img_background.height($img_background.parent().height() - 99);
-  $img_background.css('left', ($img_background.parent().width() - $img_background.width()) / 2);
+  // var $img_background = $('img.bg');
+  // $img_background.height($img_background.parent().height() - 99);
+  // $img_background.css('left', ($img_background.parent().width() - $img_background.width()) / 2);
 
   // recharge les bagues pour corriger un problème de taille de l'image de la bague
   if (orientation_value == "paysage"){
-    Magic360.stop('image_360_1');
-    Magic360.stop('image_360_2');
-    Magic360.start('image_360_1');
-    Magic360.start('image_360_2');
+    if ($('#image_360_1').length > 0){
+      Magic360.stop('image_360_1');
+      Magic360.start('image_360_1');
+    }
+
+    if ($('#image_360_2').length > 0){
+      Magic360.stop('image_360_2');
+      Magic360.start('image_360_2');
+    }
+
+    // si la vidéo a déjà été lancée (sous Android)
+    if ($("#video_lovekey").length > 0){
+      // met la vidéo au bonnes dimension
+      var myPlayer = videojs("video_lovekey");
+      myPlayer.height($(window).height() - 55);
+      myPlayer.width($(window).width());
+    }
   }
   else if (orientation_value == "portrait"){
-    Magic360.stop('image_360_1');
-    Magic360.start('image_360_1');
+    if ($('#image_360_1').length > 0){
+      Magic360.stop('image_360_1');
+      Magic360.start('image_360_1');
+    }
+
+    // si la vidéo a déjà été lancée (sous Android)
+    if ($("#video_lovekey").length > 0){
+      // met la vidéo au bonnes dimension
+      var myPlayer = videojs("video_lovekey");
+      myPlayer.height($(window).height() - 55);
+      myPlayer.width($(window).width());
+    }
   }
 }
 
@@ -369,10 +456,12 @@ function change_bague_size(){
     var type_configurateur = $("select[name='type_configurateur']").val();
 
     // définit la taille de l'élément qui contient les bagues selon si 1 ou 2 bagues sont affichées
-    if (type_configurateur == 1 || type_configurateur == 2)
+    if (type_configurateur == 1 || type_configurateur == 2){
       $('.articles_pictures').css('width', '203px');
-    else if (type_configurateur == 3 || type_configurateur == 4)
-      $('.articles_pictures').css('width', '400px');
+    }
+    else if (type_configurateur == 3 || type_configurateur == 4){
+      $('.articles_pictures').css('width', '406px');
+    }
   }
   else if (orientation_value == "portrait"){
     $("div.Magic360Contener").css({
@@ -380,7 +469,7 @@ function change_bague_size(){
       'height': '240px'
     });
 
-    $('.articles_pictures').css('width', '255px');
+    $('.articles_pictures').css('width', '265px');
   }
 }
 
@@ -912,6 +1001,7 @@ function save_saves(saves_tab){
 
 // supprime une sauvegarde
 function remove_save(index_to_remove){
+  clickSound.play();
 
   function remove(buttonIndex){
     if (buttonIndex == 1){
@@ -949,13 +1039,13 @@ function print_saves(){
   // parcourt toutes les sauvegardes et les affiche
   $.each(bagues_saves, function(index, value){
     msg = "<li>"
-            +"<div class='save_data' onclick='javascript: load_bague(" + value.type_configurateur + ", \"" + (value.options).join(",") + "\");'>"
+            +"<div class='save_data' ontouchend='javascript: load_bague(" + value.type_configurateur + ", \"" + (value.options).join(",") + "\");'>"
               +"<img src='img/fleche_droite.png' class='fleche_droite' />"
               +"<span class='save_name'>" + value.name + "</span>"
               +"<br>"
               +"<span class='save_date'>" + value.date + "</span>"
             +"</div>"
-            +"<div class='save_modify' onclick='javascript: remove_save(" + x + ");'>supprimer</div>"
+            +"<div class='save_modify' ontouchend='javascript: remove_save(" + x + ");'>supprimer</div>"
           +"</li>";
 
     $('#view_load .sauvegarde_bagues').append(msg);
@@ -992,13 +1082,13 @@ function print_saves_from_array(saves_array){
   // parcourt toutes les sauvegardes et les affiche
   $.each(saves_array, function(index, value){
     msg = "<li>"
-            +"<div class='save_data' onclick='javascript: load_bague(" + value.type_configurateur + ", \"" + (value.options).join(",") + "\");'>"
+            +"<div class='save_data' ontouchend='javascript: load_bague(" + value.type_configurateur + ", \"" + (value.options).join(",") + "\");'>"
               +"<img src='img/fleche_droite.png' class='fleche_droite' />"
               +"<span class='save_name'>" + value.name + "</span>"
               +"<br>"
               +"<span class='save_date'>" + value.date + "</span>"
             +"</div>"
-            +"<div class='save_modify' onclick='javascript: remove_save(" + x + ");'>supprimer</div>"
+            +"<div class='save_modify' ontouchend='javascript: remove_save(" + x + ");'>supprimer</div>"
           +"</li>";
 
     $('#view_load .sauvegarde_bagues').append(msg);
@@ -1012,6 +1102,9 @@ function print_saves_from_array(saves_array){
 
 // charge une sauvegarde
 function load_bague(type_configurateur, options){
+  
+  clickSound.play();
+
   // récupert les options dans un tableau
   var options = options.split(",");
 
@@ -1109,10 +1202,9 @@ function print_video(){
     if ($("video#video_lovekey").length > 0){
       videojs("video_lovekey", { 
         "controls": true, 
-        /*"autoplay": true, */
         "preload": true, 
         "width": "100%", 
-        "height": "90%",
+        "height": ($(window).height() - 50) + "px",
         "customControlsOnMobile": true
       }, 
       function(){
@@ -1186,13 +1278,11 @@ function share_click(share_button){
 function toggle_slide(){
   clickSound.play();
 
-  if (slide_state == 1){
+  if (slide.bodyOffset > 0){  
     slide.close();
-    slide_state = 0;
   }
-  else if (slide_state == 0){
+  else{
     slide.open();
-    slide_state = 1;
   }
 
   e.stopPropagation();
