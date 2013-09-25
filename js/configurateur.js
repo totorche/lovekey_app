@@ -14,7 +14,7 @@ var no_bague_displayed = 1;
 
 var buy_link = "";
 
-var orientation_value = "";
+var orientation_value = "portrait";
 
 var slide = null;
 var sharing_menu_state = 0;
@@ -531,7 +531,8 @@ function change_type_configurateur(val){
     else
       reset(2, "bijou");
 
-    $('#boutons_bagues').css('display', 'block');
+    if (orientation_value == "portrait")
+      $('#boutons_bagues').css('display', 'block');
   }
   else if (val == 4){  // alliance bijou
     article_id = 3;
@@ -541,7 +542,8 @@ function change_type_configurateur(val){
     else
       reset(2, "alliance");
 
-    $('#boutons_bagues').css('display', 'block');
+    if (orientation_value == "portrait")
+      $('#boutons_bagues').css('display', 'block');
   }
 }
 

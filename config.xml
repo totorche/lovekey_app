@@ -36,10 +36,19 @@
     <gap:splash src="splash/ios/screen-iphone-landscape.png" gap:platform="ios" width="480" height="320" />
     <gap:splash src="splash/ios/screen-iphone-landscape-2x.png" gap:platform="ios" width="960" height="640" />
 
-    <gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+    <!-- <gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
     <gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
     <gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+    <gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" /> -->
+
+    <gap:splash gap:platform="android" src="splash/android/screen-ldpi-portrait.png" width="200" height="320" />
+    <gap:splash gap:platform="android" src="splash/android/screen-mdpi-portrait.png" width="480" height="320" />
+    <gap:splash gap:platform="android" src="splash/android/screen-hdpi-portrait.png" width="480" height="800" />
+    <gap:splash gap:platform="android" src="splash/android/screen-xhdpi-portrait.png" width="720" height="1280" />
+    <gap:splash gap:platform="android" src="splash/android/screen-ldpi-landscape.png" width="320" height="200" />
+    <gap:splash gap:platform="android" src="splash/android/screen-mdpi-landscape.png" width="320" height="480" />
+    <gap:splash gap:platform="android" src="splash/android/screen-hdpi-landscape.png" width="800" height="480" />
+    <gap:splash gap:platform="android" src="splash/android/screen-xhdpi-landscape.png" width="1280" height="720" />
 
     <feature name="http://api.phonegap.com/1.0/network"/>
     <feature name="http://api.phonegap.com/1.0/notification"/>
