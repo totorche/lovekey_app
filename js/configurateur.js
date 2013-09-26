@@ -286,9 +286,12 @@ function change_link_to_website(){
 
 // lors d'un changement d'orientation de l'appareil
 function orientationChange(){
+  // récupert la hauteur et la largeur de la fenêtre
+  var windows_height = $(window).height();
+  var windows_width = $(window).width();
 
   // vérifie l'orientation de l'appareil
-  if ($(window).height() >= $(window).width())
+  if (windows_height >= windows_width)
     orientation_value = "portrait";
   else
     orientation_value = "paysage";
@@ -305,10 +308,12 @@ function orientationChange(){
     $('.articles_pictures').css('margin-top', '44px');
 
     // masque le logo
-    $('#sidebar .logo').hide();
-    $('#sidebar .logo_petit').hide();
-    $('#sidebar .options').css('margin-top', '0');
-    $('#sidebar').css('background-position', 'center -62px');
+    if (windows_height < 400){
+      $('#sidebar .logo').hide();
+      $('#sidebar .logo_petit').hide();
+      $('#sidebar .options').css('margin-top', '0');
+      $('#sidebar').css('background-position', 'center -62px');
+    }
   }
   // si on est en mode "portrait"
   if (orientation_value == "portrait"){
@@ -446,10 +451,21 @@ function window_change_size(){
 
 // redimensionne les bagues selon l'orientation de l'appareil
 function change_bague_size(){
+
   if (orientation_value == "paysage"){
+    // récupert la hauteur de la fenêtre
+    var windows_height = $(window).height();
+
+    // définit la taille (hauteur = largeur) des bagues
+    var magic360size = 240;
+
+    // si la fenêtre n'est pas assez grande, on réduit la taille des bagues
+    if (windows_height < 400)
+      magic360size = 183;
+
     $("div.Magic360Contener").css({
-      'width': '183px',
-      'height': '183px'
+      'width': magic360size + 'px',
+      'height': magic360size + 'px'
     });
 
     // vérifie le type de configurateur
@@ -457,10 +473,10 @@ function change_bague_size(){
 
     // définit la taille de l'élément qui contient les bagues selon si 1 ou 2 bagues sont affichées
     if (type_configurateur == 1 || type_configurateur == 2){
-      $('.articles_pictures').css('width', '203px');
+      $('.articles_pictures').css('width', (magic360size + 20) + 'px');
     }
     else if (type_configurateur == 3 || type_configurateur == 4){
-      $('.articles_pictures').css('width', '406px');
+      $('.articles_pictures').css('width', (magic360size * 2 + 40) + 'px');
     }
   }
   else if (orientation_value == "portrait"){
