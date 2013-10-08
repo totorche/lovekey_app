@@ -107,7 +107,8 @@ alert('0');
   alert('1');
 
   // récupert les différentes valeurs nécessaires
-  $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
+  // $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
+  $.get('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
     alert('2');
     if (data.id_set_adaptateur != undefined)
       id_set_adaptateur = data.id_set_adaptateur;
@@ -137,7 +138,7 @@ alert('3');
     change_type_configurateur(configurateur_type);
 
     alert('4');
-  });
+  }, "json");
 
 alert('5');
 
