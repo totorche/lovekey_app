@@ -495,6 +495,7 @@ function change_bague_size(){
 function change_type_configurateur(val){
 
   // si le type de configurateur a été changé via le chargement d'une sauvegarde de bague, on sélectionne le bon élément dans la liste déroulante
+  console.log($("select[name='type_configurateur']").val());
   if ($("select[name='type_configurateur']").val() != val){
     $("select[name='type_configurateur']").val(val);
   }
@@ -725,6 +726,8 @@ function update_sets(no_article){
 
     x++;
   }
+
+  console.log(options);
 
   // met à jour tous les sets d'options de l'article en cours
   $("#article" + no_article + " .article_sets").load("http://lovekey.com/content/shop_article_print_options.php", {
