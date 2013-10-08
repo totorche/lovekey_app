@@ -94,7 +94,7 @@ function init_app(){
     backLabel: null,
     view: $('#view_bagues')
   };
-
+alert('0');
   // configure le ViewNavigator
   window.viewNavigator = new ViewNavigator('body');
 
@@ -104,9 +104,11 @@ function init_app(){
   // configure la sidebar
   slide = new SlidingView('sidebar', 'body');
 
+  alert('1');
+
   // récupert les différentes valeurs nécessaires
   $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
-    
+    alert('2');
     if (data.id_set_adaptateur != undefined)
       id_set_adaptateur = data.id_set_adaptateur;
     if (data.id_set_love != undefined)
@@ -130,10 +132,14 @@ function init_app(){
     else{
       configurateur_type = $("select[name='type_configurateur']").val();
     }
-
+alert('3');
     // initialise l'affichage
     change_type_configurateur(configurateur_type);
+
+    alert('4');
   });
+
+alert('5');
 
   // lors d'un changement de type de configurateur
   $("select[name='type_configurateur']").change(function(){
