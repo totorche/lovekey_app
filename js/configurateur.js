@@ -726,121 +726,127 @@ function update_sets(no_article){
     x++;
   }
 
-  // met à jour tous les sets d'options de l'article en cours
   $("#article" + no_article + " .article_sets").load("http://lovekey.com/content/shop_article_print_options.php", {
     aid: article_id,
     sid: '1_2_4',
     nb_articles: nb_articles
-  }, function(){
-    if (options.length == 3){
-      var love_default_id = options[0];
-      var adaptateur_default_id = options[1];
-      var taille_default_id = options[2];
-    }
-    else{
-      if (gamme_bague == "alliance" && no_article == 1){
-        var love_default_id = 28;
-        var adaptateur_default_id = 24;
-        var taille_default_id = 40;
-      }
-      else if (gamme_bague == "alliance" && no_article == 2){
-        var love_default_id = 28;
-        var adaptateur_default_id = 24;
-        var taille_default_id = 45;
-      }
-      else if (gamme_bague == "bijou" && no_article == 1){
-        var love_default_id = 28;
-        var adaptateur_default_id = 59;
-        var taille_default_id = 45;
-      }
-      else if (gamme_bague == "bijou" && no_article == 2){
-        var love_default_id = 28;
-        var adaptateur_default_id = 59;
-        var taille_default_id = 51;
-      }
-      else{
-        var love_default_id = undefined;
-        var adaptateur_default_id = undefined;
-        var taille_default_id = undefined;
-      }
-    }
-    
-    // initialise les options (sans la gravure)
-    init_options(no_article, love_default_id, adaptateur_default_id, taille_default_id, 11);
-    
-    // met à jour l'image de l'article
-    update_picture(no_article);
-
-    // met à jour le lien qui relie l'application au site web
-    change_link_to_website();
-
-    // gère la sélection des options de l'article
-    // $('#article' + no_article + ' .options_set').change(function(){
-    //   // récupert l'id de l'option correspondant à l'image
-    //   var id_option = $(this).val();
-      
-    //   // récupert l'id du set d'options
-    //   var id_set = $(this).data('set-id');
-
-    //   // si on sélectionne un Adaptateur en Or, on désactive la Love en Titan. Si Adaptateur en Titan (pour les 2 bagues), on active la Love en Titan
-    //   if (id_set == id_set_adaptateur){
-    //     // si Adaptateur Or
-    //     if (jQuery.inArray(id_option, id_option_ada_or) != -1){
-    //       // si la love en Titan était sélectionnée jusqu'à présent, on sélectionne la première Love activée
-    //       var select_love = $("#article1").find("select[name=option_set_" + id_set_love + "]");
-
-    //       var selected = select_love.find("option:selected");
-    //       if (selected.prop("value") == id_option_love_t){
-    //         var new_option = select_love.find("option:enabled:first");
-    //         new_option.prop("selected", true);
-    //         select_love.val(new_option.val());
-    //         select_love.trigger('change');
-    //       }
-    //     }
-    //   }
-
-    //   // si on sélectionne une love en Titan, on sélectionne l'adaptateur en Titan également
-    //   if (id_set == id_set_love){
-    //     // si Love Titan
-    //     if (id_option == id_option_love_t){
-    //       // sélectionne les Adaptateurs Titan
-    //       $.each(id_option_ada_titan, function(index, value){
-    //         var select_adaptateur = $("#article" + no_article).find("select[name=option_set_" + id_set_adaptateur + "]");
-    //         select_adaptateur.find("option[value=" + value + "]").prop("selected", true);
-    //         select_adaptateur.val(value);
-    //       })
-    //     }
-    //   }
-
-    //   // si on sélectionne la love de la 1ère bague, on l'applique également à la 2è bague
-    //   if (no_article == 1 && id_set == 1){
-    //     var $listbox = $("#article2 select[name=option_set_1]");
-        
-    //     // désélectionne toutes les options
-    //     $listbox.find("option").prop("selected", false);
-        
-    //     // sélectionne la bonne option dans la listbox
-    //     $listbox.find("option[value=" + id_option + "]").prop("selected", true);
-    //     $listbox.val(id_option);
-
-    //     // déclenche l'événement "change" sur le select
-    //     $listbox.trigger('change');
-    //   }
-
-    //   // si on modifie une option autre que la gravure
-    //   if ($(this).attr('name') != 'option_set_5'){
-    //     // met à jour l'image de l'article
-    //     update_picture(no_article);
-
-    //     // met à jour le lien qui relie l'application au site web
-    //     change_link_to_website();
-    //   }
-    // });
-
-    // si on a terminé l'initialisation des 2 sets d'options, on simule un changement d'adaptateur pour mettre en place les différentes règles
-    if (no_article == 2)
-      $("select.options_set[name=option_set_" + id_set_adaptateur + "]").trigger('change');
   });
+
+  // met à jour tous les sets d'options de l'article en cours
+  // $("#article" + no_article + " .article_sets").load("http://lovekey.com/content/shop_article_print_options.php", {
+  //   aid: article_id,
+  //   sid: '1_2_4',
+  //   nb_articles: nb_articles
+  // }, function(){
+  //   if (options.length == 3){
+  //     var love_default_id = options[0];
+  //     var adaptateur_default_id = options[1];
+  //     var taille_default_id = options[2];
+  //   }
+  //   else{
+  //     if (gamme_bague == "alliance" && no_article == 1){
+  //       var love_default_id = 28;
+  //       var adaptateur_default_id = 24;
+  //       var taille_default_id = 40;
+  //     }
+  //     else if (gamme_bague == "alliance" && no_article == 2){
+  //       var love_default_id = 28;
+  //       var adaptateur_default_id = 24;
+  //       var taille_default_id = 45;
+  //     }
+  //     else if (gamme_bague == "bijou" && no_article == 1){
+  //       var love_default_id = 28;
+  //       var adaptateur_default_id = 59;
+  //       var taille_default_id = 45;
+  //     }
+  //     else if (gamme_bague == "bijou" && no_article == 2){
+  //       var love_default_id = 28;
+  //       var adaptateur_default_id = 59;
+  //       var taille_default_id = 51;
+  //     }
+  //     else{
+  //       var love_default_id = undefined;
+  //       var adaptateur_default_id = undefined;
+  //       var taille_default_id = undefined;
+  //     }
+  //   }
+    
+  //   // initialise les options (sans la gravure)
+  //   init_options(no_article, love_default_id, adaptateur_default_id, taille_default_id, 11);
+    
+  //   // met à jour l'image de l'article
+  //   update_picture(no_article);
+
+  //   // met à jour le lien qui relie l'application au site web
+  //   change_link_to_website();
+
+  //   // gère la sélection des options de l'article
+  //   $('#article' + no_article + ' .options_set').change(function(){
+  //     // récupert l'id de l'option correspondant à l'image
+  //     var id_option = $(this).val();
+      
+  //     // récupert l'id du set d'options
+  //     var id_set = $(this).data('set-id');
+
+  //     // si on sélectionne un Adaptateur en Or, on désactive la Love en Titan. Si Adaptateur en Titan (pour les 2 bagues), on active la Love en Titan
+  //     if (id_set == id_set_adaptateur){
+  //       // si Adaptateur Or
+  //       if (jQuery.inArray(id_option, id_option_ada_or) != -1){
+  //         // si la love en Titan était sélectionnée jusqu'à présent, on sélectionne la première Love activée
+  //         var select_love = $("#article1").find("select[name=option_set_" + id_set_love + "]");
+
+  //         var selected = select_love.find("option:selected");
+  //         if (selected.prop("value") == id_option_love_t){
+  //           var new_option = select_love.find("option:enabled:first");
+  //           new_option.prop("selected", true);
+  //           select_love.val(new_option.val());
+  //           select_love.trigger('change');
+  //         }
+  //       }
+  //     }
+
+  //     // si on sélectionne une love en Titan, on sélectionne l'adaptateur en Titan également
+  //     if (id_set == id_set_love){
+  //       // si Love Titan
+  //       if (id_option == id_option_love_t){
+  //         // sélectionne les Adaptateurs Titan
+  //         $.each(id_option_ada_titan, function(index, value){
+  //           var select_adaptateur = $("#article" + no_article).find("select[name=option_set_" + id_set_adaptateur + "]");
+  //           select_adaptateur.find("option[value=" + value + "]").prop("selected", true);
+  //           select_adaptateur.val(value);
+  //         })
+  //       }
+  //     }
+
+  //     // si on sélectionne la love de la 1ère bague, on l'applique également à la 2è bague
+  //     if (no_article == 1 && id_set == 1){
+  //       var $listbox = $("#article2 select[name=option_set_1]");
+        
+  //       // désélectionne toutes les options
+  //       $listbox.find("option").prop("selected", false);
+        
+  //       // sélectionne la bonne option dans la listbox
+  //       $listbox.find("option[value=" + id_option + "]").prop("selected", true);
+  //       $listbox.val(id_option);
+
+  //       // déclenche l'événement "change" sur le select
+  //       $listbox.trigger('change');
+  //     }
+
+  //     // si on modifie une option autre que la gravure
+  //     if ($(this).attr('name') != 'option_set_5'){
+  //       // met à jour l'image de l'article
+  //       update_picture(no_article);
+
+  //       // met à jour le lien qui relie l'application au site web
+  //       change_link_to_website();
+  //     }
+  //   });
+
+  //   // si on a terminé l'initialisation des 2 sets d'options, on simule un changement d'adaptateur pour mettre en place les différentes règles
+  //   if (no_article == 2)
+  //     $("select.options_set[name=option_set_" + id_set_adaptateur + "]").trigger('change');
+  // });
 }
 
 // paramètre les termes du spinner 360°
