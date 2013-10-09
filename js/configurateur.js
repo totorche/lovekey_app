@@ -1212,6 +1212,9 @@ function print_video(){
 
   clickSound.play();
 
+  window.open('video_test.html','_blank','location=no');
+  return 0;
+
   // si on est sur une plateforme iOS
   if (platform == 'iOS'){
     // récupert les vidéos du site

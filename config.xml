@@ -9,6 +9,9 @@
         Hervé Torche - Torche Web Marketing
     </author>
     <access origin="*" />
+
+    <preference name="phonegap-version" value="3.0.0" />
+
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
 
@@ -29,6 +32,18 @@
     <icon src="icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
     <icon src="icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
     <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+    
+    <!-- Plateformes -->
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+
+    <!-- Plugins -->
+    <gap:plugin name="org.apache.cordova.core.device" />
+    <gap:plugin name="org.apache.cordova.core.dialogs" />
+    <gap:plugin name="org.apache.cordova.core.file" />
+    <gap:plugin name="org.apache.cordova.core.inappbrowser" />
+    <gap:plugin name="org.apache.cordova.core.network-information" />
+    <gap:plugin name="org.apache.cordova.core.vibration" />
 
     <gap:splash src="splash.png" />
     <gap:splash src="splash/ios/screen-iphone-portrait.png" gap:platform="ios" width="320" height="480" />
@@ -36,10 +51,15 @@
     <gap:splash src="splash/ios/screen-iphone-landscape.png" gap:platform="ios" width="480" height="320" />
     <gap:splash src="splash/ios/screen-iphone-landscape-2x.png" gap:platform="ios" width="960" height="640" />
 
-    <gap:splash src="res/screen/android/screen-ldpi-portrait.png" gap:platform="android" gap:density="ldpi" />
+    <!-- <gap:splash src="res/screen/android/screen-ldpi-portrait.png" gap:platform="android" gap:density="ldpi" />
     <gap:splash src="res/screen/android/screen-mdpi-portrait.png" gap:platform="android" gap:density="mdpi" />
     <gap:splash src="res/screen/android/screen-hdpi-portrai.png" gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="res/screen/android/screen-xhdpi-portrait.png" gap:platform="android" gap:density="xhdpi" />
+    <gap:splash src="res/screen/android/screen-xhdpi-portrait.png" gap:platform="android" gap:density="xhdpi" /> -->
+
+    <gap:splash src="splash/android/screen-ldpi-portrait.png" gap:platform="android" gap:density="ldpi" />
+    <gap:splash src="splash/android/screen-mdpi-portrait.png" gap:platform="android" gap:density="mdpi" />
+    <gap:splash src="splash/android/screen-hdpi-portrai.png" gap:platform="android" gap:density="hdpi" />
+    <gap:splash src="splash/android/screen-xhdpi-portrait.png" gap:platform="android" gap:density="xhdpi" />
 
     <!-- <gap:splash gap:platform="android" src="res/screen/android/screen-ldpi-portrait.png" width="200" height="320" />
     <gap:splash gap:platform="android" src="res/screen/android/screen-mdpi-portrait.png" width="480" height="320" />
