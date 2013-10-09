@@ -56,19 +56,24 @@
         var video1 = $('#player1');
         var video2 = $('#player2');
 
-        video1.onended = function(e){
+        video1.addEventListener('ended',end1,false);
+        video1.addEventListener('paused',pause1,false);
+        video2.addEventListener('ended',end2,false);
+        video2.addEventListener('paused',pause2,false);
+
+        function end1(e) {
           alert('video 1 end');
         }
 
-        video1.onpaused = function(e){
-          alert('video 1 paused');
-        }
-
-        video2.onended = function(e){
+        function end2(e) {
           alert('video 2 end');
         }
 
-        video2.onpaused = function(e){
+        function pause1(e) {
+          alert('video 1 paused');
+        }
+
+        function pause2(e) {
           alert('video 2 paused');
         }
 

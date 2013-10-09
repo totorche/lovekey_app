@@ -643,6 +643,7 @@ function init_options(no_article){
       if (element && element.length > 0){
         // sélectionne la bonne option dans la listbox
         // element.attr("selected", true);
+        console.log(element.attr("selected"));
         $(this).val(id_option);
 
         // désélectionne toutes les autres options
