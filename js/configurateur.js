@@ -573,6 +573,8 @@ function change_type_configurateur(val){
  */
 function reset(nb_pictures, gamme){
 
+  console.log('reset');
+
   var options = new Array();
   
   // récupert les options (à partir du 2è paramètre)
@@ -583,6 +585,8 @@ function reset(nb_pictures, gamme){
 
     x++;
   }
+
+  console.log('options : ' + options);
   
   $('.article_sets').empty();
   $('.article_picture').empty();
