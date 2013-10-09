@@ -1204,7 +1204,7 @@ function print_video(){
 
   clickSound.play();
 
-  var ref = window.open('video_test.html','_self','location=yes');
+  var ref = window.open('http://lovekey.com/app/video_test.html','_self','location=yes');
   ref.addEventListener('loadstart', function(event){   
     if (event.url.match("close")) {
       ref.close();

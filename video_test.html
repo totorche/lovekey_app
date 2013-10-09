@@ -6,8 +6,14 @@
       
       <!--<script src="js/jquery-1.10.2.min.js"></script>-->
       <script src="http://codeorigin.jquery.com/jquery-1.10.2.js"></script>
+      <link href="http://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet">
+      <script src="http://vjs.zencdn.net/4.1/video.js"></script>
 
       <style type="text/css">
+        body{
+          height: 100%;
+        }
+        
         .video-container {
           position: relative;
           padding-bottom: 56.25%;
@@ -44,10 +50,13 @@
     function test1(){document.getElementById('player1').play()}
     function test2(){document.getElementById('player2').play()}
     </script>
-    <input type=button value="WebView" onclick=test1()>
+    <!-- <input type=button value="WebView" onclick=test1()>
     <br><input type=button value="InAppBrowser" onclick=test2()>
-    <br><div style="border:1px solid red"><video width="100%" id="player1"><source src="http://m.comptoir-info.com/app/beta/sample.mp4" type="video/mp4"></video></div>
-    <br><div style="border:1px solid red"><video width="100%" id="player2"><source src="lovekey.mp4" type="video/mp4"></video></div>
+    <br> -->
+    <video controls autoplay preload="auto" height="100%" id="player1">
+      <source src="http://m.comptoir-info.com/app/beta/sample.mp4" type="video/mp4">
+    </video>
+    <!-- <br><div style="border:1px solid red"><video width="100%" id="player2"><source src="lovekey.mp4" type="video/mp4"></video></div> -->
 
     
     <script type="text/javascript">
@@ -55,12 +64,12 @@
       $(document).ready( function() {
 
         var video1 = $('#player1')[0];
-        var video2 = $('#player2')[0];
+        // var video2 = $('#player2')[0];
 
         video1.addEventListener('ended',end1,false);
-        video1.addEventListener('paused',pause1,false);
-        video2.addEventListener('ended',end2,false);
-        video2.addEventListener('paused',pause2,false);
+        video1.addEventListener('pause',pause1,false);
+        // video2.addEventListener('ended',end2,false);
+        // video2.addEventListener('pause',pause2,false);
 
         function end1(e) {
           alert('video 1 end');
