@@ -1204,6 +1204,11 @@ function print_video(){
 
   clickSound.play();
 
+  // window.open('video_test.html','_blank','location=no');
+  e.stopPropagation();
+  var ref = window.open('http://lovekey.com/app/video.html', '_self');
+  return true;
+
   // si on est sur une plateforme iOS
   if (platform == 'iOS'){
     // récupert les vidéos du site

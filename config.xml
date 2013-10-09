@@ -38,6 +38,7 @@
     <gap:platform name="android" />
 
     <!-- Plugins -->
+    <gap:plugin name="org.apache.cordova.core.audiohandler" />
     <gap:plugin name="org.apache.cordova.core.device" />
     <gap:plugin name="org.apache.cordova.core.dialogs" />
     <gap:plugin name="org.apache.cordova.core.file" />
@@ -70,8 +71,8 @@
     <gap:splash gap:platform="android" src="res/screen/android/screen-hdpi-landscape.png" width="800" height="480" />
     <gap:splash gap:platform="android" src="res/screen/android/screen-xhdpi-landscape.png" width="1280" height="720" /> -->
 
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <feature name="http://api.phonegap.com/1.0/notification"/>
+   <!--  <feature name="http://api.phonegap.com/1.0/network"/>
+    <feature name="http://api.phonegap.com/1.0/notification"/> -->
 
     <access origin="http://lovekey.com" subdomains="true" />
 </widget>
