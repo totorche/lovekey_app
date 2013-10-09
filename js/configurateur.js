@@ -95,7 +95,7 @@ function init_app(){
     view: $('#view_bagues')
   };
 
-  // configure le ViewNavigator
+  // configure le ViewNavigatorinit
   window.viewNavigator = new ViewNavigator('body');
 
   // et y ajoute la première vue
@@ -660,7 +660,7 @@ function init_options(no_article){
         $(this).val(id_option);
 
         // désélectionne toutes les autres options
-        $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').attr("selected", false);
+        // $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').attr("selected", false);
       }
     }
 
@@ -1219,9 +1219,9 @@ function print_video(){
   clickSound.play();
 
   // window.open('video_test.html','_blank','location=no');
-  e.stopPropagation();
-  var ref = window.open('http://lovekey.com/app/video.html', '_self');
-  return true;
+  // e.stopPropagation();
+  // var ref = window.open('http://lovekey.com/app/video.html', '_self');
+  // return true;
 
   // si on est sur une plateforme iOS
   if (platform == 'iOS'){
