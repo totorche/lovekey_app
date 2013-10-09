@@ -197,6 +197,8 @@ function init_app(){
 
   // dit que l'on est connecté
   connected = 2;
+
+  $('.options').on("touchend", "select", function(){$(this).trigger("click");});
 }
 
 // retourne le chemin du répertoire des données de l'application
@@ -843,7 +845,7 @@ function update_sets(no_article){
 
     slide.setupEventHandlers();
     console.log('setup');
-    
+
   });
 }
 
