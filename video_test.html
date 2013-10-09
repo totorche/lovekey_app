@@ -55,7 +55,7 @@
     <br> -->
     <!-- <video controls autoplay="true" preload="auto" height="100%" id="player1"> -->
     <div style="visibility: hidden;">
-    <video data-setup='{"controls": true, "autoplay": true, "preload": "auto"}' id="player1">
+    <video data-setup='{"controls": true, "autoplay": false, "preload": "auto", "customControlsOnMobile": true}' id="player1">
       <source src="http://m.comptoir-info.com/app/beta/sample.mp4" type="video/mp4">
     </video>
   </div>
@@ -66,28 +66,27 @@
 
       $(document).ready( function() {
 
-        var video1 = $('#player1')[0];
-        // var video2 = $('#player2')[0];
+        // var video1 = $('#player1')[0];
 
-        video1.addEventListener('ended',end1,false);
-        video1.addEventListener('pause',pause1,false);
-        // video2.addEventListener('ended',end2,false);
-        // video2.addEventListener('pause',pause2,false);
+        var player = videojs("player1");
+
+        // video1.addEventListener('ended',end1,false);
+        // video1.addEventListener('pause',pause1,false);
+
+        player.on("ended", end1);
+        player.on("pause", pause1);
+
+        player.play();
+        player.requestFullScreen();
 
         function end1(e) {
-          alert('video 1 end');
-        }
-
-        function end2(e) {
-          alert('video 2 end');
+          // alert('video 1 end');
+          document.location.href = 'close';
         }
 
         function pause1(e) {
-          alert('video 1 paused');
-        }
-
-        function pause2(e) {
-          alert('video 2 paused');
+          // alert('video 1 paused');
+          document.location.href = 'close';
         }
 
         // function onPause(id) {
