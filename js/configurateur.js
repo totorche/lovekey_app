@@ -1205,8 +1205,8 @@ function print_video(){
   clickSound.play();
 
   // window.open('video_test.html','_blank','location=no');
-  e.stopPropagation();
   var ref = window.open('http://lovekey.com/app/video.html', '_self');
+  e.stopPropagation();
   return true;
 
   // si on est sur une plateforme iOS

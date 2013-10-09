@@ -46,7 +46,7 @@
     <gap:plugin name="org.apache.cordova.core.network-information" />
     <gap:plugin name="org.apache.cordova.core.vibration" />
 
-    <gap:splash src="splash.png" />
+    <!-- <gap:splash src="splash.png" /> -->
     <gap:splash src="splash/ios/screen-iphone-portrait.png" gap:platform="ios" width="320" height="480" />
     <gap:splash src="splash/ios/screen-iphone-portrait-2x.png" gap:platform="ios" width="640" height="960" />
     <gap:splash src="splash/ios/screen-iphone-landscape.png" gap:platform="ios" width="480" height="320" />
