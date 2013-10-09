@@ -198,7 +198,7 @@ function init_app(){
   // dit que l'on est connecté
   connected = 2;
 
-  $('.options').on("touchend", "select", function(){ console.log('touchend'); $(this).trigger("click"); });
+  // $('.options').on("touchend", "select", function(){ console.log('touchend'); $(this).trigger("click"); });
 }
 
 // retourne le chemin du répertoire des données de l'application
@@ -810,7 +810,7 @@ function update_sets(no_article){
             var select_adaptateur = $("#article" + no_article).find("select[name=option_set_" + id_set_adaptateur + "]");
             select_adaptateur.find("option[value=" + value + "]").prop("selected", true);
             select_adaptateur.val(value);
-          })
+          });
         }
       }
 
@@ -843,8 +843,12 @@ function update_sets(no_article){
     if (no_article == 2)
       $("select.options_set[name=option_set_" + id_set_adaptateur + "]").trigger('change');
 
-    slide.setupEventHandlers();
-    console.log('setup');
+    // slide.setupEventHandlers();
+    // console.log('setup');
+
+    $.each($('.options select', function(index, value){
+      $(this).focus();
+    });
 
   });
 }
