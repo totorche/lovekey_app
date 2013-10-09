@@ -675,30 +675,30 @@ function update_picture(no_article){
   else
     do_mirror = 1;
 
-  // $.get("http://lovekey.com/content/get_product_image.php", {
-  //   article_options: params,
-  //   mirror: do_mirror,
-  //   gamme_bague: gamme_bague
-  // },
-  // function(data){
+  $.get("http://lovekey.com/content/get_product_image.php", {
+    article_options: params,
+    mirror: do_mirror,
+    gamme_bague: gamme_bague
+  },
+  function(data){
 
-  //   data = data.split("&&");
+    data = data.split("&&");
 
-  //   if (no_article == 1)
-  //     start_column = 1;
-  //   else
-  //     start_column = 9;
+    if (no_article == 1)
+      start_column = 1;
+    else
+      start_column = 9;
 
-  //   // start_column = 1;
+    // start_column = 1;
 
-  //   // ajoute une image 360°
-  //   var image_360 = $('<p><a href="http://lovekey.com/' + data[0] + '" class="Magic360" id="image_360_' + no_article + '" data-magic360-options="columns: 8; rows: 1; filename: ' + data[2] + '; large-filename: ' + data[2] + '; autospin: off; spin: hover; magnify: true; "><img src="http://lovekey.com/' + data[1] + '" alt=""/></a></p>');
-  //   $('.article' + no_article + '_picture a#image_360_' + no_article).closest('p').remove();
-  //   $('.article' + no_article + '_picture').append(image_360);
-  //   if (Magic360){
-  //     Magic360.start('image_360_' + no_article);
-  //   }
-  // });
+    // ajoute une image 360°
+    var image_360 = $('<p><a href="http://lovekey.com/' + data[0] + '" class="Magic360" id="image_360_' + no_article + '" data-magic360-options="columns: 8; rows: 1; filename: ' + data[2] + '; large-filename: ' + data[2] + '; autospin: off; spin: hover; magnify: true; "><img src="http://lovekey.com/' + data[1] + '" alt=""/></a></p>');
+    $('.article' + no_article + '_picture a#image_360_' + no_article).closest('p').remove();
+    $('.article' + no_article + '_picture').append(image_360);
+    if (Magic360){
+      Magic360.start('image_360_' + no_article);
+    }
+  });
 }
 
 /**
@@ -843,8 +843,7 @@ function update_sets(no_article){
 
     slide.setupEventHandlers();
     console.log('setup');
-    // configure la sidebar
-    slide = new SlidingView('sidebar', 'body');
+    
   });
 }
 

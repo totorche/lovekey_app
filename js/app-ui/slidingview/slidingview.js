@@ -50,7 +50,6 @@ SlidingView.prototype.setupEventHandlers = function() {
 	var func = function( event ){ self.onTouchStart(event), true };
 	var body = this.body.get()[0];
 	body.addEventListener( this.START_EVENT, func, false );
-	console.log('bind event');
 }
 
 SlidingView.prototype.onTouchStart = function(event) {
@@ -189,7 +188,6 @@ SlidingView.prototype.open = function() {
 }
 
 SlidingView.prototype.unbindEvents = function() {
-	console.log('unbind event');
 	this.body.get()[0].removeEventListener( this.MOVE_EVENT, this.touchMoveHandler, false );
 	this.body.get()[0].removeEventListener( this.END_EVENT, this.touchUpHandler, false );
 }
