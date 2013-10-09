@@ -642,13 +642,13 @@ function init_options(no_article){
 
       if (element && element.length > 0){
         // sélectionne la bonne option dans la listbox
-        // element.attr("selected", true);
-        console.log('prop');
-        console.log(element.prop("selected"));
+        element.prop("selected", true);
+        // console.log('prop');
+        // console.log(element.prop("selected"));
         $(this).val(id_option);
 
         // désélectionne toutes les autres options
-        // $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').attr("selected", false);
+        $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').prop("selected", false);
       }
     }
 
@@ -828,10 +828,10 @@ function update_sets(no_article){
         var $listbox = $("#article2 select[name=option_set_1]");
         
         // désélectionne toutes les options
-        $listbox.find("option").attr("selected", false);
+        $listbox.find("option").prop("selected", false);
         
         // sélectionne la bonne option dans la listbox
-        $listbox.find("option[value=" + id_option + "]").attr("selected", true);
+        $listbox.find("option[value=" + id_option + "]").prop("selected", true);
         $listbox.val(id_option);
 
         // déclenche l'événement "change" sur le select
