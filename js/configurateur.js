@@ -95,7 +95,7 @@ function init_app(){
     view: $('#view_bagues')
   };
 
-  // configure le ViewNavigatorinit
+  // configure le ViewNavigator
   window.viewNavigator = new ViewNavigator('body');
 
   // et y ajoute la première vue
@@ -105,10 +105,8 @@ function init_app(){
   slide = new SlidingView('sidebar', 'body');
 
   // récupert les différentes valeurs nécessaires
-  // $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
-  $.get('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
-    console.log('data : ');
-    console.log(data);
+  $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
+    
     if (data.id_set_adaptateur != undefined)
       id_set_adaptateur = data.id_set_adaptateur;
     if (data.id_set_love != undefined)
@@ -132,10 +130,10 @@ function init_app(){
     else{
       configurateur_type = $("select[name='type_configurateur']").val();
     }
-alert('configurateur : ' + configurateur_type);
+
     // initialise l'affichage
     change_type_configurateur(configurateur_type);
-  }, "json");
+  });
 
   // lors d'un changement de type de configurateur
   $("select[name='type_configurateur']").change(function(){
@@ -493,13 +491,11 @@ function change_bague_size(){
 
 // change le type de configurateur
 function change_type_configurateur(val){
-console.log('change conf : ' + val);
+
   // si le type de configurateur a été changé via le chargement d'une sauvegarde de bague, on sélectionne le bon élément dans la liste déroulante
-  console.log($("select[name='type_configurateur']").val());
   if ($("select[name='type_configurateur']").val() != val){
     $("select[name='type_configurateur']").val(val);
   }
-  console.log('change conf 2');
 
   var options = new Array();
   
@@ -511,7 +507,7 @@ console.log('change conf : ' + val);
 
     x++;
   }
-console.log(options);
+
   // stock le type de configurateur
   window.localStorage.setItem("type_configurateur", val);
 
@@ -574,8 +570,6 @@ console.log(options);
  */
 function reset(nb_pictures, gamme){
 
-  console.log('reset');
-
   var options = new Array();
   
   // récupert les options (à partir du 2è paramètre)
@@ -586,8 +580,6 @@ function reset(nb_pictures, gamme){
 
     x++;
   }
-
-  console.log('options : ' + options);
   
   $('.article_sets').empty();
   $('.article_picture').empty();
@@ -623,7 +615,6 @@ function reset(nb_pictures, gamme){
  * Le premier paramètre sera pour le premier set d'option, etc.
  */   
 function init_options(no_article){
-  console.log('init : ' + no_article);
   if (no_article == undefined)
     return;
 
@@ -638,8 +629,6 @@ function init_options(no_article){
     x++;
   }
 
-  console.log(options);
-
   var x = 0;
 
   var element = false;
@@ -652,7 +641,6 @@ function init_options(no_article){
       element = $(this).find('option.option_set_element.in_stock[value=' + id_option + ']');
       console.log(id_option);
       console.log(element);
-      
 
       if (element && element.length > 0){
         // sélectionne la bonne option dans la listbox
@@ -660,7 +648,7 @@ function init_options(no_article){
         $(this).val(id_option);
 
         // désélectionne toutes les autres options
-        // $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').attr("selected", false);
+        $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').attr("selected", false);
       }
     }
 
@@ -737,8 +725,6 @@ function update_sets(no_article){
 
     x++;
   }
-
-  console.log(options);
 
   // met à jour tous les sets d'options de l'article en cours
   $("#article" + no_article + " .article_sets").load("http://lovekey.com/content/shop_article_print_options.php", {
@@ -1217,11 +1203,6 @@ function print_video(){
   // else{
 
   clickSound.play();
-
-  // window.open('video_test.html','_blank','location=no');
-  // e.stopPropagation();
-  // var ref = window.open('http://lovekey.com/app/video.html', '_self');
-  // return true;
 
   // si on est sur une plateforme iOS
   if (platform == 'iOS'){
