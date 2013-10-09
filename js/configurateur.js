@@ -1210,6 +1210,12 @@ function print_video(){
       ref.close();
     }
   });
+  ref.addEventListener('loaderror', function(event){   
+    if (event.url.match("close")) {
+      ref.close();
+    }
+  });
+  
   // var ref = window.open('http://lovekey.com/app/video.html', '_self');
   e.stopPropagation();
   return true;
