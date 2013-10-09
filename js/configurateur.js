@@ -842,6 +842,9 @@ function update_sets(no_article){
       $("select.options_set[name=option_set_" + id_set_adaptateur + "]").trigger('change');
 
     slide.setupEventHandlers();
+    console.log('setup');
+    // configure la sidebar
+    slide = new SlidingView('sidebar', 'body');
   });
 }
 
