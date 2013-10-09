@@ -4,7 +4,8 @@
       <meta charset="utf-8" />
       <title>Lovekey</title>
       
-      <script src="js/jquery-1.10.2.min.js"></script>
+      <!--<script src="js/jquery-1.10.2.min.js"></script>-->
+      <script src="http://codeorigin.jquery.com/jquery-1.10.2.js"></script>
 
       <style type="text/css">
         .video-container {
@@ -53,8 +54,8 @@
 
       $(document).ready( function() {
 
-        var video1 = $('#player1');
-        var video2 = $('#player2');
+        var video1 = $('#player1')[0];
+        var video2 = $('#player2')[0];
 
         video1.addEventListener('ended',end1,false);
         video1.addEventListener('paused',pause1,false);
