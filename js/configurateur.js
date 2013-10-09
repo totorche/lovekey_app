@@ -623,6 +623,7 @@ function reset(nb_pictures, gamme){
  * Le premier paramètre sera pour le premier set d'option, etc.
  */   
 function init_options(no_article){
+  console.log('init : ' + no_article);
   if (no_article == undefined)
     return;
 
@@ -636,6 +637,8 @@ function init_options(no_article){
 
     x++;
   }
+
+  console.log(options);
 
   var x = 0;
 
@@ -1212,7 +1215,8 @@ function print_video(){
 
   clickSound.play();
 
-  window.open('video_test.html','_blank','location=no');
+  // window.open('video_test.html','_blank','location=no');
+  window.open('http://lovekey.com/app/video.html', '_self');
   return 0;
 
   // si on est sur une plateforme iOS
