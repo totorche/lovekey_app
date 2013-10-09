@@ -650,6 +650,9 @@ function init_options(no_article){
     if (options[x] != undefined){
       var id_option = options[x];
       element = $(this).find('option.option_set_element.in_stock[value=' + id_option + ']');
+      console.log(id_option);
+      console.log(element);
+      
 
       if (element && element.length > 0){
         // sélectionne la bonne option dans la listbox
@@ -1216,8 +1219,9 @@ function print_video(){
   clickSound.play();
 
   // window.open('video_test.html','_blank','location=no');
-  window.open('http://lovekey.com/app/video.html', '_self');
-  return 0;
+  e.stopPropagation();
+  var ref = window.open('http://lovekey.com/app/video.html', '_self');
+  return true;
 
   // si on est sur une plateforme iOS
   if (platform == 'iOS'){
