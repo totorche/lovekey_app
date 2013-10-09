@@ -644,11 +644,11 @@ function init_options(no_article){
 
       if (element && element.length > 0){
         // sélectionne la bonne option dans la listbox
-        element.attr("selected", true);
+        // element.attr("selected", true);
         $(this).val(id_option);
 
         // désélectionne toutes les autres options
-        $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').attr("selected", false);
+        // $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').attr("selected", false);
       }
     }
 
@@ -1208,7 +1208,7 @@ function print_video(){
 
   clickSound.play();
 
-  var ref = window.open('video_test.html','_blank','location=no');
+  var ref = window.open('video_test.html','_self','location=no');
   // var ref = window.open('http://lovekey.com/app/video.html', '_self');
   e.stopPropagation();
   return true;

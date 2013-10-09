@@ -41,11 +41,12 @@
     <body bgcolor=#000></body>
     <script>
     function test1(){document.getElementById('player1').play()}
-    function test2(){window.open('empty.html','_blank','location=no')}
+    function test2(){document.getElementById('player2').play()}
     </script>
     <input type=button value="WebView" onclick=test1()>
     <br><input type=button value="InAppBrowser" onclick=test2()>
     <br><div style="border:1px solid red"><video width="100%" id="player1"><source src="http://m.comptoir-info.com/app/beta/sample.mp4" type="video/mp4"></video></div>
+    <br><div style="border:1px solid red"><video width="100%" id="player2"><source src="lovekey.mp4" type="video/mp4"></video></div>
 
     
     <script type="text/javascript">
