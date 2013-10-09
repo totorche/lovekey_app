@@ -12,14 +12,12 @@
 
     <preference name="phonegap-version" value="3.0.0" />
 
-    <preference name="fullscreen" value="true" />
-    <preference name="webviewbounce" value="true" />
+    <preference name="fullscreen" value="false" />
+    <!-- <preference name="webviewbounce" value="true" /> -->
 
     <preference name="orientation" value="default" />
 
-    <preference name="target-device" value="handset" />
-
-    <preference name="auto-hide-splash-screen" value="false" /> <!-- Pour iOS -->
+    <preference name="target-device" value="handset" /> <!-- Pour iOS -->
     <preference name="splash-screen-duration" value="10000" /> <!-- Pour Android -->
 
     <icon src="icons/ios/Icon.png" gap:platform="ios" width="57" height="57" />

@@ -51,21 +51,32 @@
     
     <script type="text/javascript">
 
-      // $(document).ready( function() {
-      //     var iframe = $('#video_vimeo')[0];
-      //     vimeoPlayer = $f(iframe);
+      $(document).ready( function() {
 
-      //     // When the player is ready, add listeners for pause, finish, and playProgress
-      //     vimeoPlayer.addEvent('ready', function() {
-      //         vimeoPlayer.api('play');
-      //         vimeoPlayer.addEvent('pause', onPause);
-      //     });
+        var video1 = $('#player1');
+        var video2 = $('#player2');
 
-      //     function onPause(id) {
-      //       // document.location.href = 'closeInAppBrowser.html';
-      //       window.history.back();
-      //     }
-      // });
+        video1.onended = function(e){
+          alert('video 1 end');
+        }
+
+        video1.onpaused = function(e){
+          alert('video 1 paused');
+        }
+
+        video2.onended = function(e){
+          alert('video 2 end');
+        }
+
+        video2.onpaused = function(e){
+          alert('video 2 paused');
+        }
+
+        // function onPause(id) {
+        //   // document.location.href = 'closeInAppBrowser.html';
+        //   window.history.back();
+        // }
+      });
 
     </script>
   </body>
