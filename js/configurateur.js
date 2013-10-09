@@ -840,6 +840,8 @@ function update_sets(no_article){
     // si on a terminé l'initialisation des 2 sets d'options, on simule un changement d'adaptateur pour mettre en place les différentes règles
     if (no_article == 2)
       $("select.options_set[name=option_set_" + id_set_adaptateur + "]").trigger('change');
+
+    slide.setupEventHandlers();
   });
 }
 
@@ -1173,18 +1175,28 @@ function print_video(){
   clickSound.play();
 
   var ref = window.open('http://lovekey.com/app/video_test.html','_self','location=yes');
-  ref.addEventListener('loadstart', function(event){
-    console.log('load start : ' + event.url);
-    if (event.url.match("close")) {
-      ref.close();
-    }
-  });
-  ref.addEventListener('loaderror', function(event){
-    console.log('erreur : ' + event.url);
-    if (event.url.match("close")) {
-      ref.close();
-    }
-  });
+
+  setTimeout(function() {
+    ref.close();
+  }, 5000);
+
+  ref.addEventListener('loadstart', function(event) { alert('start: ' + event.url); });
+         ref.addEventListener('loadstop', function(event) { alert('stop: ' + event.url); });
+         ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
+         ref.addEventListener('exit', function(event) { alert(event.type); });
+
+  // ref.addEventListener('loadstart', function(event){
+  //   console.log('load start : ' + event.url);
+  //   if (event.url.match("close")) {
+  //     ref.close();
+  //   }
+  // });
+  // ref.addEventListener('loaderror', function(event){
+  //   console.log('erreur : ' + event.url);
+  //   if (event.url.match("close")) {
+  //     ref.close();
+  //   }
+  // });
 
   // var ref = window.open('http://lovekey.com/app/video.html', '_self');
   e.stopPropagation();
