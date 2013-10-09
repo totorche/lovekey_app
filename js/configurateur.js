@@ -732,12 +732,16 @@ function update_sets(no_article){
     sid: '1_2_4',
     nb_articles: nb_articles
   }, function(){
+    console.log('options : ');
+    console.log(options);
     if (options.length == 3){
       var love_default_id = options[0];
       var adaptateur_default_id = options[1];
       var taille_default_id = options[2];
     }
     else{
+      console.log('gamme bague : ' + gamme_bague);
+      console.log('no_article : ' + no_article);
       if (gamme_bague == "alliance" && no_article == 1){
         var love_default_id = 28;
         var adaptateur_default_id = 24;
@@ -1204,8 +1208,8 @@ function print_video(){
 
   clickSound.play();
 
-  // window.open('video_test.html','_blank','location=no');
-  var ref = window.open('http://lovekey.com/app/video.html', '_self');
+  var ref = window.open('video_test.html','_blank','location=no');
+  // var ref = window.open('http://lovekey.com/app/video.html', '_self');
   e.stopPropagation();
   return true;
 
