@@ -109,6 +109,10 @@ h2{
   float: left;
 }
 
+.options select{
+  z-index: 1000;
+}
+
 .logo,
 .logo_petit{
   font-family: "A771RomanOsf",sans-serif;

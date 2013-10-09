@@ -846,9 +846,9 @@ function update_sets(no_article){
     // slide.setupEventHandlers();
     // console.log('setup');
 
-    $.each($('.options select', function(index, value){
-      $(this).focus();
-    });
+    // $.each($('.options select'), function(index, value){
+    //   $(this).focus();
+    // });
 
   });
 }
