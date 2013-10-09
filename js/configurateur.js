@@ -493,12 +493,13 @@ function change_bague_size(){
 
 // change le type de configurateur
 function change_type_configurateur(val){
-
+console.log('change conf : ' + val);
   // si le type de configurateur a été changé via le chargement d'une sauvegarde de bague, on sélectionne le bon élément dans la liste déroulante
   console.log($("select[name='type_configurateur']").val());
   if ($("select[name='type_configurateur']").val() != val){
     $("select[name='type_configurateur']").val(val);
   }
+  console.log('change conf 2');
 
   var options = new Array();
   
@@ -510,7 +511,7 @@ function change_type_configurateur(val){
 
     x++;
   }
-
+console.log(options);
   // stock le type de configurateur
   window.localStorage.setItem("type_configurateur", val);
 
