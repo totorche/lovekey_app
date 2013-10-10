@@ -40,11 +40,11 @@ body {
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
 
-	-webkit-transform: translate3d(0,0,0);
+	/*-webkit-transform: translate3d(0,0,0);
 	-moz-transform: translate3d(0,0,0);
 	-o-transform: translate3d(0,0,0);
 	-ms-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);*/
 }
 
 .viewNavigator_root {
@@ -72,12 +72,12 @@ body {
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
 
-	transform: translate3d(0,0,0);
+	/*transform: translate3d(0,0,0);
 	-webkit-transform: translate3d(0,0,0);
 	-moz-transform: translate3d(0,0,0);
 	-o-transform: translate3d(0,0,0);
 	-ms-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);*/
 }
 
 .viewNavigator_header_backlink {
@@ -117,14 +117,14 @@ body {
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
 	
-	transform: translate3d(0,0,0);
+	/*transform: translate3d(0,0,0);
 	-webkit-transform: translate3d(0,0,0);
 
 	-webkit-transform: translate3d(0,0,0);
 	-moz-transform: translate3d(0,0,0);
 	-o-transform: translate3d(0,0,0);
 	-ms-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);*/
 	position: absolute;
 }
 
@@ -138,11 +138,11 @@ body {
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
 
-	-webkit-transform: translate3d(0,0,0);
+	/*-webkit-transform: translate3d(0,0,0);
 	-moz-transform: translate3d(0,0,0);
 	-o-transform: translate3d(0,0,0);
 	-ms-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);*/
 }
 
 
@@ -166,11 +166,11 @@ body {
 	backface-visibility: visible;
 	-webkit-backface-visibility: visible;
 
-	-webkit-transform: translate3d(0,0,0);
+	/*-webkit-transform: translate3d(0,0,0);
 	-moz-transform: translate3d(0,0,0);
 	-o-transform: translate3d(0,0,0);
 	-ms-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);*/
 }
 
 .viewNavigator_contentHolder {
@@ -192,11 +192,11 @@ body {
 	transform: translate3d(0,0,0);
 	-webkit-transform: translate3d(0,0,0);
 
-	-webkit-transform: translate3d(0,0,0);
+	/*-webkit-transform: translate3d(0,0,0);
 	-moz-transform: translate3d(0,0,0);
 	-o-transform: translate3d(0,0,0);
 	-ms-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);*/
 }
 
 .viewNavigator_backface {
