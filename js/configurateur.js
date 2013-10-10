@@ -847,7 +847,8 @@ function update_sets(no_article){
     $.each($(".options select"), function(index, value){
       // $(this).select2();
       $(this).attr('data-native-menu', 'false');
-      $(this).focus();
+      $(this).hide();
+      $(this).show();
     });
   });
 }
