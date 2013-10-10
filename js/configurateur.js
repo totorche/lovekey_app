@@ -842,14 +842,6 @@ function update_sets(no_article){
     // si on a terminé l'initialisation des 2 sets d'options, on simule un changement d'adaptateur pour mettre en place les différentes règles
     if (no_article == 2)
       $("select.options_set[name=option_set_" + id_set_adaptateur + "]").trigger('change');
-
-    // slide.setupEventHandlers();
-    // console.log('setup');
-
-    // $.each($('.options select'), function(index, value){
-    //   $(this).focus();
-    // });
-
   });
 }
 
@@ -1309,6 +1301,10 @@ function toggle_slide(){
   }
   else{
     slide.open();
+    $.each($('.options select'), function(index, value){
+      console.log(this);
+      $(this).focus();
+    });
   }
 
   e.stopPropagation();
