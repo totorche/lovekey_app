@@ -768,7 +768,7 @@ function update_sets(no_article){
     }
     
     // initialise les options (sans la gravure)
-    init_options(no_article, love_default_id, adaptateur_default_id, taille_default_id, 11);
+    // init_options(no_article, love_default_id, adaptateur_default_id, taille_default_id, 11);
     
     // met à jour l'image de l'article
     update_picture(no_article);
@@ -847,6 +847,7 @@ function update_sets(no_article){
     $.each($(".options select"), function(index, value){
       // $(this).select2();
       $(this).attr('data-native-menu', 'false');
+      $(this).focus();
     });
   });
 }
