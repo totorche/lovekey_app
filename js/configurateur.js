@@ -135,9 +135,9 @@ function init_app(){
     }
 
     // initialise l'affichage
-    // change_type_configurateur(configurateur_type);
+    change_type_configurateur(configurateur_type);
 
-    setTimeout(function(){change_type_configurateur(configurateur_type);},3000);
+    // setTimeout(function(){change_type_configurateur(configurateur_type);},3000);
   });
 
   // lors d'un changement de type de configurateur
