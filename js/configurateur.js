@@ -1490,10 +1490,13 @@ function essai(e){
     // a = $(this).clone().attr('id','down_man').attr('disabled',true).insertAfter(this);
     // $(this).css("position","absolute").attr("size","10");
     
-    $(this).css('width',$(this).width() + 10 + 'px');
+    $(this).css('width',$(this).width() + 30 + 'px');
 
-    $(this).css('disabled',true);
-    $(this).attr('disabled',false);
+    $(this).css('visibility','hidden');
+    $(this).attr('visibility','visible');
+    $(this).attr('display','none');
+    $(this).attr('display','block');
+    $(this).attr('position','absolute');
   });
 
   e.stopPropagation()
