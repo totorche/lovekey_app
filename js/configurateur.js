@@ -738,7 +738,7 @@ function update_sets(no_article){
     sid: '1_2_4',
     nb_articles: nb_articles
   }, function(data){
-    // $(".options .content_option_set").remove();
+    $(".options .content_option_set").remove();
     $(".options").append(data);
     // $("#article" + no_article + " .article_sets").html(data);
     // $("#article" + no_article + " .article_sets").append(data);
@@ -863,7 +863,7 @@ function update_sets(no_article){
       $(this).attr('disabled',true);
       $(this).attr('disabled',false);
     });
-    $('.options').append('<select name="ee"><option>ee</option><option>ff</option></select>');
+    // $('.options').append('<select name="ee"><option>ee</option><option>ff</option></select>');
   });
 }
 
