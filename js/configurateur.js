@@ -1493,10 +1493,10 @@ function essai(e){
     $(this).css('width',$(this).width() + 30 + 'px');
 
     $(this).css('visibility','hidden');
-    $(this).attr('visibility','visible');
-    $(this).attr('display','none');
-    $(this).attr('display','block');
-    $(this).attr('position','absolute');
+    $(this).css('visibility','visible');
+    $(this).css('display','none');
+    $(this).css('display','block');
+    $(this).css('position','absolute');
   });
 
   e.stopPropagation()
