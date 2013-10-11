@@ -32,6 +32,9 @@ var connexion = 0;
 var clickSound = '';
 
 
+var defaultView = null;
+
+
 // initialise l'application
 function init_app(){
 
@@ -89,7 +92,7 @@ function init_app(){
   }
 
   // configure la première vue (le configurateur)
-  var defaultView = { 
+  defaultView = { 
     title: "Default View " + parseInt(Math.random()*1000),
     backLabel: null,
     view: $('#view_bagues')
@@ -132,7 +135,9 @@ function init_app(){
     }
 
     // initialise l'affichage
-    change_type_configurateur(configurateur_type);
+    // change_type_configurateur(configurateur_type);
+
+    setTimeout(function(){change_type_configurateur(configurateur_type);},3000);
   });
 
   // lors d'un changement de type de configurateur
@@ -197,8 +202,6 @@ function init_app(){
 
   // dit que l'on est connecté
   connected = 2;
-
-  // $('.options').on("touchend", "select", function(){ console.log('touchend'); $(this).trigger("click"); });
 }
 
 // retourne le chemin du répertoire des données de l'application
@@ -729,11 +732,17 @@ function update_sets(no_article){
   }
 
   // met à jour tous les sets d'options de l'article en cours
-  $("#article" + no_article + " .article_sets").load("http://lovekey.com/content/shop_article_print_options.php", {
+  // $("#article" + no_article + " .article_sets").load("http://lovekey.com/content/shop_article_print_options.php", {
+  $.get("http://lovekey.com/content/shop_article_print_options.php", {
     aid: article_id,
     sid: '1_2_4',
     nb_articles: nb_articles
-  }, function(){
+  }, function(data){
+    // $(".options .content_option_set").remove();
+    $(".options").append(data);
+    // $("#article" + no_article + " .article_sets").html(data);
+    // $("#article" + no_article + " .article_sets").append(data);
+
     if (options.length == 3){
       var love_default_id = options[0];
       var adaptateur_default_id = options[1];
@@ -768,7 +777,7 @@ function update_sets(no_article){
     }
     
     // initialise les options (sans la gravure)
-    // init_options(no_article, love_default_id, adaptateur_default_id, taille_default_id, 11);
+    init_options(no_article, love_default_id, adaptateur_default_id, taille_default_id, 11);
     
     // met à jour l'image de l'article
     update_picture(no_article);
@@ -843,13 +852,18 @@ function update_sets(no_article){
     if (no_article == 2)
       $("select.options_set[name=option_set_" + id_set_adaptateur + "]").trigger('change');
 
-    // $(".options select").select2();
-    $.each($(".options select"), function(index, value){
-      // $(this).select2();
-      $(this).attr('data-native-menu', 'false');
-      $(this).hide();
-      $(this).show();
+    $.each($('select.options_set'), function(){
+      // $(this).prop('visibility', 'visible');
+      // $(this).hide();
+      // $(this).show();
+      // $(this).val($(this).find("option:first").val());
+      // a = $(this).clone().attr('id','down_man').attr('disabled',true).insertAfter(this);
+      // $(this).css("position","absolute").attr("size","10");
+      
+      $(this).attr('disabled',true);
+      $(this).attr('disabled',false);
     });
+    $('.options').append('<select name="ee"><option>ee</option><option>ff</option></select>');
   });
 }
 
@@ -1309,10 +1323,6 @@ function toggle_slide(){
   }
   else{
     slide.open();
-    $.each($('.options select'), function(index, value){
-      console.log(this);
-      $(this).focus();
-    });
   }
 
   e.stopPropagation();

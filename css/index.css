@@ -78,7 +78,6 @@ body .viewNavigator_content{
 }
 
 #sidebar{
-  /*padding:10px;*/
   height: 100%;
   overflow-y: scroll;
   background: url(../img/top-bg.png) no-repeat center 0;
@@ -95,7 +94,7 @@ h2{
 }
 
 .content_option_set{
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .options{
@@ -110,7 +109,8 @@ h2{
 }
 
 .options select{
-  z-index: 1000;
+  position: relative; 
+  z-index: 999;
 }
 
 .logo,
