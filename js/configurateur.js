@@ -202,6 +202,8 @@ function init_app(){
 
   // dit que l'on est connecté
   connected = 2;
+
+  $(".options h2").on("touchend", essai);
 }
 
 // retourne le chemin du répertoire des données de l'application
@@ -903,7 +905,7 @@ var bagues_saves = Array();
 var modify_saves_open = false;
 
 // affiche une boite de dialogue pour demander le nom de la sauvegarde à l'utilisateur
-function save_confirmation() {
+function save_confirmation(e) {
   clickSound.play();
 
   navigator.notification.prompt(
@@ -1037,7 +1039,7 @@ function remove_save(index_to_remove){
 }
 
 // affiche les sauvegarde disponibles
-function print_saves(){
+function print_saves(e){
   clickSound.play();
 
   // met à jour les sauvegardes
@@ -1139,7 +1141,7 @@ function load_bague(type_configurateur, options){
 }
 
 // affiche la possibilité de modifier (supprimer) les sauvegardes
-function modify_saves(){
+function modify_saves(e){
 
   clickSound.play();
   
@@ -1186,7 +1188,7 @@ function modify_saves(){
 var video_state = 0;
 
 // affiche la vidéo
-function print_video(){
+function print_video(e){
   // si la connexion est minimum en 3G, on lit la vidéo via Vimeo
   // if (connexion >= 2){
   //   var ref = window.open('http://lovekey.com/app/video.html', '_self');
@@ -1302,7 +1304,7 @@ function show_video_controls(){
 }
 
 // lorsque l'on clique sur un bouton de partage
-function share_click(share_button){
+function share_click(e){
   clickSound.play();
 
   var target = '_blank';
@@ -1315,7 +1317,7 @@ function share_click(share_button){
 }
 
 // pour ouvrir ou fermer le menu "slide"
-function toggle_slide(){
+function toggle_slide(e){
   clickSound.play();
 
   if (slide.bodyOffset > 0){  
@@ -1387,7 +1389,7 @@ function toggle_disconnected(){
 }
 
 // revient à la vue précédente
-function popView() {
+function popView(e) {
   clickSound.play();
 
   window.viewNavigator.popView();
@@ -1477,4 +1479,22 @@ function updateConnection() {
   }
 
   return connexion;
+}
+
+function essai(e){
+  $.each($('select.options_set'), function(){
+    // $(this).prop('visibility', 'visible');
+    // $(this).hide();
+    // $(this).show();
+    // $(this).val($(this).find("option:first").val());
+    // a = $(this).clone().attr('id','down_man').attr('disabled',true).insertAfter(this);
+    // $(this).css("position","absolute").attr("size","10");
+    
+    $(this).css('width',$(this).width() + 10 + 'px');
+
+    $(this).css('disabled',true);
+    $(this).attr('disabled',false);
+  });
+
+  e.stopPropagation()
 }
