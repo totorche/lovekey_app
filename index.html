@@ -22,206 +22,99 @@
       <meta charset="utf-8" />
       <meta name="format-detection" content="telephone=no" />
       <!-- <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, target-densitydpi=device-dpi" /> -->
-      <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320" />
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320" />
       <link rel="stylesheet" type="text/css" href="css/index.css" />
       <title>Lovekey</title>
+      
+      <script type="text/javascript" src="cordova.js"></script>
+      <script type="text/javascript" src="js/index.js"></script>
+      
+      <script src="js/jquery-1.10.2.min.js"></script>
+
+      <!-- Pour éviter le délai de 300ms du onClick sur iOS -->
+      <script src="js/noClickDelay.js"></script>
+  
+      <!-- Amélioration de $.animate de jQuery pour les smartphone -->
+      <!--<script src="js/jquery.animate-enhanced.js"></script>-->
+
+      <!-- Permet, dans webkit, le scroll d'un élément de taille fixe -->
+      <!--<script src="js/iscroll.js"></script>-->
+
+      <!-- Pour le menu horizontal (SlidingMenu) -->
+      <script type="text/javascript" src="js/SlidingMenuJS/menu_nav.js"></script>
+      
+      <!-- Magic 360 -->
+      <script type="text/javascript" src="js/magic360/magic360/magic360.js"></script>
+      <link rel="stylesheet" href="js/magic360/magic360/magic360.css" />
+
+      <!-- Configurateur -->
+      <script type="text/javascript" src="js/configurateur.js"></script>
+      
+      <!-- Video JS -->
+      <link href="js/video-js/video-js.css" rel="stylesheet">
+      <script src="js/video-js/video.js"></script>
+        
+      <!-- Pour permettre de définir des CSS personnalisés selon la plateforme -->
+      <link rel="stylesheet" type="text/css" href="css/overrides.css" />
   </head>
 
   <body>
+    <div id="mobileContainer">
 
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    
-    <!-- APP-UI -->
-    <script src="js/jquery-1.10.2.min.js"></script>
-    <script src="js/app-ui/libs/jquery.animate-enhanced.js"></script>
-    <script src="js/app-ui/libs/iscroll.js"></script>
-    <script src="js/app-ui/libs/noClickDelay.js"></script>
-    
-    <link rel="stylesheet" href="js/app-ui/slidingview/slidingview.css" type="text/css" />
-    <script src="js/app-ui/slidingview/slidingview.js"></script>
+      <!-- Menu Sidebar -->
+      <div id="slidingMenu">
+        <div id="slidingMenuContent">
+          
+          <div class='slidingMenuTop'></div>
 
-    <link rel="stylesheet" href="js/app-ui/viewnavigator/viewnavigator.css" type="text/css" />
-    <script src="js/app-ui/viewnavigator/viewnavigator.js"></script>
-    <script src="js/app-ui/libs/jquery.animate-enhanced.js"></script>
-    <script src="js/app-ui/libs/iscroll.js"></script>
-    <script src="js/app-ui/libs/noClickDelay.js"></script>
-    
-    <!-- Magic 360 -->
-    <script type="text/javascript" src="js/magic360/magic360/magic360.js"></script>
-    <link rel="stylesheet" href="js/magic360/magic360/magic360.css" />
+          <div class='logo'>LoveKey</div>
+          <div class='logo_petit'>unique comme vos sentiments</div>
+          
+          <div class="options">
+            <h2>Choisissez votre type de bague</h2>
 
-    <!-- Configurateur -->
-    <script type="text/javascript" src="js/configurateur.js"></script>
-    
-    <!-- Video JS -->
-    <link href="js/video-js/video-js.css" rel="stylesheet">
-    <script src="js/video-js/video.js"></script>
+            <div id="type_configurateur">
+              <select name="type_configurateur">
+                <option value="1">Bague célibataire collection bijou</option>
+                <option value="2">Bague célibataire collection alliance</option>
+                <option value="3">Couple de bagues collection bijou</option>
+                <option value="4">Couple de bagues alliance</option>
+              </select>
+            </div>
 
-    <link href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" rel="stylesheet">
-    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+            <h2>Choisissez les options</h2>
 
-
-
-
-    <div id="app_container" style="display: none;">
-    
-      <!-- Vue du configurateur -->
-      <div id="view_bagues">
-        <div class="slidingview_wrapper">
-          <div id="sidebar">
-
-            <div class='logo'>LoveKey</div>
-            <div class='logo_petit'>unique comme vos sentiments</div>
-            
-            <div class="options">
-              <h2>Choisissez votre type de bague</h2>
-
-              <div id="type_configurateur">
-                <select name="type_configurateur">
-                  <option value="1">Bague célibataire collection bijou</option>
-                  <option value="2">Bague célibataire collection alliance</option>
-                  <option value="3">Couple de bagues collection bijou</option>
-                  <option value="4">Couple de bagues alliance</option>
-                </select>
-              </div>
-
-              <h2>Choisissez les options</h2>
-
-              <div id="article1">
-                <div class="article_sets"></div>
-              </div>
-              <div id="article2">
-                <div class="article_sets"></div>
-              </div>
+            <div id="article1">
+              <div class="article_sets"></div>
+            </div>
+            <div id="article2">
+              <div class="article_sets"></div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div id="body">
-
-            <!-- Affiche la barre du haut -->
-            <div class="barre_top">
-                <a href='javascript: return false;' title="Afficher le menu" id="bouton_menu"></a>
-
-                <div id="boutons_bagues">
-                  <a href='javascript: return false;' title="Afficher la bague n° 1" id="bouton_bague_1" class="bouton_bague">Bague 1</a>
-                  <a href='javascript: return false;' title="Afficher la bague n° 2" id="bouton_bague_2" class="bouton_bague">Bague 2</a>
-                </div>
-            </div>
-
-            <img class="bg" src="img/background.jpg" />
-            <div class='articles_pictures'>
-              <div class='article_picture article1_picture'></div>
-              <div class='article_picture article2_picture'></div>
-            </div>
-
-            <div class="barre_bottom">
-              <div class="bouton_centre">
-                <a href='javascript: return false;' title="Charger" id="bouton_charger" class="boutons_bottom">Charger</a>
-                <a href='javascript: return false;' title="Enregistrer" id="bouton_enregistrer" class="boutons_bottom">Sauver</a>
-                <a href='javascript: return false;' title="Acheter" id="bouton_acheter" class="boutons_bottom">Acheter</a>
-                <a href='javascript: return false;' title="Vidéo" id="bouton_video" class="boutons_bottom">Vidéo</a>
-                <a href='javascript: return false;' title="Partager" id="bouton_partager" class="boutons_bottom">Partager</a>
-              </div>
-            </div>
-          <!-- Pour la vidéo en local -->
-          <!-- <div class="video"> -->
-          <!-- <div class="video"> -->
-            <video id="video_lovekey" width="100%" tabindex="0" preload="auto" controls
-            class="video-js vjs-default-skin">
-              <source src="lovekey.mp4" type="video/mp4" />
-              <!-- <source src="http://lovekey.com/lovekey_mobile.mp4" type="video/mp4" /> -->
-            </video>
-          <!-- </div> -->
-          </div>
+      <!-- Affiche la barre du haut -->
+      <div id="page">
+        <div id="pageContent">
+          
+          <!-- Contenu de la page -->
           
         </div>
-
-        <div id="menu_partage">
-          <div class='partage_title'>
-            Partager votre bague Lovekey
-            <img src='img/fermer.png' id='partage_fermer' />  
-          </div>
-
-          <ul>
-            <li class='partage partage_facebook' data-sharelink='#'>
-              <img src='img/facebook.png' class='social_icon' />
-              <span class='partage_text'>Facebook</span>
-              <img src='img/fleche_droite.png' class='fleche_droite' />
-            </li>
-            <li class='partage partage_twitter' data-sharelink='#'>
-              <img src='img/twitter.png' class='social_icon' />
-              <span class='partage_text'>Twitter</span>
-              <img src='img/fleche_droite.png' class='fleche_droite' />
-            </li>
-            <li class='partage partage_pinterest' data-sharelink='#'>
-              <img src='img/pinterest.png' class='social_icon' />
-              <span class='partage_text'>Pinterest</span>
-              <img src='img/fleche_droite.png' class='fleche_droite' />
-            <li class='partage partage_email' data-sharelink='#'>
-              <img src='img/email.png' class='social_icon' />
-              <span class='partage_text'>E-mail</span>
-              <img src='img/fleche_droite.png' class='fleche_droite' />
-            </li>
-          </ul>
-        </div>
       </div>
-      <!-- Fin de la vue du configurateur -->
-
-
-      <!-- Vue des bagues sauvegardées -->
-      <div id="view_load">
-
-        <!-- Affiche la barre du haut -->
-        <div class="barre_top">
-          <a href='javascript: return false;' title="Retourner au configurateur" id="bouton_retour" class="bouton bouton_retour">Retour</a>
-          <a href='javascript: return false;' title="Modifier les sauvegardes" id="bouton_modifier_sauvegardes" class="bouton bouton_modifier_sauvegardes">Modifier</a>
-        </div>
-
-        <ul class='sauvegarde_bagues'></ul>
-      </div>
-      <!-- Fin de la vue des bagues sauvegardées -->
-
-
-      <!-- Vue lorsqu'il n'y a pas de connexion à Internet -->
-      <div id="view_no_connection">
-
-        <div class='logo'>LoveKey</div>
-        <div class='logo_petit'>unique comme vos sentiments</div>
-        
-        <p>
-          La connexion disponible n'est actuellement pas suffisante pour utiliser toutes les fonctionnalités de l'application Lovekey.
-        </p>
-
-        <p id="message_video_patienter">
-          En attendant une meilleure connexion, visionnez notre vidéo : 
-        </p>
-
-        <p>
-          <a href="javascript: print_video();" title="Lancer la vidéo" id="bouton_video_no_connection"><img src="img/play.png" alt="Play" class="video_link" /></a>
-        </p>
-
-        <div class="video">
-          <video id="video_lovekey_no_connection" autobuffer width="100%" tabindex="0" preload="auto">
-            <source src="lovekey.mp4" type="video/mp4" />
-            <!-- <source src="http://lovekey.com/lovekey_mobile.mp4" type="video/mp4" /> -->
-          </video>
-        </div>
-
-      </div>
-      <!-- Fin de la vue lorsqu'il n'y a pas de connexion à Internet -->
     </div>
-
-
     <script type="text/javascript">
       app.initialize();
+
 
       var ready = false;
 
       document.addEventListener("deviceready",onDeviceReady,false);
 
       function onDeviceReady(){
-        checkConnection();
+        // charge la page
+        loadPage("home.html", $("#pageContent"), checkConnection);
+        // checkConnection();
 
         setTimeout(function() {
           navigator.splashscreen.hide();

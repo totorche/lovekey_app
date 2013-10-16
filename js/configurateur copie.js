@@ -31,22 +31,48 @@ var connexion = 0;
 // pour le bruit d'un click
 var clickSound = '';
 
-// pour patienter pendant le chargement d'une page
-var preloader = '<center style="margin-top: 30px;"><img src="img/preloader.gif" alt="loading..." /></center>';
 
-
-// initialise l'application.
+// initialise l'application
 function init_app(){
+
   // détecte la plateforme sur laquelle est lancée l'application
   platform = device.platform;
-  
+
+  // si on est Android
+  if (platform == "Android"){
+    // on change le viewport
+    // $('meta[name=viewport]').attr('content', 'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=480');
+
+    // on masque le bouton permettant de lire la vidéo si pas de connexion
+    $('#bouton_video_no_connection').hide();
+    $('#message_video_patienter').hide();
+    $('#video_lovekey').find('source').attr('src', 'http://lovekey.com/lovekey_mobile.mp4');
+    // $('.video').addClass("android");
+    $('#video_lovekey').addClass("android");
+
+    $('#video_lovekey').on('touchend', show_video_controls);
+  }
+  else if (platform == "iOS"){
+    $('#video_lovekey').wrap('<div class="video" />');
+  }
+
    // vérifie la connexion à internet
   updateConnection();
 
   // s'il n'y a pas de connexion
   if (connexion < 1){
-    // charge la page
-    loadPage("no_connection.html", $("#pageContent"), "");
+    // prépare la vue qui affiche un message d'avertissement et permet de visualiser la vidéo
+    var defaultView = {
+      title: "View no connection",
+      backLabel: null,
+      view: $('#view_no_connection').clone()
+    };
+
+    // configure le ViewNavigator
+    window.viewNavigator = new ViewNavigator('body');
+
+    // et y ajoute la première vue
+    window.viewNavigator.pushView(defaultView);
 
     // dit que l'on est pas connecté
     connected = 0;
@@ -62,8 +88,106 @@ function init_app(){
     return false;
   }
 
+  // configure la première vue (le configurateur)
+  var defaultView = { 
+    title: "Default View " + parseInt(Math.random()*1000),
+    backLabel: null,
+    view: $('#view_bagues')
+  };
+
+  // configure le ViewNavigator
+  window.viewNavigator = new ViewNavigator('body');
+
+  // et y ajoute la première vue
+  window.viewNavigator.pushView(defaultView);
+
+  // configure la sidebar
+  slide = new SlidingView('sidebar', 'body');
+
+  // récupert les différentes valeurs nécessaires
+  $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data) {
+    
+    if (data.id_set_adaptateur != undefined)
+      id_set_adaptateur = data.id_set_adaptateur;
+    if (data.id_set_love != undefined)
+      id_set_love = data.id_set_love;
+    if (data.id_option_ada_or != undefined)
+      id_option_ada_or = data.id_option_ada_or;
+    if (data.id_option_ada_titan != undefined)
+      id_option_ada_titan = data.id_option_ada_titan;
+    if (data.id_option_love_t != undefined)
+      id_option_love_t = data.id_option_love_t;
+    
+    
+    // récupert le dernier type d'affichage utilisé par l'utilisateur
+    var configurateur_type = window.localStorage.getItem("type_configurateur");
+
+    // si disponible, on affecte cette valeur à la listbox
+    if (configurateur_type != undefined){
+      $("select[name='type_configurateur']").val(configurateur_type);
+    }
+    // si pas disponible, on prend le premier type de configurateur disponible
+    else{
+      configurateur_type = $("select[name='type_configurateur']").val();
+    }
+
+    // initialise l'affichage
+    change_type_configurateur(configurateur_type);
+  });
+
+  // lors d'un changement de type de configurateur
+  $("select[name='type_configurateur']").change(function(){
+    change_type_configurateur($(this).val());
+  });
+
   // charge toutes les bagues sauvegardées
   load_saves();
+
+  // appelle le changement d'orientation pour initialiser l'affichage correctement
+  orientationChange();
+
+  // pour afficher/masquer le menu
+  $('#bouton_menu').on("touchend", toggle_slide);
+
+  // pour afficher la bague n° 1
+  $('#bouton_bague_1').on("touchend", function(){
+    change_bague(1);
+  });
+
+  // pour afficher la bague n° 2
+  $('#bouton_bague_2').on("touchend", function(){
+    change_bague(2);
+  });
+
+  // pour la sauvegarde de la bague
+  $('#bouton_enregistrer').on("touchend", save_confirmation);
+
+  // pour charger les sauvegardes des bagues
+  $('#bouton_charger').on("touchend", print_saves);
+
+  // pour le lien vers la page du site Internet
+  $('#bouton_acheter').on("touchend", goto_website);
+
+  // pour la vidéo
+  $('#bouton_video').on("touchend", print_video);
+
+  // pour le partage
+  $('#bouton_partager').on("touchend", toggle_sharing_menu);
+
+  // pour fermer la fenêtre de partage
+  $('#partage_fermer').on("touchend", toggle_sharing_menu);
+
+  // lors d'un clic sur un bouton de partage
+  $("#menu_partage").on("touchend", "li.partage", share_click);
+
+  // pour le bouton de retour lorsque l'on est dans les sauvegarde
+  $("body").on("touchend", ".bouton_retour", popView);
+
+  // pour le bouton qui permet de supprimer une sauvegarde
+  $("body").on("touchend", ".bouton_modifier_sauvegardes", modify_saves);
+
+  // pour la vidéo "no connection"
+  $("#bouton_video_no_connection").on("touchend", print_video);
 
   // lors d'un redimensionnement de la fenêtre (changement d'orientation)
   $(window).resize(window_change_size);
@@ -71,120 +195,8 @@ function init_app(){
   // charge le son d'un click
   clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
 
-  // initialise la page d'accueil et charge les bagues par défaut
-  init_accueil(true);
-
   // dit que l'on est connecté
   connected = 2;
-
-  // enlève le délai de 300ms lors d'un clic
-  new NoClickDelay($("#slidingMenu")[0]);
-
-  // pour afficher la bague n° 1
-  $("body").on("touchend", '#bouton_bague_1', function(){
-    change_bague(1);
-  });
-
-  // pour afficher la bague n° 2
-  $("body").on("touchend", '#bouton_bague_2', function(){
-    change_bague(2);
-  });
-
-  // trigger the opening or closing action
-  $("body").off("touchstart", ".show-menu-button", toggleMenu);
-  $("body").on("touchstart", ".show-menu-button", toggleMenu);
-
-  // pour la sauvegarde de la bague
-  $("body").off("touchend", '#bouton_enregistrer', save_confirmation);
-  $("body").on("touchend", '#bouton_enregistrer', save_confirmation);
-
-  // pour charger les sauvegardes des bagues
-  $("body").off("touchend", '#bouton_charger', print_saves);
-  $("body").on("touchend", '#bouton_charger', print_saves);
-
-  // pour le lien vers la page du site Internet
-  $("body").off("touchend", '#bouton_acheter', goto_website);
-  $("body").on("touchend", '#bouton_acheter', goto_website);
-
-  // pour la vidéo
-  $("body").off("touchend", '#bouton_video', print_video);
-  $("body").on("touchend", '#bouton_video', print_video);
-
-  // pour le partage
-  $("body").off("touchend", '#bouton_partager', toggle_sharing_menu);
-  $("body").on("touchend", '#bouton_partager', toggle_sharing_menu);
-
-  // pour fermer la fenêtre de partage
-  $("body").off("touchend", '#partage_fermer', toggle_sharing_menu);
-  $("body").on("touchend", '#partage_fermer', toggle_sharing_menu);
-
-  // lors d'un clic sur un bouton de partage
-  $("body").off("touchend", "li.partage", share_click);
-  $("body").on("touchend", "li.partage", share_click);
-
-  // pour le bouton de retour lorsque l'on est dans les sauvegardes
-  $("body").off("touchend", ".bouton_retour", backHome);
-  $("body").on("touchend", ".bouton_retour", backHome);
-
-  // pour le bouton qui permet de supprimer une sauvegarde
-  $("body").off("touchend", ".bouton_modifier_sauvegardes", modify_saves);
-  $("body").on("touchend", ".bouton_modifier_sauvegardes", modify_saves);
-
-  // pour la vidéo "no connection"
-  $("body").off("touchend", "#bouton_video_no_connection", print_video);
-  $("body").on("touchend", "#bouton_video_no_connection", print_video);
-}
-
-
-// initialise la page d'accueil. Si load_bagues = TRUE, on charge les bagues par défaut. Si FALSE, on ne les charge pas.
-function init_accueil(load_bagues){
-
-  // initialise le menu horizontal
-  initMetrics();
-
-  // récupert les différentes valeurs nécessaires
-  if (load_bagues == true){
-    $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data){
-      
-      if (data.id_set_adaptateur != undefined)
-        id_set_adaptateur = data.id_set_adaptateur;
-      if (data.id_set_love != undefined)
-        id_set_love = data.id_set_love;
-      if (data.id_option_ada_or != undefined)
-        id_option_ada_or = data.id_option_ada_or;
-      if (data.id_option_ada_titan != undefined)
-        id_option_ada_titan = data.id_option_ada_titan;
-      if (data.id_option_love_t != undefined)
-        id_option_love_t = data.id_option_love_t;
-      
-      
-      // récupert le dernier type d'affichage utilisé par l'utilisateur
-      var configurateur_type = window.localStorage.getItem("type_configurateur");
-
-      // si disponible, on affecte cette valeur à la listbox
-      if (configurateur_type != undefined){
-        $("select[name='type_configurateur']").val(configurateur_type);
-      }
-      // si pas disponible, on prend le premier type de configurateur disponible
-      else{
-        configurateur_type = $("select[name='type_configurateur']").val();
-      }
-
-      // initialise l'affichage
-      change_type_configurateur(configurateur_type);
-    });
-  }
-
-  // lors d'un changement de type de configurateur
-  $("select[name='type_configurateur']").unbind('change', function(){
-    change_type_configurateur($(this).val());
-  });
-  $("select[name='type_configurateur']").change(function(){
-    change_type_configurateur($(this).val());
-  });
-
-  // appelle le changement d'orientation pour initialiser l'affichage correctement
-  orientationChange();
 }
 
 // retourne le chemin du répertoire des données de l'application
@@ -297,10 +309,10 @@ function orientationChange(){
 
     // masque le logo
     if (windows_height < 400){
-      $('#slidingMenu .logo').hide();
-      $('#slidingMenu .logo_petit').hide();
-      $('#slidingMenu .options').css('margin-top', '0');
-      $('#slidingMenu').css('background-position', 'center -62px');
+      $('#sidebar .logo').hide();
+      $('#sidebar .logo_petit').hide();
+      $('#sidebar .options').css('margin-top', '0');
+      $('#sidebar').css('background-position', 'center -62px');
     }
   }
   // si on est en mode "portrait"
@@ -328,27 +340,61 @@ function orientationChange(){
     change_bague(1);
   }
 
-  // pour savoir combien de place prenne les barres de menu haut et bas
-  var minus = 99;  // par défaut
 
-  // si iOS 7 => 109
-  if (device.platform == "iOS"){
-    var version = device.version;
-    if (version[0] == '7')
-      minus = 109;
-  }
+  // switch(window.orientation){
+  //   case -90:
+  //   case 90:
+  //   case undefined:
+  //     // paysage
+  //     orientation_value = "paysage";
+
+  //     // affiche les 2 bagues
+  //     $('.article_picture').show();
+
+  //     // masque les boutons de changement de bague
+  //     $('#boutons_bagues').hide();
+      
+  //     // recentre les images
+  //     $('.articles_pictures').css('margin-top', '44px');
+
+  //     // masque le logo
+  //     $('#sidebar .logo').hide();
+  //     $('#sidebar .logo_petit').hide();
+  //     $('#sidebar .options').css('margin-top', '0');
+  //     $('#sidebar').css('background-position', 'center -62px');
+  //     break; 
+  //   default:
+  //     // portrait
+  //     orientation_value = "portrait";
+
+  //     // masque la 2ème bague
+  //     $('.article2_picture').hide();
+
+  //     // vérifie le type de configurateur
+  //     var type_configurateur = $("select[name='type_configurateur']").val();
+
+  //     // si 2 bagues sont affichées on affiche les boutons de changement de bague
+  //     if (type_configurateur == 3 || type_configurateur == 4)
+  //       $('#boutons_bagues').show();
+
+  //     // recentre les images
+  //     $('.articles_pictures').css('margin-top', '84px');
+
+  //     // affiche le logo
+  //     $('#sidebar .logo').show();
+  //     $('#sidebar .logo_petit').show();
+  //     $('#sidebar .options').css('margin-top', '20px');
+  //     $('#sidebar').css('background-position', 'center 0');
+
+  //     // sélectionne le bouton de la bague n° 1
+  //     change_bague(1);
+  //     break; 
+  // }
 
   // redimensionne et replace l'image de fond
   var $img_background = $('img.bg');
-  $img_background.height($img_background.parent().height() - minus);
+  $img_background.height($img_background.parent().height() - 99);
   $img_background.css('left', ($img_background.parent().width() - $img_background.width()) / 2);
-
-  // redimensionne la vidéo
-  var $video_el = $("#video_lovekey:visible");
-  if ($video_el.length > 0){
-    var video = videojs("video_lovekey");
-    video.dimensions($(window).width() + "px", ($(window).height() - 50) + "px");
-  }
 
   // redimensionne les bagues selon l'orientation de l'appareil
   change_bague_size();
@@ -360,22 +406,12 @@ function window_change_size(){
   orientationChange();
 
   // redimensionne les bagues selon l'orientation de l'appareil
-  // change_bague_size();
-
-  // pour savoir combien de place prenne les barres de menu haut et bas
-  var minus = 99;  // par défaut
-
-  // si iOS 7 => 109
-  if (device.platform == "iOS"){
-    var version = device.version;
-    if (version[0] == '7')
-      minus = 109;
-  }
+  change_bague_size();
 
   // redimensionne et replace l'image de fond
-  var $img_background = $('img.bg');
-  $img_background.height($img_background.parent().height() - minus);
-  $img_background.css('left', ($img_background.parent().width() - $img_background.width()) / 2);
+  // var $img_background = $('img.bg');
+  // $img_background.height($img_background.parent().height() - 99);
+  // $img_background.css('left', ($img_background.parent().width() - $img_background.width()) / 2);
 
   // recharge les bagues pour corriger un problème de taille de l'image de la bague
   if (orientation_value == "paysage"){
@@ -525,9 +561,6 @@ function change_type_configurateur(val){
     if (orientation_value == "portrait")
       $('#boutons_bagues').css('display', 'block');
   }
-
-  // vérifie l'orientation
-  orientationChange();
 }
 
 /**
@@ -558,6 +591,8 @@ function reset(nb_pictures, gamme){
       update_sets(0, options[0], options[1], options[2]);
     else
       update_sets(0);
+
+    // $('.articles_pictures').css('width', '240px');
   }
   else if (nb_pictures == 2){
 
@@ -569,6 +604,8 @@ function reset(nb_pictures, gamme){
       update_sets(1);
       update_sets(2);
     }
+    // $('.articles_pictures').css('width', '240px');
+    // $('.articles_pictures').css('width', '470px');
   }
 }
 
@@ -605,12 +642,11 @@ function init_options(no_article){
 
       if (element && element.length > 0){
         // sélectionne la bonne option dans la listbox
-        element.prop("selected", true);
-
+        element.attr("selected", true);
         $(this).val(id_option);
 
         // désélectionne toutes les autres options
-        $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').prop("selected", false);
+        $(this).find('option.option_set_element.in_stock[value!=' + id_option + ']').attr("selected", false);
       }
     }
 
@@ -693,8 +729,7 @@ function update_sets(no_article){
     aid: article_id,
     sid: '1_2_4',
     nb_articles: nb_articles
-  }, function(data){
-
+  }, function(){
     if (options.length == 3){
       var love_default_id = options[0];
       var adaptateur_default_id = options[1];
@@ -736,6 +771,15 @@ function update_sets(no_article){
 
     // met à jour le lien qui relie l'application au site web
     change_link_to_website();
+    
+    // met à jour le prix de l'article
+    // update_price();
+    
+    // met à jour la quantité disponible
+    // update_quantity();
+    
+    // met à jour le détails des options choisies
+    // update_options_details();
 
     // gère la sélection des options de l'article
     $('#article' + no_article + ' .options_set').change(function(){
@@ -771,19 +815,21 @@ function update_sets(no_article){
             var select_adaptateur = $("#article" + no_article).find("select[name=option_set_" + id_set_adaptateur + "]");
             select_adaptateur.find("option[value=" + value + "]").prop("selected", true);
             select_adaptateur.val(value);
-          });
+          })
         }
       }
+
+
 
       // si on sélectionne la love de la 1ère bague, on l'applique également à la 2è bague
       if (no_article == 1 && id_set == 1){
         var $listbox = $("#article2 select[name=option_set_1]");
         
         // désélectionne toutes les options
-        $listbox.find("option").prop("selected", false);
+        $listbox.find("option").attr("selected", false);
         
         // sélectionne la bonne option dans la listbox
-        $listbox.find("option[value=" + id_option + "]").prop("selected", true);
+        $listbox.find("option[value=" + id_option + "]").attr("selected", true);
         $listbox.val(id_option);
 
         // déclenche l'événement "change" sur le select
@@ -798,7 +844,28 @@ function update_sets(no_article){
         // met à jour le lien qui relie l'application au site web
         change_link_to_website();
       }
+      
+      // met à jour le prix de l'article
+      // update_price();
+      
+      // met à jour la quantité disponible
+      // update_quantity();
+      
+      // met à jour le détails des options choisies
+      // update_options_details();
+      
+      // définit l'id de l'option sélectionnée dans le formulaire d'ajout de l'article au panier
+      // var input = $('input#input-article' + no_article + '-set-' + id_set);
+      // if (input.length > 0){
+      //   input.attr('value', id_option);
+      // }
     });
+
+    // gère le choix de l'utilisateur si gravure de l'article ou non
+    // $('#article' + no_article + ' select[name=option_set_5]').change(function(){
+    //   // affiche ou masque les données pour la gravure
+    //   set_gravure(this, no_article);
+    // });
 
     // si on a terminé l'initialisation des 2 sets d'options, on simule un changement d'adaptateur pour mettre en place les différentes règles
     if (no_article == 2)
@@ -842,7 +909,7 @@ var bagues_saves = Array();
 var modify_saves_open = false;
 
 // affiche une boite de dialogue pour demander le nom de la sauvegarde à l'utilisateur
-function save_confirmation(e) {
+function save_confirmation() {
   clickSound.play();
 
   navigator.notification.prompt(
@@ -976,42 +1043,49 @@ function remove_save(index_to_remove){
 }
 
 // affiche les sauvegarde disponibles
-function print_saves(e){
+function print_saves(){
   clickSound.play();
 
-  // charge la page "saves.html"
-  loadPage("saves.html", $("#pageContent"), function(){
-    // met à jour les sauvegardes
-    load_saves();
+  // met à jour les sauvegardes
+  load_saves();
 
-    // efface les sauvegardes déjà affichées
-    $('#view_load .sauvegarde_bagues').empty();
+  // efface les sauvegardes déjà affichées
+  $('#view_load .sauvegarde_bagues').empty();
 
-    var x = 0;
+  var x = 0;
 
-    // parcourt toutes les sauvegardes et les affiche
-    $.each(bagues_saves, function(index, value){
-      msg = "<li>"
-              +"<div class='save_data' ontouchend='javascript: load_bague(" + value.type_configurateur + ", \"" + (value.options).join(",") + "\");'>"
-                +"<img src='img/fleche_droite.png' class='fleche_droite' />"
-                +"<span class='save_name'>" + value.name + "</span>"
-                +"<br>"
-                +"<span class='save_date'>" + value.date + "</span>"
-              +"</div>"
-              +"<div class='save_modify' ontouchend='javascript: remove_save(" + x + ");'>supprimer</div>"
-            +"</li>";
+  // parcourt toutes les sauvegardes et les affiche
+  $.each(bagues_saves, function(index, value){
+    msg = "<li>"
+            +"<div class='save_data' ontouchend='javascript: load_bague(" + value.type_configurateur + ", \"" + (value.options).join(",") + "\");'>"
+              +"<img src='img/fleche_droite.png' class='fleche_droite' />"
+              +"<span class='save_name'>" + value.name + "</span>"
+              +"<br>"
+              +"<span class='save_date'>" + value.date + "</span>"
+            +"</div>"
+            +"<div class='save_modify' ontouchend='javascript: remove_save(" + x + ");'>supprimer</div>"
+          +"</li>";
 
-      $('#view_load .sauvegarde_bagues').append(msg);
+    $('#view_load .sauvegarde_bagues').append(msg);
 
-      x++;
-    });
-
-    // affiche le contenu n° 2 pour la barre du haut
-    // print_barreTop(2);
-
-    // dit que les boutons de suppression sont fermés
-    modify_saves_open = false;
+    x++;
   });
+
+  // configure la vue du chargeur de bague
+  var view_saves = { 
+    title: "Default View " + parseInt(Math.random()*1000),
+    backLabel: 'retour',
+    view: $('#view_load').clone()
+  };
+
+  // affiche la vue
+  window.viewNavigator.pushView(view_saves);
+
+  // affiche le contenu n° 2 pour la barre du haut
+  // print_barreTop(2);
+
+  // dit que les boutons de suppression sont fermés
+  modify_saves_open = false;
 
   e.stopPropagation();
 }
@@ -1052,26 +1126,26 @@ function load_bague(type_configurateur, options){
   // récupert les options dans un tableau
   var options = options.split(",");
 
-  // affiche la page principale
-  loadPage("home.html", $("#pageContent"), function(){
-    // initialise la page d'accueil
-    init_accueil(false);
+  // revient à la vue précédente
+  window.viewNavigator.popView();
 
-    // si le type de configurateur est pour une seule bague et que 3 options ont été données 
-    if ((type_configurateur == 1 || type_configurateur == 2) && options.length == 3){
-      // on change le type de configurateur et on initialise les bagues
-      change_type_configurateur(type_configurateur, options[0], options[1], options[2]);
-    }
-    // si le type de configurateur est pour un couple de bagues et que 6 options ont été données
-    else if ((type_configurateur == 3 || type_configurateur == 4) && options.length == 6){
-      // on change le type de configurateur et on initialise les bagues
-      change_type_configurateur(type_configurateur, options[0], options[1], options[2], options[3], options[4], options[5]);
-    }
-  });
+  // affiche le contenu n° 1 pour la barre du haut
+  // print_barreTop(1);
+
+  // si le type de configurateur est pour une seule bague et que 3 options ont été données 
+  if ((type_configurateur == 1 || type_configurateur == 2) && options.length == 3){
+    // on change le type de configurateur et on initialise les bagues
+    change_type_configurateur(type_configurateur, options[0], options[1], options[2]);
+  }
+  // si le type de configurateur est pour un couple de bagues et que 6 options ont été données
+  else if ((type_configurateur == 3 || type_configurateur == 4) && options.length == 6){
+    // on change le type de configurateur et on initialise les bagues
+    change_type_configurateur(type_configurateur, options[0], options[1], options[2], options[3], options[4], options[5]);
+  }
 }
 
 // affiche la possibilité de modifier (supprimer) les sauvegardes
-function modify_saves(e){
+function modify_saves(){
 
   clickSound.play();
   
@@ -1084,12 +1158,13 @@ function modify_saves(e){
       200,
       "swing"
     );
+
     $(".save_data").animate(
-      // {right: "+=0px"}, 
-      {right: "0px"}, 
+      {right: "+=0px"}, 
       200,
       "swing"
     );
+
     modify_saves_open = false;
   }
   // si c'est fermé
@@ -1099,12 +1174,13 @@ function modify_saves(e){
       200,
       "linear"
     );
+
     $(".save_modify").animate(
-      // {right: "+=0px"},
-      {right: "0px"},
+      {right: "+=0px"},
       200,
       "linear"
     );
+
     modify_saves_open = true;
   }
 
@@ -1112,158 +1188,99 @@ function modify_saves(e){
 }
 
 
+
 var video_state = 0;
 
 // affiche la vidéo
-function print_video(e){
+function print_video(){
+  // si la connexion est minimum en 3G, on lit la vidéo via Vimeo
+  // if (connexion >= 2){
+  //   var ref = window.open('http://lovekey.com/app/video.html', '_self');
+  // }
+  // sinon on lit la vidéo en local
+  // else{
+
   clickSound.play();
 
-  // récupert la vidéo
-  var player = null;
+  // si on est sur une plateforme iOS
+  if (platform == 'iOS'){
+    // récupert les vidéos du site
+    var video = $('video');
 
-  // l'élément "video"
-  var $elVideo = $("#video_lovekey");
-
-  // si on est Android
-  if (platform == "Android"){
-    // if ($elVideo.length > 0){
-    //   $elVideo.find('source').remove();
-    //   $elVideo.append('<source src="http://lovekey.com/lovekey_mobile.mp4" type="video/mp4">');
-    //   $elVideo.find('source').attr('src', 'http://lovekey.com/lovekey_mobile.mp4');
-    // }
-
-    // récupert la version d'Android utilisée
-    var version = device.version;
-
-    // si version 2.x
-    if (version[0] == '2'){
-      
-      // affiche l'élément vidéo
-      if ($("#video_lovekey").length > 0){
-        $("#video_lovekey").css('display', 'block');
-      }
-
-      // récupert la vidéo
-      player = videojs("video_lovekey");
-      
-      // modifie la source de la vidéo pour prendre la vidéo online (Phonegap sous Android ne gère pas encore les vidéos locales)
-      player.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
-
-      // masque la vidéo lorsque la lecture de la vidéo est terminée
-      player.on("ended", hide_video1);
-
-      // lance la vidéo
-      player.play();
-      // player.requestFullScreen();
-
-    }
-    // si version 4.x
-    else if (version[0] == '4'){
-      // si le plugin n'a pas encore chargé la vidéo, on le fait
-      if ($("video#video_lovekey").length > 0){
-
-        // enlève le div entourant la vidéo
-        $elVideo.unwrap();
-
-        // affiche l'élément vidéo
-        $elVideo.css('display', 'block');
-
-        // prépare videojs
-        videojs("video_lovekey", { 
-          "controls": true, 
-          "preload": true, 
-          "width": "100%", 
-          "height": ($(window).height() - 50) + "px",
-          "customControlsOnMobile": true
-        }, 
-        function(){
-          // affiche la vidéo online
-          this.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
-
-          // et la joue
-          this.play();
-
-          // masque la vidéo lorsque l'on appuye sur "Pause" ou que la lecture de la vidéo est terminée
-          this.on("pause", hide_video2);
-          this.on("ended", hide_video2);
-        });
-
-        video_state = 2;
-      }
-      // si le plugin est déjà prêt
-      else{
-        // affiche la vidéo
-        var player = videojs("video_lovekey");
-
-        // redimensionne la vidéo
-        player.dimensions($(window).width() + "px", ($(window).height() - 50) + "px");
-        
-        // affiche la vidéo          
-        $elVideo.css('display', 'block');
-
-        // et la joue
-        player.play();
-
-        video_state = 1;
-      }
+    // si des vidéos ont été trouvées, on joue la dernière
+    if (video.length > 0){
+      video = video[video.length - 1];
+      video.play();
     }
   }
-  else{
+  // si on est sur une plateforme Android
+  else if(platform == "Android"){
+    // on doit gérer la vidéo via le plugin videojs
+    // si le plugin n'a pas encore chargé la vidéo, on le fait
+    if ($("video#video_lovekey").length > 0){
+      videojs("video_lovekey", { 
+        "controls": true, 
+        "preload": true, 
+        "width": "100%", 
+        "height": ($(window).height() - 50) + "px",
+        "customControlsOnMobile": true
+      }, 
+      function(){
+        // affiche la vidéo online
+        this.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
+        $("#video_lovekey").css('display', 'block');
+        // $(".video.android").css('display', 'block');
 
-    // affiche l'élément vidéo
-    if ($("#video_lovekey").length > 0){
-      $("#video_lovekey").css('display', 'block');
+        // et la joue
+        this.play();
+
+        // masque la vidéo lorsque l'on appuye sur "Pause" ou que la lecture de la vidéo est terminée
+        this.on("pause", hide_video);
+        this.on("ended", hide_video);
+      });
+
+      video_state = 2;
     }
+    // si le plugin est déjà prêt
+    else{
+      // affiche la vidéo
+      var myPlayer = videojs("video_lovekey");
+      $("#video_lovekey").css('display', 'block');
+      // $(".video.android").css('display', 'block');
 
-    // récupert la vidéo
-    player = videojs("video_lovekey");
-    
-    // modifie la source de la vidéo pour prendre la vidéo online (Phonegap sous Android ne gère pas encore les vidéos locales)
-    player.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
+      $(".vjs-control-bar").css('visibility', 'visible');
+      $(".vjs-control-bar").fadeIn();
 
-    // masque la vidéo lorsque la lecture de la vidéo est terminée
-    player.on("ended", hide_video1);
+      // et la joue
+      myPlayer.play();
 
-    // lance la vidéo
-    player.play();
-    // player.requestFullScreen();
+      video_state = 1;
+    }
   }
 
   e.stopPropagation();
-  return true;
-
-  // si on est sur une plateforme iOS
-  // if (platform == 'iOS'){
-  //   // récupert les vidéos du site
-  //   var video = $('video');
-
-  //   // si des vidéos ont été trouvées, on joue la dernière
-  //   if (video.length > 0){
-  //     video = video[video.length - 1];
-  //     video.play();
-  //   }
-  // }
-
-  // e.stopPropagation();
 }
 
-// Pour Android v2.3.x et iOS, lorsque la vidéo se termine ou se met en pause
-function hide_video1(e){
-  this.cancelFullScreen();
-}
-
-// Pour Android v4.x, lorsque la vidéo est en pause ou se termine, on masque la vidéo
-function hide_video2(){
+// masque la vidéo
+function hide_video(){
   if (video_state == 2){
     $("#video_lovekey").css('display', 'none');
+    // $(".video.android").css('display', 'none');
   }
   else if(video_state == 1){
     video_state = 2;
   }
 }
 
+function show_video_controls(){
+  $(".vjs-control-bar").css('visibility', 'visible');
+  $(".vjs-control-bar").css('z-index', '1003');
+  $(".vjs-control-bar").fadeIn();
+  $(".vjs-control-bar").show();
+}
+
 // lorsque l'on clique sur un bouton de partage
-function share_click(e){
+function share_click(share_button){
   clickSound.play();
 
   var target = '_blank';
@@ -1271,6 +1288,20 @@ function share_click(e){
     target = '_system';
 
   window.open($(this).data('sharelink'), target, 'location=no');
+
+  e.stopPropagation();
+}
+
+// pour ouvrir ou fermer le menu "slide"
+function toggle_slide(){
+  clickSound.play();
+
+  if (slide.bodyOffset > 0){  
+    slide.close();
+  }
+  else{
+    slide.open();
+  }
 
   e.stopPropagation();
 }
@@ -1310,73 +1341,39 @@ function toggle_sharing_menu(e){
 function toggle_disconnected(){
    // si on est connecté
   if (connected == 1){
-    // revient à la page principale
-    loadHome();
+    // revient à la vue précédente (vue principale)
+    window.viewNavigator.popView();
 
     // dit qu'on est maintenant connecté
     connected = 2;
   }
   // si on est pas connecté, on affiche la vue "déconnecté"
   else if (connected == 2){
-    // affiche la page "no_connection.html"
-    loadPage("no_connection.html", $("#pageContent"), function(){
-      // si on est Android
-      if (platform == "Android"){
-        // on masque le bouton permettant de lire la vidéo
-        $('#bouton_video_no_connection').hide();
-        $('#message_video_patienter').hide();
-      }
-    });
+    // configure la vue "déconnecté"
+    var defaultView = { 
+      title: "Default View " + parseInt(Math.random()*1000),
+      backLabel: null,
+      view: $('#view_no_connection').clone()
+    };
+
+    // puis l'affiche
+    window.viewNavigator.pushView(defaultView);
 
     // dit qu'on est maintenant déconnecté
     connected = 1;
   }
 }
 
-// lors d'un click sur le bouton "retour"
-function backHome(e){
+// revient à la vue précédente
+function popView() {
   clickSound.play();
+
+  window.viewNavigator.popView();
+  
+  // affiche le contenu n° 1 pour la barre du haut
+  print_barreTop(1);
+
   e.stopPropagation();
-  loadHome();
-}
-
-// revient à la page d'accueil
-function loadHome(){
-  loadPage("home.html", $("#pageContent"), init_accueil(true));
-}
-
-// charge la page "url" et l'affiche dans l'élément "where". Appelle éventuellement la fonction "callback" une fois terminé.
-function loadPage(url, where, callback){
-  if(!jQuery.isFunction(callback))
-    callback = jQuery.noop();
-
-  if (where.length == 0)
-    return;
-
-  where.html(preloader);
-  where.load(url, function(){
-    // enlève le délai de 300ms lors d'un clic
-    var menu_top = $('.barre_top');
-    var menu_bottom = $('.barre_bottom');
-    var menu_share = $('#menu_partage');
-
-    if (menu_top.length > 0)
-      new NoClickDelay(menu_top[0]);
-    
-    if (menu_bottom.length > 0)
-      new NoClickDelay(menu_bottom[0]);
-    
-    if (menu_share.length > 0)
-      new NoClickDelay(menu_share[0]);
-    
-    // si on est sur iOS 7
-    if (device.platform == 'iOS'){
-      $('#mobileContainer').addClass('ios');
-    }
-
-    // appelle la fonction de rappel
-    callback();
-  });
 }
 
 // vérifie si on est connecté ou pas et affiche la bonne vue en fonction
@@ -1388,7 +1385,7 @@ function checkConnection(){
 
   // si l'application n'a pas encore été initialisée
   if (connected == null){
-    init_app(true);
+    init_app();
   }
   // si on est maintenant déconnecté mais qu'on était auparavant connecté
   else if (connexion == 0 && connected == 2){
@@ -1402,7 +1399,7 @@ function checkConnection(){
   }
   // si on est maintenant connecté mais qu'on a jamais été connecté auparavant
   else if (connexion > 0 && connected == 0){
-    init_app(true);
+    init_app();
   }
   // si on est maintenant connecté mais qu'on était auparavant déconnecté
   else if (connexion > 0 && connected == 1){

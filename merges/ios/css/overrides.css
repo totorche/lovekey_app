@@ -1,0 +1,14 @@
+#page { 
+  background: blue;
+}
+
+.barre_top{
+  height: 54px;
+  background: url('../img/barre_top.jpg') left bottom;
+}
+
+#bouton_menu,
+#boutons_bagues,
+#bouton_modifier_sauvegardes{
+  top: 17px;
+}

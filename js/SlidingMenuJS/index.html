@@ -1,0 +1,90 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+		<title>Sliding menu js</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="msapplication-tap-highlight" content="no"/> 
+	    <link rel="stylesheet" type="text/css" href="style_demo.css">
+	    <link rel="stylesheet" type="text/css" href="style_lovekey_demo.css">
+		<script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="menu_nav.js"></script>
+	</head>
+	<body>
+		<div id="mobileContainer">
+			
+			<div id="page">
+		
+				<div id="header">
+	        <a href="javascript:void(0);" class="show-menu-button"></a>
+				</div>
+
+				<div id="pageContent" >			
+					<div class="barre_top">
+              <a href='javascript: return false;' title="Afficher le menu" id="bouton_menu" class="show-menu-button"></a>
+
+              <div id="boutons_bagues">
+                <a href='javascript: return false;' title="Afficher la bague n° 1" id="bouton_bague_1" class="bouton_bague">Bague 1</a>
+                <a href='javascript: return false;' title="Afficher la bague n° 2" id="bouton_bague_2" class="bouton_bague">Bague 2</a>
+              </div>
+          </div>
+          
+          <!-- L'image de fond -->
+          <img class="bg" src="img/background.jpg" />
+
+          <!-- Les images des bagues -->
+          <div class='articles_pictures'>
+            <div class='article_picture article1_picture'></div>
+            <div class='article_picture article2_picture'></div>
+          </div>
+          
+          <!-- La barre de menu du bas -->
+          <div class="barre_bottom">
+            <div class="bouton_centre">
+              <a href='javascript: return false;' title="Charger" id="bouton_charger" class="boutons_bottom">Charger</a>
+              <a href='javascript: return false;' title="Enregistrer" id="bouton_enregistrer" class="boutons_bottom">Sauver</a>
+              <a href='javascript: return false;' title="Acheter" id="bouton_acheter" class="boutons_bottom">Acheter</a>
+              <a href='javascript: return false;' title="Vidéo" id="bouton_video" class="boutons_bottom">Vidéo</a>
+              <a href='javascript: return false;' title="Partager" id="bouton_partager" class="boutons_bottom">Partager</a>
+            </div>
+          </div>
+				</div>
+
+			</div>
+			
+			<div id="slidingMenu">
+
+				<div id="slidingMenuContent">
+					<div class='logo'>LoveKey</div>
+          <div class='logo_petit'>unique comme vos sentiments</div>
+          
+          <div class="options">
+            <h2>Choisissez votre type de bague</h2>
+
+            <div id="type_configurateur">
+              <select name="type_configurateur">
+                <option value="1">Bague célibataire collection bijou</option>
+                <option value="2">Bague célibataire collection alliance</option>
+                <option value="3">Couple de bagues collection bijou</option>
+                <option value="4">Couple de bagues alliance</option>
+              </select>
+            </div>
+
+            <h2>Choisissez les options</h2>
+
+            <div id="article1">
+              <div class="article_sets"></div>
+            </div>
+            <div id="article2">
+              <div class="article_sets"></div>
+            </div>
+          </div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+</html>
+

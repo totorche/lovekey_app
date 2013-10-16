@@ -1,0 +1,26 @@
+<!-- Vue lorsqu'il n'y a pas de connexion à Internet -->
+<div id="view_no_connection">
+
+  <div class='logo'>LoveKey</div>
+  <div class='logo_petit'>unique comme vos sentiments</div>
+  
+  <p>
+    La connexion disponible n'est actuellement pas suffisante pour utiliser toutes les fonctionnalités de l'application Lovekey.
+  </p>
+
+  <p id="message_video_patienter">
+    En attendant une meilleure connexion, visionnez notre vidéo : 
+  </p>
+
+  <p>
+    <a href="javascript: print_video();" title="Lancer la vidéo" id="bouton_video_no_connection"><img src="img/play.png" alt="Play" class="video_link" /></a>
+  </p>
+
+  <div class="video">
+    <video id="video_lovekey_no_connection" autobuffer width="100%" tabindex="0" preload="auto">
+      <source src="lovekey.mp4" type="video/mp4" />
+      <!-- <source src="http://lovekey.com/lovekey_mobile.mp4" type="video/mp4" /> -->
+    </video>
+  </div>
+
+</div>

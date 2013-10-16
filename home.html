@@ -1,0 +1,82 @@
+<!-- Vue principale -->
+<div class="barre_top">
+  <a href='javascript: return false;' title="Afficher le menu" id="bouton_menu" class="show-menu-button"></a>
+
+  <div id="boutons_bagues">
+    <a href='javascript: return false;' title="Afficher la bague n° 1" id="bouton_bague_1" class="bouton_bague">Bague 1</a>
+    <a href='javascript: return false;' title="Afficher la bague n° 2" id="bouton_bague_2" class="bouton_bague">Bague 2</a>
+  </div>
+</div>
+
+
+<!-- L'image de fond -->
+<img class="bg" src="img/background.jpg" />
+
+
+<!-- Les images des bagues -->
+<div class='articles_pictures'>
+  <div class='article_picture article1_picture'></div>
+  <div class='article_picture article2_picture'></div>
+</div>
+
+
+<!-- La barre de menu du bas -->
+<div class="barre_bottom">
+  <div class="bouton_centre">
+    <a href='javascript: return false;' title="Charger" id="bouton_charger" class="boutons_bottom">Charger</a>
+    <a href='javascript: return false;' title="Enregistrer" id="bouton_enregistrer" class="boutons_bottom">Sauver</a>
+    <a href='javascript: return false;' title="Acheter" id="bouton_acheter" class="boutons_bottom">Acheter</a>
+    <a href='javascript: return false;' title="Vidéo" id="bouton_video" class="boutons_bottom">Vidéo</a>
+    <a href='javascript: return false;' title="Partager" id="bouton_partager" class="boutons_bottom">Partager</a>
+  </div>
+</div>
+
+
+<!-- Pour la vidéo en local -->
+<!-- <video id="video_lovekey" width="100%" tabindex="0" preload="auto" controls class="video-js vjs-default-skin">
+  <source src="lovekey.mp4" type="video/mp4" />
+</video> -->
+<!-- <div id="video_home" style="visibility: hidden;"> -->
+  <!-- <video data-setup='{"controls": true, "autoplay": false, "preload": "auto", "customControlsOnMobile": true}' id="video_lovekey">
+    <source src="http://m.comptoir-info.com/app/beta/sample.mp4" type="video/mp4">
+    <source src="lovekey.mp4" type="video/mp4">
+  </video> -->
+
+  <!-- <video data-setup='{"controls": true, "autoplay": false, "preload": "auto", "customControlsOnMobile": true}' id="video_lovekey_android"> -->
+  <div id="video_lovekey_contener">
+    <video id="video_lovekey" width="100%" tabindex="0" preload="auto" controls class="video-js vjs-default-skin" style="display: none;">
+      <!-- <source src="http://m.comptoir-info.com/app/beta/sample.mp4" type="video/mp4"> -->
+      <source src="http://lovekey.com/lovekey_mobile.mp4" type="video/mp4">
+    </video>
+  </div>
+
+
+<!-- Menu "partage" -->
+<div id="menu_partage">
+  <div class='partage_title'>
+    Partager votre bague Lovekey
+    <img src='img/fermer.png' id='partage_fermer' />  
+  </div>
+
+  <ul>
+    <li class='partage partage_facebook' data-sharelink='#'>
+      <img src='img/facebook.png' class='social_icon' />
+      <span class='partage_text'>Facebook</span>
+      <img src='img/fleche_droite.png' class='fleche_droite' />
+    </li>
+    <li class='partage partage_twitter' data-sharelink='#'>
+      <img src='img/twitter.png' class='social_icon' />
+      <span class='partage_text'>Twitter</span>
+      <img src='img/fleche_droite.png' class='fleche_droite' />
+    </li>
+    <li class='partage partage_pinterest' data-sharelink='#'>
+      <img src='img/pinterest.png' class='social_icon' />
+      <span class='partage_text'>Pinterest</span>
+      <img src='img/fleche_droite.png' class='fleche_droite' />
+    <li class='partage partage_email' data-sharelink='#'>
+      <img src='img/email.png' class='social_icon' />
+      <span class='partage_text'>E-mail</span>
+      <img src='img/fleche_droite.png' class='fleche_droite' />
+    </li>
+  </ul>
+</div>
