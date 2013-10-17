@@ -12,6 +12,7 @@
 
 	// initMetrics();
 
+
 	function initMetrics() {
 		page = $("#page");
 		pageContent  = $("#pageContent");
@@ -22,8 +23,18 @@
 	    	width  : $(window).width(),
 	    	height : $(window).height()
 		};
+
+		initGestures();
 	}
 
+  function initGestures() {
+    var openingGesture = Hammer(document).on("swiperight", function(event) {
+        openMenu();
+    });
+    var closingGesture = Hammer(document).on("swipeleft", function(event) {
+        closeMenu();
+    });
+  }
 
 	function toggleMenu(e){
 		clickSound.play();

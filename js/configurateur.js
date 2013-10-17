@@ -332,11 +332,11 @@ function orientationChange(){
   var minus = 99;  // par défaut
 
   // si iOS 7 => 109
-  if (device.platform == "iOS"){
-    var version = device.version;
-    if (version[0] == '7')
-      minus = 109;
-  }
+  // if (device.platform == "iOS"){
+  //   var version = device.version;
+  //   if (version[0] == '7')
+  //     minus = 109;
+  // }
 
   // redimensionne et replace l'image de fond
   var $img_background = $('img.bg');
@@ -366,11 +366,11 @@ function window_change_size(){
   var minus = 99;  // par défaut
 
   // si iOS 7 => 109
-  if (device.platform == "iOS"){
-    var version = device.version;
-    if (version[0] == '7')
-      minus = 109;
-  }
+  // if (device.platform == "iOS"){
+  //   var version = device.version;
+  //   if (version[0] == '7')
+  //     minus = 109;
+  // }
 
   // redimensionne et replace l'image de fond
   var $img_background = $('img.bg');
@@ -1370,9 +1370,11 @@ function loadPage(url, where, callback){
       new NoClickDelay(menu_share[0]);
     
     // si on est sur iOS 7
-    if (device.platform == 'iOS'){
-      $('#mobileContainer').addClass('ios');
-    }
+    // if (device.platform == "iOS"){
+    //   var version = device.version;
+    //   if (version[0] == '7')
+    //     $('#mobileContainer').addClass('ios');
+    // }
 
     // appelle la fonction de rappel
     callback();
