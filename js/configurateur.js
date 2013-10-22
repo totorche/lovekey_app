@@ -1135,11 +1135,6 @@ function print_video(e){
 
   // si on est Android
   if (platform == "Android"){
-    // if ($elVideo.length > 0){
-    //   $elVideo.find('source').remove();
-    //   $elVideo.append('<source src="http://lovekey.com/lovekey_mobile.mp4" type="video/mp4">');
-    //   $elVideo.find('source').attr('src', 'http://lovekey.com/lovekey_mobile.mp4');
-    // }
 
     // récupert la version d'Android utilisée
     var version = device.version;
@@ -1157,10 +1152,10 @@ function print_video(e){
       // player.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
 
       // masque la vidéo lorsque la lecture de la vidéo est terminée
-      player.on("ended", hide_video1);
+      // player.on("ended", hide_video1);
 
       // lance la vidéo
-      player.play();
+      // player.play();
       // player.requestFullScreen();
 
     }
