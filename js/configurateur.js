@@ -69,6 +69,7 @@ function init_app(){
   $(window).resize(window_change_size);
 
   // charge le son d'un click
+  alert(getPhoneGapPath() + 'mouseclick.wav');
   clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
   // clickSound = new Media('http://lovekey.com/mouseclick.wav');
   // clickSound = new Media('mouseclick.wav');
