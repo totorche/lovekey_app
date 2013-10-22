@@ -1143,9 +1143,9 @@ function print_video(e){
     if (version[0] == '2'){
       alert($elVideo);
       console.log($elVideo);
-      return false;
+      // return false;
       // affiche l'élément vidéo
-      $elVideo.css('display', 'block');
+      $elVideo.css('display', 'inline');
 alert('1');
       // récupert la vidéo
       player = videojs(videoId);
