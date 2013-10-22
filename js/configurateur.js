@@ -1123,8 +1123,11 @@ function print_video(e){
 
   // récupert l'élément "video"
   var $elVideo = $("#video_lovekey");
-  if ($elVideo.length == 0)
+  var videoId = "video_lovekey";
+  if ($elVideo.length == 0){
     var $elVideo = $("#video_lovekey_no_connection");
+    var videoId = "video_lovekey_no_connection";
+  }
 
   // si aucune vidéo n'existe, on arrête là
   if ($elVideo.length == 0)
@@ -1145,12 +1148,10 @@ function print_video(e){
     if (version[0] == '2'){
       
       // affiche l'élément vidéo
-      if ($("#video_lovekey").length > 0){
-        $("#video_lovekey").css('display', 'block');
-      }
+      $elVideo.css('display', 'block');
 
       // récupert la vidéo
-      player = videojs("video_lovekey");
+      player = videojs(videoId);
       
       // modifie la source de la vidéo pour prendre la vidéo online (Phonegap sous Android ne gère pas encore les vidéos locales)
       // player.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
@@ -1166,7 +1167,7 @@ function print_video(e){
     // si version 4.x
     else if (version[0] == '4'){
       // si le plugin n'a pas encore chargé la vidéo, on le fait
-      if ($("video#video_lovekey").length > 0){
+      if ($("video#" + videoId).length > 0){
 
         // enlève le div entourant la vidéo
         $elVideo.unwrap();
@@ -1175,7 +1176,7 @@ function print_video(e){
         $elVideo.css('display', 'block');
 
         // prépare videojs
-        videojs("video_lovekey", { 
+        videojs(videoId, { 
           "controls": true, 
           "preload": true, 
           "width": "100%", 
@@ -1199,7 +1200,7 @@ function print_video(e){
       // si le plugin est déjà prêt
       else{
         // affiche la vidéo
-        var player = videojs("video_lovekey");
+        var player = videojs(videoId);
 
         // redimensionne la vidéo
         player.dimensions($(window).width() + "px", ($(window).height() - 50) + "px");
@@ -1218,12 +1219,10 @@ function print_video(e){
   else{
 
     // affiche l'élément vidéo
-    if ($("#video_lovekey").length > 0){
-      $("#video_lovekey").css('display', 'block');
-    }
+    $elVideo.css('display', 'block');
 
     // récupert la vidéo
-    player = videojs("video_lovekey");
+    player = videojs(videoId);
     
     // modifie la source de la vidéo pour prendre la vidéo en local
     player.src({src: 'lovekey.mp4'});
