@@ -1141,7 +1141,7 @@ function print_video(e){
 
     // si version 2.x
     if (version[0] == '2'){
-      alert('v2');
+      alert($elVideo);
       // affiche l'élément vidéo
       $elVideo.css('display', 'block');
 alert('1');
