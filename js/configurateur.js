@@ -1349,18 +1349,20 @@ function loadPage(url, where, callback){
   where.html(preloader);
   where.load(url, function(){
     // enlève le délai de 300ms lors d'un clic
-    var menu_top = $('.barre_top');
-    var menu_bottom = $('.barre_bottom');
-    var menu_share = $('#menu_partage');
+    // var menu_top = $('.barre_top');
+    // var menu_bottom = $('.barre_bottom');
+    // var menu_share = $('#menu_partage');
 
-    if (menu_top.length > 0)
-      new NoClickDelay(menu_top[0]);
+    // if (menu_top.length > 0)
+    //   new NoClickDelay(menu_top[0]);
     
-    if (menu_bottom.length > 0)
-      new NoClickDelay(menu_bottom[0]);
+    // if (menu_bottom.length > 0)
+    //   new NoClickDelay(menu_bottom[0]);
     
-    if (menu_share.length > 0)
-      new NoClickDelay(menu_share[0]);
+    // if (menu_share.length > 0)
+    //   new NoClickDelay(menu_share[0]);
+
+    new NoClickDelay($("#pageContent")[0]);
     
     // si on est sur iOS 7
     // if (device.platform == "iOS"){
