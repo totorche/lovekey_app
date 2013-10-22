@@ -69,7 +69,8 @@ function init_app(){
   $(window).resize(window_change_size);
 
   // charge le son d'un click
-  clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
+  // clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
+  clickSound = new Media(g'http://lovekey.com/mouseclick.wav');
 
   // initialise la page d'accueil et charge les bagues par défaut
   init_accueil(true);
@@ -188,7 +189,7 @@ function init_accueil(load_bagues){
 }
 
 // retourne le chemin du répertoire des données de l'application
-function getPhoneGapPath() {
+function getPhoneGapPath(){
   var path = window.location.pathname;
   path = path.substr( path, path.length - 10 );
   return 'file://' + path;
