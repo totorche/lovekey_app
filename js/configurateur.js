@@ -1117,7 +1117,7 @@ var video_state = 0;
 // affiche la vidéo
 function print_video(e){
   clickSound.play();
-
+alert('1');
   // récupert la vidéo
   var player = null;
 
@@ -1128,25 +1128,25 @@ function print_video(e){
     var $elVideo = $("#video_lovekey_no_connection");
     var videoId = "video_lovekey_no_connection";
   }
-
+alert('2');
   // si aucune vidéo n'existe, on arrête là
   if ($elVideo.length == 0)
     return false;
-
+alert('3');
   // si on est Android
   if (platform == "Android"){
-
+alert('android');
     // récupert la version d'Android utilisée
     var version = device.version;
 
     // si version 2.x
     if (version[0] == '2'){
-      
+      alert('v2');
       // affiche l'élément vidéo
-      $elVideo.css('display', 'block');
+      // $elVideo.css('display', 'block');
 
       // récupert la vidéo
-      player = videojs(videoId);
+      // player = videojs(videoId);
       
       // modifie la source de la vidéo pour prendre la vidéo online (Phonegap sous Android ne gère pas encore les vidéos locales)
       // player.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
