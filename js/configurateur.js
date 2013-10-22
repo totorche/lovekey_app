@@ -70,7 +70,8 @@ function init_app(){
 
   // charge le son d'un click
   // clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
-  clickSound = new Media('http://lovekey.com/mouseclick.wav');
+  // clickSound = new Media('http://lovekey.com/mouseclick.wav');
+  clickSound = new Media('mouseclick.wav');
 
   // initialise la page d'accueil et charge les bagues par défaut
   init_accueil(true);
