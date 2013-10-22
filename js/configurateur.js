@@ -1141,25 +1141,20 @@ function print_video(e){
 
     // si version 2.x
     if (version[0] == '2'){
-      alert($elVideo);
-      console.log($elVideo);
-      // return false;
       // affiche l'élément vidéo
-      alert('0');
       $elVideo.css('display', 'inline');
-alert('1');
+
       // récupert la vidéo
       player = videojs(videoId);
-alert('2');
+
       // modifie la source de la vidéo pour prendre la vidéo online (Phonegap sous Android ne gère pas encore les vidéos locales)
       // player.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
 
       // masque la vidéo lorsque la lecture de la vidéo est terminée
       player.on("ended", hide_video1);
-alert('3');
+
       // lance la vidéo
       player.play();
-      alert('4');
       // player.requestFullScreen();
 
     }
