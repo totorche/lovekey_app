@@ -1121,8 +1121,14 @@ function print_video(e){
   // récupert la vidéo
   var player = null;
 
-  // l'élément "video"
+  // récupert l'élément "video"
   var $elVideo = $("#video_lovekey");
+  if ($elVideo.length == 0)
+    var $elVideo = $("#video_lovekey_no_connection");
+
+  // si aucune vidéo n'existe, on arrête là
+  if ($elVideo.length == 0)
+    return false;
 
   // si on est Android
   if (platform == "Android"){
@@ -1208,6 +1214,7 @@ function print_video(e){
       }
     }
   }
+  // si iOS
   else{
 
     // affiche l'élément vidéo
@@ -1218,8 +1225,8 @@ function print_video(e){
     // récupert la vidéo
     player = videojs("video_lovekey");
     
-    // modifie la source de la vidéo pour prendre la vidéo online (Phonegap sous Android ne gère pas encore les vidéos locales)
-    player.src({src: 'http://lovekey.com/lovekey_mobile.mp4'});
+    // modifie la source de la vidéo pour prendre la vidéo en local
+    player.src({src: 'lovekey_mobile.mp4'});
 
     // masque la vidéo lorsque la lecture de la vidéo est terminée
     player.on("ended", hide_video1);
@@ -1231,20 +1238,6 @@ function print_video(e){
 
   e.stopPropagation();
   return true;
-
-  // si on est sur une plateforme iOS
-  // if (platform == 'iOS'){
-  //   // récupert les vidéos du site
-  //   var video = $('video');
-
-  //   // si des vidéos ont été trouvées, on joue la dernière
-  //   if (video.length > 0){
-  //     video = video[video.length - 1];
-  //     video.play();
-  //   }
-  // }
-
-  // e.stopPropagation();
 }
 
 // Pour Android v2.3.x et iOS, lorsque la vidéo se termine ou se met en pause
