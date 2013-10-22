@@ -567,7 +567,7 @@ ul.sauvegarde_bagues li img.fleche_droite{
 
 
 /* Spécial pour iOS */
-.ios .slidingMenuTop{
+/*.ios .slidingMenuTop{
   display: block;
   width: 100%;
   height: 10px;
@@ -580,15 +580,14 @@ ul.sauvegarde_bagues li img.fleche_droite{
 
 .ios .barre_top{
   height: 54px;
-  /*background: url('../img/barre_top.jpg') left bottom;*/
-  background: #52575a; /* Old browsers */
-  background: -moz-linear-gradient(top,  #52575a 0%, #2a2b2d 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#52575a), color-stop(100%,#2a2b2d)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #52575a 0%,#2a2b2d 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #52575a 0%,#2a2b2d 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #52575a 0%,#2a2b2d 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #52575a 0%,#2a2b2d 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52575a', endColorstr='#2a2b2d',GradientType=0 ); /* IE6-9 */
+  background: #52575a; 
+  background: -moz-linear-gradient(top,  #52575a 0%, #2a2b2d 100%); 
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#52575a), color-stop(100%,#2a2b2d)); 
+  background: -webkit-linear-gradient(top,  #52575a 0%,#2a2b2d 100%); 
+  background: -o-linear-gradient(top,  #52575a 0%,#2a2b2d 100%); 
+  background: -ms-linear-gradient(top,  #52575a 0%,#2a2b2d 100%); 
+  background: linear-gradient(to bottom,  #52575a 0%,#2a2b2d 100%); 
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52575a', endColorstr='#2a2b2d',GradientType=0 ); 
 }
 
 .ios #bouton_menu,
@@ -604,5 +603,5 @@ ul.sauvegarde_bagues li img.fleche_droite{
 
 .ios ul.sauvegarde_bagues{
   top: 54px;
-}
+}*/
 /* Fin Spécial pour iOS */

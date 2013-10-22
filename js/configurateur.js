@@ -78,7 +78,7 @@ function init_app(){
   connected = 2;
 
   // enlève le délai de 300ms lors d'un clic
-  new NoClickDelay($("#slidingMenu")[0]);
+  // new NoClickDelay($("#slidingMenu")[0]);
 
   // pour afficher la bague n° 1
   $("body").on("touchend", '#bouton_bague_1', function(){
