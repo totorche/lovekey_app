@@ -69,9 +69,9 @@ function init_app(){
   $(window).resize(window_change_size);
 
   // charge le son d'un click
-  // clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
+  clickSound = new Media(getPhoneGapPath() + 'mouseclick.wav');
   // clickSound = new Media('http://lovekey.com/mouseclick.wav');
-  clickSound = new Media('mouseclick.wav');
+  // clickSound = new Media('mouseclick.wav');
 
   // initialise la page d'accueil et charge les bagues par défaut
   init_accueil(true);
@@ -191,9 +191,18 @@ function init_accueil(load_bagues){
 
 // retourne le chemin du répertoire des données de l'application
 function getPhoneGapPath(){
-  var path = window.location.pathname;
-  path = path.substr( path, path.length - 10 );
-  return 'file://' + path;
+  // si iOS, le chemin doit être vide
+  if (device.platform == "iOS"){
+    return "";
+  }
+  // si Android
+  else if (device.platform == "Android"){
+    var path = window.location.pathname;
+    path = path.substr( path, path.length - 10 );
+    return 'file://' + path;
+  }
+  else
+    return "";
 };
 
 // va sur le configurateur online (sur le site web) avec les bonnes options sélectionnées
