@@ -1226,7 +1226,7 @@ function print_video(e){
     player = videojs("video_lovekey");
     
     // modifie la source de la vidéo pour prendre la vidéo en local
-    player.src({src: 'lovekey_mobile.mp4'});
+    player.src({src: 'lovekey.mp4'});
 
     // masque la vidéo lorsque la lecture de la vidéo est terminée
     player.on("ended", hide_video1);
