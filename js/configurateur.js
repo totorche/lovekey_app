@@ -1145,6 +1145,7 @@ function print_video(e){
       console.log($elVideo);
       // return false;
       // affiche l'élément vidéo
+      alert('0');
       $elVideo.css('display', 'inline');
 alert('1');
       // récupert la vidéo
