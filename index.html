@@ -1,126 +1,19 @@
-<!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<!doctype html>
 
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
+
   <head>
-      <meta charset="utf-8" />
-      <meta name="format-detection" content="telephone=no" />
-      <!-- <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, target-densitydpi=device-dpi" /> -->
-      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320" />
-      <link rel="stylesheet" type="text/css" href="css/index.css" />
-      <title>Lovekey</title>
-      
-      <script type="text/javascript" src="cordova.js"></script>
-      <script type="text/javascript" src="js/index.js"></script>
-      
-      <script src="js/jquery-1.10.2.min.js"></script>
 
-      <!-- Pour éviter le délai de 300ms du onClick sur iOS -->
-      <script src="js/noClickDelay.js"></script>
-  
-      <!-- Amélioration de $.animate de jQuery pour les smartphone -->
-      <!--<script src="js/jquery.animate-enhanced.js"></script>-->
+    <title>tittle</title>
 
-      <!-- Permet, dans webkit, le scroll d'un élément de taille fixe -->
-      <!--<script src="js/iscroll.js"></script>-->
+    <script>
 
-      <!-- Pour le menu horizontal (SlidingMenu) -->
-      <script type="text/javascript" src="js/SlidingMenuJS/menu_nav.js"></script>
-      <script type="text/javascript" src="js/hammer.min.js"></script>
-      
-      <!-- Magic 360 -->
-      <script type="text/javascript" src="js/magic360/magic360/magic360.js"></script>
-      <link rel="stylesheet" href="js/magic360/magic360/magic360.css" />
+      window.location='./main.html';
 
-      <!-- Configurateur -->
-      <script type="text/javascript" src="js/configurateur.js"></script>
-      
-      <!-- Video JS -->
-      <link href="js/video-js/video-js.css" rel="stylesheet">
-      <script src="js/video-js/video.js"></script>
-        
-      <!-- Pour permettre de définir des CSS personnalisés selon la plateforme -->
-      <link rel="stylesheet" type="text/css" href="css/overrides.css" />
-  </head>
-
-  <body>
-    <div id="mobileContainer">
-
-      <!-- Menu Sidebar -->
-      <div id="slidingMenu">
-        <div id="slidingMenuContent">
-          
-          <div class='slidingMenuTop'></div>
-
-          <div class='logo'>LoveKey</div>
-          <div class='logo_petit'>unique comme vos sentiments</div>
-          
-          <div class="options">
-            <h2>Choisissez votre type de bague</h2>
-
-            <div id="type_configurateur">
-              <select name="type_configurateur">
-                <option value="1">Bague célibataire collection bijou</option>
-                <option value="2">Bague célibataire collection alliance</option>
-                <option value="3">Couple de bagues collection bijou</option>
-                <option value="4">Couple de bagues alliance</option>
-              </select>
-            </div>
-
-            <h2>Choisissez les options</h2>
-
-            <div id="article1">
-              <div class="article_sets"></div>
-            </div>
-            <div id="article2">
-              <div class="article_sets"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Affiche la barre du haut -->
-      <div id="page">
-        <div id="pageContent">
-          
-          <!-- Contenu de la page -->
-          
-        </div>
-      </div>
-    </div>
-    <script type="text/javascript">
-      app.initialize();
-
-
-      var ready = false;
-
-      document.addEventListener("deviceready",onDeviceReady,false);
-
-      function onDeviceReady(){
-        // charge la page
-        loadPage("home.html", $("#pageContent"), checkConnection);
-        // checkConnection();
-
-        setTimeout(function() {
-          navigator.splashscreen.hide();
-        }, 2000);
-      }
     </script>
+
+  <body>    
+
   </body>
+
 </html>
