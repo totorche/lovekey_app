@@ -364,6 +364,9 @@ img.bg{
   list-style-type: none;
   padding: 0px;
   margin: 0px;
+
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 #menu_partage li{
@@ -404,6 +407,10 @@ img.bg{
   position: absolute;
   right: 10px;
   cursor: pointer;
+}
+
+#menu_partage_scroller{
+  height: 100%;
 }
 
 /*.video{

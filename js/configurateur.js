@@ -142,6 +142,8 @@ function init_accueil(load_bagues){
   // initialise le menu horizontal
   initMetrics();
 
+  myScroll = new iScroll('menu_partage_scroller');
+
   // récupert les différentes valeurs nécessaires
   if (load_bagues == true){
     $.getJSON('http://lovekey.com/content/get_lovekey_details_for_app.php', function(data){
