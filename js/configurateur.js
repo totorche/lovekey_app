@@ -34,6 +34,9 @@ var clickSound = '';
 // pour patienter pendant le chargement d'une page
 var preloader = '<center style="margin-top: 30px;"><img src="img/preloader.gif" alt="loading..." /></center>';
 
+// pour savoir si on est en train de faire défiler le menu de partage (pour éviter que ça "clic" sur les éléments du menu)
+var sharing_menu_move = false;
+
 
 // initialise l'application.
 function init_app(){
@@ -79,6 +82,22 @@ function init_app(){
 
   // enlève le délai de 300ms lors d'un clic
   // new NoClickDelay($("#slidingMenu")[0]);
+
+  document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+  // lorsque l'on fait défiler le menu de partage
+  $("body").on("touchmove", "#menu_partage", function(e){
+    e.preventDefault();
+
+    // dit qu'on en train de faire défiler le menu
+    sharing_menu_move = true;
+  });
+
+  // lorsque l'on arrête de faire défiler le menu de partage
+  $("body").on("touchend", "#menu_partage", function(e){
+    // dit qu'on a fini de faire défiler le menu
+    sharing_menu_move = false;
+  });
 
   // pour afficher la bague n° 1
   $("body").on("touchend", '#bouton_bague_1', function(){
@@ -141,8 +160,6 @@ function init_accueil(load_bagues){
 
   // initialise le menu horizontal
   initMetrics();
-
-  myScroll = new iScroll('menu_partage_scroller');
 
   // récupert les différentes valeurs nécessaires
   if (load_bagues == true){
@@ -1261,6 +1278,11 @@ function hide_video2(){
 
 // lorsque l'on clique sur un bouton de partage
 function share_click(e){
+
+  // vérifie qu'on ne soit pas en train de faire défiler le menu
+  if (sharing_menu_move)
+    return;
+
   clickSound.play();
 
   var target = '_blank';
@@ -1269,7 +1291,7 @@ function share_click(e){
 
   window.open($(this).data('sharelink'), target, 'location=no');
 
-  e.stopPropagation();
+  // e.stopPropagation();
 }
 
 // pour ouvrir ou fermer le menu de partage
@@ -1293,6 +1315,8 @@ function toggle_sharing_menu(e){
       function(){
         $('#menu_partage').animate({
           height: $(window).height() - 44
+        }, 500, function(){
+          var myScroll = new iScroll('menu_partage_scroller');
         });
       }
     );
@@ -1339,7 +1363,7 @@ function backHome(e){
 
 // revient à la page d'accueil
 function loadHome(){
-  loadPage("home.html", $("#pageContent"), init_accueil(true));
+  loadPage("home.html", $("#pageContent"), function(){init_accueil(true);});
 }
 
 // charge la page "url" et l'affiche dans l'élément "where". Appelle éventuellement la fonction "callback" une fois terminé.
@@ -1351,7 +1375,10 @@ function loadPage(url, where, callback){
     return;
 
   where.html(preloader);
+
   where.load(url, function(){
+    // $.get(url, function(data){
+    
     // enlève le délai de 300ms lors d'un clic
     // var menu_top = $('.barre_top');
     // var menu_bottom = $('.barre_bottom');
